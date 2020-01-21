@@ -8,5 +8,12 @@
     <artifactId>messages</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.msgpack</groupId>
+            <artifactId>msgpack-core</artifactId>
+            <version>0.8.15</version>
+        </dependency>
+    </dependencies>
 
 </project>
