@@ -4,7 +4,10 @@ import org.msgpack.core.MessageBufferPacker;
 import org.msgpack.core.MessageUnpacker;
 import org.msgpack.value.ImmutableValue;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 
 public class Utils {
 
@@ -67,6 +70,16 @@ public class Utils {
         Integer fullDataSize = unpackInteger(unpacker);
         //dataType
         Integer dataType = unpacker.unpackInt();
+    }
+
+    public static byte[] binaryFromFile(String file) throws IOException {
+        return Files.readAllBytes(new File(file).toPath());
+    }
+
+    public static void binaryToFile(String file, byte[] binary) throws IOException {
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            fos.write(binary);
+        }
     }
 
     public static String unpackString(MessageUnpacker unpacker) throws IOException {
