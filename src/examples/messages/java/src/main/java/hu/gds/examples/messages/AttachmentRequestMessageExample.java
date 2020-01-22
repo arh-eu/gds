@@ -21,7 +21,7 @@ public class AttachmentRequestMessageExample {
         packer.packArrayHeader(11);
 
         //HEADER
-        Utils.packHeader(packer, DataType.EVENT.getValue());
+        Utils.packHeader(packer, DataType.ATTACHMENT_REQUEST.getValue());
 
         //DATA
         packer.packString("SELECT meta, data, \"@to_valid\" FROM \"events-@attachment\" WHERE id = ’ATID201811071434257890’ and ownerid = ’EVNT201811020039071890’ FOR UPDATE WAIT 86400");
