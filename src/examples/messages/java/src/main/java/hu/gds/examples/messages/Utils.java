@@ -91,6 +91,15 @@ public class Utils {
         }
     }
 
+    public static Long unpackLong(MessageUnpacker unpacker) throws IOException {
+        ImmutableValue value = unpacker.unpackValue();
+        if (value.isNilValue()) {
+            return null;
+        } else {
+            return value.asNumberValue().toLong();
+        }
+    }
+
     public static Integer unpackInteger(MessageUnpacker unpacker) throws IOException {
         ImmutableValue value = unpacker.unpackValue();
         if (value.isNilValue()) {

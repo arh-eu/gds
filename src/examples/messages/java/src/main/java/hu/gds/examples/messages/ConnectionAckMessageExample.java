@@ -63,52 +63,52 @@ public class ConnectionAckMessageExample {
     }
 
     public static void unpackMessage(byte[] message) throws IOException {
-        MessageUnpacker unPacker = MessagePack.newDefaultUnpacker(message);
+        MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(message);
 
         //Wrapper array
-        unPacker.unpackArrayHeader();
+        unpacker.unpackArrayHeader();
 
         //HEADER
-        Utils.unpackHeader(unPacker);
+        Utils.unpackHeader(unpacker);
 
         //DATA
-        unPacker.unpackArrayHeader();
+        unpacker.unpackArrayHeader();
 
         //status
-        int status = unPacker.unpackInt();
+        int status = unpacker.unpackInt();
 
         //ack type data array
-        if (unPacker.getNextFormat().getValueType().isArrayType()) { //SUCCESS ACK
-            unPacker.unpackArrayHeader();
+        if (unpacker.getNextFormat().getValueType().isArrayType()) { //SUCCESS ACK
+            unpacker.unpackArrayHeader();
 
             //serve on the same connection
-            boolean serveOnTheSameConnection = unPacker.unpackBoolean();
+            boolean serveOnTheSameConnection = unpacker.unpackBoolean();
 
             //protocol version number
-            int protocolVersionNumber = unPacker.unpackInt();
+            int protocolVersionNumber = unpacker.unpackInt();
 
             //fragmentation supported
-            boolean fragmentationSupported = unPacker.unpackBoolean();
+            boolean fragmentationSupported = unpacker.unpackBoolean();
 
             //fragmentation transmission unit
-            Integer fragmentationTransmissionUnit = Utils.unpackInteger(unPacker);
+            Integer fragmentationTransmissionUnit = Utils.unpackInteger(unpacker);
 
-            if (unPacker.hasNext()) {
-                if (!unPacker.getNextFormat().getValueType().isNilType()) {
+            if (unpacker.hasNext()) {
+                if (!unpacker.getNextFormat().getValueType().isNilType()) {
                     //reserved fields
-                    unPacker.unpackArrayHeader();
+                    unpacker.unpackArrayHeader();
                     //password
-                    String password = Utils.unpackString(unPacker);
+                    String password = Utils.unpackString(unpacker);
                 }
             }
         } else { //UNSUCCESS ACK
             Map<Integer, String> ackTypeDataMap = new HashMap<>();
-            for (Map.Entry<Value, Value> entry : unPacker.unpackValue().asMapValue().map().entrySet()) {
+            for (Map.Entry<Value, Value> entry : unpacker.unpackValue().asMapValue().map().entrySet()) {
                 ackTypeDataMap.put(entry.getKey().asIntegerValue().asInt(), entry.getValue().asStringValue().asString());
             }
         }
 
         //exception
-        String exception = Utils.unpackString(unPacker);
+        String exception = Utils.unpackString(unpacker);
     }
 }
