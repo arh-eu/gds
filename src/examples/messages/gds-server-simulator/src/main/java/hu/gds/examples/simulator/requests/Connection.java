@@ -15,7 +15,6 @@ import java.io.IOException;
 
 public class Connection implements Packable {
 
-    private final String clusterName;
     private final boolean sotsc;
     private final int protocol;
     private final boolean fragSupp;
@@ -26,7 +25,7 @@ public class Connection implements Packable {
     @SuppressWarnings("ConstantConditions") //value unboxing is handled in the MessagePackUtil class.
     public Connection(MessageUnpacker unpacker) throws IOException {
 
-        int arraySize = unpacker.unpackArrayHeader();
+        /*int arraySize = unpacker.unpackArrayHeader();
         if (arraySize < 5 || arraySize > 6) {
             throw new IllegalStateException("The Body of Connection be an array of size 5 or 6, found "
                     + arraySize + " elements instead!");
@@ -49,6 +48,39 @@ public class Connection implements Packable {
 
         for (int i = 0; i < reserved.length; ++i) {
             reserved[i] = MessagePackUtil.getString(unpacker);
+        }*/
+
+        //DATA
+        int arraySize = unpacker.unpackArrayHeader();
+        if (arraySize < 4 || arraySize > 5) {
+            throw new IllegalStateException("The Body of Connection be an array of size 4 or 5, found "
+                    + arraySize + " elements instead!");
+        }
+
+        //serve on the same connection
+        sotsc = unpacker.unpackBoolean();
+
+        //protocol version number
+        protocol = unpacker.unpackInt();
+
+        //fragmentation supported
+        fragSupp = unpacker.unpackBoolean();
+
+        //fragmentation transmission unit
+        fragTU = MessagePackUtil.getInteger(unpacker);
+
+        if (unpacker.hasNext()) {
+            if (!unpacker.getNextFormat().getValueType().isNilType()) {
+                //reserved fields
+                unpacker.unpackArrayHeader();
+                //password
+                String password = MessagePackUtil.getString(unpacker);
+                reserved = new String[]{password};
+            } else {
+                reserved = null;
+            }
+        } else {
+            reserved = null;
         }
     }
 
@@ -56,10 +88,7 @@ public class Connection implements Packable {
     @Override
     public void pack(MessageBufferPacker packer) throws IOException {
 
-        packer.packArrayHeader(null == clusterName ? 5 : 6);
-        if (null != clusterName) {
-            packer.packString(clusterName);
-        }
+        packer.packArrayHeader(null == reserved ? 4 : 5);
 
         packer.packBoolean(sotsc);
         packer.packInt(protocol);
@@ -70,9 +99,11 @@ public class Connection implements Packable {
             packer.packInt(fragTU);
         }
 
-        packer.packArrayHeader(reserved.length);
-        for (String s : reserved) {
-            packer.packString(s);
+        if(reserved != null) {
+            packer.packArrayHeader(reserved.length);
+            for (String s : reserved) {
+                packer.packString(s);
+            }
         }
     }
 }

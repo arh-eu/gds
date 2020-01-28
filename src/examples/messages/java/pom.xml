@@ -20,6 +20,12 @@
             <artifactId>msgpack-core</artifactId>
             <version>0.8.15</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.45.Final</version>
+        </dependency>
     </dependencies>
 
 </project>

@@ -22,13 +22,13 @@ public class AttachmentRequestAckMessageExample {
                [
                    201, --> status
                    { --> 'ack type data map'
-                       'requestids': ['793ed37a-a30c-44cb-848b-ad30c1c52358'],
-                       'ownertable': 'events' --> 'owner table',
+                       'requestids': ['793ed37a-a30c-44cb-848b-ad30c1c52358'], --> 'request ids'
+                       'ownertable': 'events', --> 'owner table'
                        'attachmentid': 'ATID201811071434257890', --> 'attachment id'
                        'ownerids': ['EVNT201811020039071890'], --> 'owner ids'
-                       'meta': 'some_meta' --> 'meta',
-                       'ttl': 86 400 000 --> ttl,
-                       'to_valid: System.currentTimeMillis() + 86 400 000 --> 'to valid'
+                       'meta': 'some_meta', --> 'meta'
+                       'ttl': 86 400 000, --> ttl
+                       'to_valid: System.currentTimeMillis() + 86 400 000, --> 'to valid'
                        'attachment': [1,2,3] --> 'attachment'
                    },
                    null --> 'remained wait time millis'
@@ -180,7 +180,7 @@ public class AttachmentRequestAckMessageExample {
                         break;
                     //to valid
                     case "to_valid":
-                        Long tovalid = value.isNilValue() ? null : value.asNumberValue().toLong();
+                        Long toValid = value.isNilValue() ? null : value.asNumberValue().toLong();
                         break;
                     //attachment
                     case "attachment":

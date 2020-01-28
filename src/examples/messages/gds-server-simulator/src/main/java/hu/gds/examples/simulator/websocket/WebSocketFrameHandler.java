@@ -23,8 +23,10 @@
 package hu.gds.examples.simulator.websocket;
 
 import hu.gds.examples.simulator.GDSSimulator;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 
@@ -34,11 +36,12 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocket
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, WebSocketFrame frame) {
-        if (frame instanceof TextWebSocketFrame) {
-            byte[] request = ((TextWebSocketFrame) frame).text().getBytes();
+        if (frame instanceof BinaryWebSocketFrame) {
+            byte[] request = new byte[frame.content().readableBytes()];
+            frame.content().readBytes(request);
             try {
                 byte[] response = simulator.handleRequest(request);
-                ctx.channel().writeAndFlush(new TextWebSocketFrame(new String(response)));
+                ctx.channel().writeAndFlush(new BinaryWebSocketFrame(Unpooled.wrappedBuffer(response)));
             } catch (Throwable t) {
                 throw new IllegalStateException(t);
             }

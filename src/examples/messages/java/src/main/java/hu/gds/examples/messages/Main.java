@@ -5,8 +5,8 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        byte[] message = attachmentRequestAckMessagePackExample();
-        attachmentRequestAckMessageUnpackExample(message);
+        byte[] message = attachmentResponseMessagePackExample();
+        attachmentResponseMessageUnpackExample(message);
     }
 
     private static byte[] connectionMessagePackExample() throws IOException {
@@ -25,27 +25,35 @@ public class Main {
         ConnectionAckMessageExample.unpackMessage(message);
     }
 
-    public static byte[] eventMessagePackExample() throws IOException {
+    private static byte[] eventMessagePackExample() throws IOException {
         return EventMessageExample.packMessage();
     }
 
-    public static void eventAckMessageUnpackExample(byte[] message) throws IOException {
+    private static void eventAckMessageUnpackExample(byte[] message) throws IOException {
         EventAckMessageExample.unpackMessage(message);
     }
 
-    public static byte[] attachmentRequestMessagePackExample() throws IOException {
+    private static byte[] attachmentRequestMessagePackExample() throws IOException {
         return AttachmentRequestMessageExample.packMessage();
     }
 
-    public static void attachmentRequestMessageUnpackExample(byte[] message) throws IOException {
+    private static void attachmentRequestMessageUnpackExample(byte[] message) throws IOException {
         AttachmentRequestMessageExample.unpackMessage(message);
     }
 
-    public static byte[] attachmentRequestAckMessagePackExample() throws IOException {
+    private static byte[] attachmentRequestAckMessagePackExample() throws IOException {
         return AttachmentRequestAckMessageExample.packMessage();
     }
 
-    public static void attachmentRequestAckMessageUnpackExample(byte[] message) throws IOException {
+    private static void attachmentRequestAckMessageUnpackExample(byte[] message) throws IOException {
         AttachmentRequestAckMessageExample.unpackMessage(message);
+    }
+
+    private static byte[] attachmentResponseMessagePackExample() throws IOException {
+        return AttachmentResponseMessageExample.packMessage();
+    }
+
+    private static void attachmentResponseMessageUnpackExample(byte[] message) throws IOException {
+        AttachmentResponseMessageExample.unpackMessage(message);
     }
 }

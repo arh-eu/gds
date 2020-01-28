@@ -49,6 +49,10 @@ public class ConnectionACK extends ACKBase {
         } else {
             data.pack(packer);
         }
-        packer.packString(globalException);
+        if(globalException == null) {
+            packer.packNil();
+        } else {
+            packer.packNil();
+        }
     }
 }
