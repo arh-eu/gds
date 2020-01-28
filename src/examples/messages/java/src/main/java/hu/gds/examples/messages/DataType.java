@@ -1,5 +1,8 @@
 package hu.gds.examples.messages;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum DataType {
     CONNECTION(0),
     CONNECTION_ACK(1),
@@ -23,5 +26,17 @@ public enum DataType {
 
     public int getValue() {
         return this.value;
+    }
+
+    private static final Map<Integer, DataType> map;
+
+    static {
+        map = new HashMap<Integer, DataType>();
+        for (DataType v : DataType.values()) {
+            map.put(v.value, v);
+        }
+    }
+    public static DataType findByKey(int i) {
+        return map.get(i);
     }
 }

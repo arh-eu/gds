@@ -21,6 +21,8 @@ import javax.net.ssl.SSLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import static hu.gds.examples.clientsimulator.ClientSimulator.logger;
+
 public class WebSocketClient {
     private final URI URI;
     private SslContext sslCtx;
@@ -90,6 +92,7 @@ public class WebSocketClient {
                                         webSocketClientHandler);
                             }
                         });
+                logger.info("WebSocket Client connecting to server...");
                 ch = bootstrap.connect(URI.getHost(), port).sync().channel();
                 webSocketClientHandler.handshakeFuture().sync();
             } catch (Throwable throwable) {
@@ -104,11 +107,13 @@ public class WebSocketClient {
             connect();
         }
         WebSocketFrame frame = new BinaryWebSocketFrame(Unpooled.wrappedBuffer(msg));
+        logger.info("WebSocket Client sending BinaryWebSocketFrame...");
         ch.writeAndFlush(frame);
     }
 
     public void close() throws InterruptedException {
         if(isOpen()) {
+            logger.info("WebSocket Client closing channel...");
             ch.writeAndFlush(new CloseWebSocketFrame());
             ch.closeFuture().sync();
             group.shutdownGracefully();
@@ -159,7 +164,7 @@ class WebSocketClientHandler extends SimpleChannelInboundHandler<Object> {
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) {
-        System.out.println("WebSocket Client disconnected!");
+        logger.info("WebSocket Client disconnected!");
     }
 
     @Override
@@ -168,10 +173,10 @@ class WebSocketClientHandler extends SimpleChannelInboundHandler<Object> {
         if (!handshaker.isHandshakeComplete()) {
             try {
                 handshaker.finishHandshake(ch, (FullHttpResponse) msg);
-                System.out.println("WebSocket Client connected!");
+                logger.info("WebSocket Client connected!");
                 handshakeFuture.setSuccess();
             } catch (WebSocketHandshakeException e) {
-                System.out.println("WebSocket Client failed to connect");
+                logger.info("WebSocket Client failed to connect");
                 handshakeFuture.setFailure(e);
             }
             return;
@@ -186,19 +191,20 @@ class WebSocketClientHandler extends SimpleChannelInboundHandler<Object> {
 
         WebSocketFrame frame = (WebSocketFrame) msg;
         if(frame instanceof BinaryWebSocketFrame) {
+            logger.info("WebSocket Client received BinaryWebSocketFrame");
             byte[] binaryFrame = new byte[frame.content().readableBytes()];
             frame.content().readBytes(binaryFrame);
             responseHandler.handleResponse(binaryFrame);
         } else if (frame instanceof TextWebSocketFrame) {
-            TextWebSocketFrame textFrame = (TextWebSocketFrame) frame;
-            responseHandler.handleResponse(textFrame.text().getBytes());
+            logger.info("WebSocket Client received TextWebSocketFrame");
+            responseHandler.handleResponse(((TextWebSocketFrame) frame).text().getBytes());
         } else if (frame instanceof PongWebSocketFrame) {
-            responseHandler.handleResponse("WebSocket Client received pong");
+            logger.info("WebSocket Client received pong");
         } else if (frame instanceof CloseWebSocketFrame) {
-            responseHandler.handleResponse("WebSocket Client received closing");
+            logger.info("WebSocket Client received closing");
             ch.close();
         } else {
-            System.out.println("unsupported frame type: " + frame.getClass().getName());
+            logger.info("unsupported frame type: " + frame.getClass().getName());
         }
     }
 

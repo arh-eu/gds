@@ -1,7 +1,6 @@
 package hu.gds.examples.messages;
 
-import org.msgpack.core.MessageBufferPacker;
-import org.msgpack.core.MessagePack;
+import org.msgpack.core.MessagePacker;
 import org.msgpack.core.MessageUnpacker;
 import org.msgpack.value.Value;
 
@@ -9,7 +8,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ConnectionAckMessageExample {
+import static hu.gds.examples.messages.MessagePackUtil.*;
+
+public class ConnectionAckData {
 
     /*
         [
@@ -26,15 +27,7 @@ public class ConnectionAckMessageExample {
             ],
         ]
      */
-    public static byte[] packMessage() throws IOException {
-        MessageBufferPacker packer = MessagePack.newDefaultBufferPacker();
-
-        //Wrapper array
-        packer.packArrayHeader(11);
-
-        //HEADER
-        Utils.packHeader(packer, DataType.CONNECTION_ACK.getValue());
-
+    public static void packData(MessagePacker packer) throws IOException {
         //DATA
         packer.packArrayHeader(3);
 
@@ -58,19 +51,9 @@ public class ConnectionAckMessageExample {
 
         //exception
         packer.packNil();
-
-        return packer.toByteArray();
     }
 
-    public static void unpackMessage(byte[] message) throws IOException {
-        MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(message);
-
-        //Wrapper array
-        unpacker.unpackArrayHeader();
-
-        //HEADER
-        Utils.unpackHeader(unpacker);
-
+    public static void unpackData(MessageUnpacker unpacker) throws IOException {
         //DATA
         unpacker.unpackArrayHeader();
 
@@ -91,24 +74,26 @@ public class ConnectionAckMessageExample {
             boolean fragmentationSupported = unpacker.unpackBoolean();
 
             //fragmentation transmission unit
-            Integer fragmentationTransmissionUnit = Utils.unpackInteger(unpacker);
+            Integer fragmentationTransmissionUnit = unpackInteger(unpacker);
 
             if (unpacker.hasNext()) {
                 if (!unpacker.getNextFormat().getValueType().isNilType()) {
                     //reserved fields
                     unpacker.unpackArrayHeader();
                     //password
-                    String password = Utils.unpackString(unpacker);
+                    String password = unpackString(unpacker);
                 }
             }
         } else { //UNSUCCESS ACK
             Map<Integer, String> ackTypeDataMap = new HashMap<>();
             for (Map.Entry<Value, Value> entry : unpacker.unpackValue().asMapValue().map().entrySet()) {
-                ackTypeDataMap.put(entry.getKey().asIntegerValue().asInt(), entry.getValue().asStringValue().asString());
+                Integer key = entry.getKey().asIntegerValue().asInt();
+                String value = entry.getValue().asStringValue().asString();
+                ackTypeDataMap.put(key, value);
             }
         }
 
         //exception
-        String exception = Utils.unpackString(unpacker);
+        String exception = unpackString(unpacker);
     }
 }

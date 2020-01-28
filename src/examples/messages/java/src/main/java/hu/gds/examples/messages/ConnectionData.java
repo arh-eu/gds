@@ -1,12 +1,13 @@
 package hu.gds.examples.messages;
 
-import org.msgpack.core.MessageBufferPacker;
-import org.msgpack.core.MessagePack;
+import org.msgpack.core.MessagePacker;
 import org.msgpack.core.MessageUnpacker;
+import static hu.gds.examples.messages.MessagePackUtil.*;
 
 import java.io.IOException;
 
-public class ConnectionMessageExample {
+
+public class ConnectionData {
 
     /*
         [
@@ -19,15 +20,7 @@ public class ConnectionMessageExample {
             ]
         ]
      */
-    public static byte[] packMessage() throws IOException {
-        MessageBufferPacker packer = MessagePack.newDefaultBufferPacker();
-
-        //Wrapper array
-        packer.packArrayHeader(11);
-
-        //HEADER
-        Utils.packHeader(packer, DataType.CONNECTION.getValue());
-
+    public static void packData(MessagePacker packer) throws IOException {
         //DATA
         //Write the value 5 if you want to use the 'password' field as well
         packer.packArrayHeader(4);
@@ -50,40 +43,30 @@ public class ConnectionMessageExample {
         //password
         packer.packString("password_example");
         */
-
-        return packer.toByteArray();
     }
 
-    public static void unpackMessage(byte[] message) throws IOException {
-        MessageUnpacker unPacker = MessagePack.newDefaultUnpacker(message);
-
-        //Wrapper array
-        unPacker.unpackArrayHeader();
-
-        //HEADER
-        Utils.unpackHeader(unPacker);
-
+    public static void unpackData(MessageUnpacker unpacker) throws IOException {
         //DATA
-        unPacker.unpackArrayHeader();
+        unpacker.unpackArrayHeader();
 
         //serve on the same connection
-        boolean serveOnTheSameConnection = unPacker.unpackBoolean();
+        boolean serveOnTheSameConnection = unpacker.unpackBoolean();
 
         //protocol version number
-        int protocolVersionNumber = unPacker.unpackInt();
+        int protocolVersionNumber = unpacker.unpackInt();
 
         //fragmentation supported
-        boolean fragmentationSupported = unPacker.unpackBoolean();
+        boolean fragmentationSupported = unpacker.unpackBoolean();
 
         //fragmentation transmission unit
-        Integer fragmentationTransmissionUnit = Utils.unpackInteger(unPacker);
+        Integer fragmentationTransmissionUnit = unpackInteger(unpacker);
 
-        if (unPacker.hasNext()) {
-            if (!unPacker.getNextFormat().getValueType().isNilType()) {
+        if (unpacker.hasNext()) {
+            if (!unpacker.getNextFormat().getValueType().isNilType()) {
                 //reserved fields
-                unPacker.unpackArrayHeader();
+                unpacker.unpackArrayHeader();
                 //password
-                String password = Utils.unpackString(unPacker);
+                String password = unpackString(unpacker);
             }
         }
     }

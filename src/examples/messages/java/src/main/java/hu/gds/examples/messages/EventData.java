@@ -1,12 +1,11 @@
 package hu.gds.examples.messages;
 
-import org.msgpack.core.MessageBufferPacker;
-import org.msgpack.core.MessagePack;
+import org.msgpack.core.MessagePacker;
 import org.msgpack.value.impl.ImmutableBinaryValueImpl;
 
 import java.io.IOException;
 
-public class EventMessageExample {
+public class EventData {
 
     /*
         [
@@ -28,15 +27,7 @@ public class EventMessageExample {
             ]
         ]
      */
-    public static byte[] packMessage() throws IOException {
-        MessageBufferPacker packer = MessagePack.newDefaultBufferPacker();
-
-        //Wrapper array
-        packer.packArrayHeader(11);
-
-        //HEADER
-        Utils.packHeader(packer, DataType.EVENT.getValue());
-
+    public static void packData(MessagePacker packer) throws IOException {
         //DATA
         packer.packArrayHeader(3);
 
@@ -61,7 +52,5 @@ public class EventMessageExample {
         packer.packMapHeader(1);
         packer.packInt(2);
         packer.packBoolean(false);
-
-        return packer.toByteArray();
     }
 }

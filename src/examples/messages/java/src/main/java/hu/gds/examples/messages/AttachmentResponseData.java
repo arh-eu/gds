@@ -1,7 +1,6 @@
 package hu.gds.examples.messages;
 
-import org.msgpack.core.MessageBufferPacker;
-import org.msgpack.core.MessagePack;
+import org.msgpack.core.MessagePacker;
 import org.msgpack.core.MessageUnpacker;
 import org.msgpack.value.Value;
 import org.msgpack.value.impl.ImmutableBinaryValueImpl;
@@ -12,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AttachmentResponseMessageExample {
+public class AttachmentResponseData {
 
     /*
         [
@@ -31,15 +30,7 @@ public class AttachmentResponseMessageExample {
             ]
         ]
      */
-    public static byte[] packMessage() throws IOException {
-        MessageBufferPacker packer = MessagePack.newDefaultBufferPacker();
-
-        //Wrapper array
-        packer.packArrayHeader(11);
-
-        //HEADER
-        Utils.packHeader(packer, DataType.ATTACHMENT_REQUEST_ACK.getValue());
-
+    public static void packData(MessagePacker packer) throws IOException {
         //DATA
         packer.packArrayHeader(1);
 
@@ -95,19 +86,9 @@ public class AttachmentResponseMessageExample {
         packer.packString("attachment");
         //map value
         packer.packValue(new ImmutableBinaryValueImpl(new byte[]{1, 2, 3}));
-
-        return packer.toByteArray();
     }
 
-    public static void unpackMessage(byte[] message) throws IOException {
-        MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(message);
-
-        //Wrapper array
-        unpacker.unpackArrayHeader();
-
-        //HEADER
-        Utils.unpackHeader(unpacker);
-
+    public static void unpackData(MessageUnpacker unpacker) throws IOException {
         //DATA
         unpacker.unpackArrayHeader();
 

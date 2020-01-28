@@ -1,23 +1,16 @@
 package hu.gds.examples.messages;
 
-import org.msgpack.core.MessagePack;
 import org.msgpack.core.MessageUnpacker;
 import org.msgpack.value.Value;
 
 import java.io.IOException;
 import java.util.List;
 
-public class EventAckMessageExample {
+import static hu.gds.examples.messages.MessagePackUtil.*;
 
-    public static void unpackMessage(byte[] message) throws IOException {
-        MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(message);
+public class EventAckData {
 
-        //Wrapper array
-        unpacker.unpackArrayHeader();
-
-        //HEADER
-        Utils.unpackHeader(unpacker);
-
+    public static void unpackData(MessageUnpacker unpacker) throws IOException {
         //DATA
         unpacker.unpackArrayHeader();
 
@@ -34,7 +27,7 @@ public class EventAckMessageExample {
                 int localStatus = unpacker.unpackInt();
 
                 //notification
-                String notification = Utils.unpackString(unpacker);
+                String notification = unpackString(unpacker);
 
                 //field descriptors
                 int fieldDescriptorsArraySize = unpacker.unpackArrayHeader();
@@ -61,16 +54,16 @@ public class EventAckMessageExample {
                     Integer subStatus = unpacker.unpackInt();
 
                     //id
-                    String id = Utils.unpackString(unpacker);
+                    String id = unpackString(unpacker);
 
                     //table name
-                    String tableName = Utils.unpackString(unpacker);
+                    String tableName = unpackString(unpacker);
 
                     //created
-                    Boolean created = Utils.unPackBoolean(unpacker);
+                    Boolean created = unPackBoolean(unpacker);
 
                     //version
-                    Long version = Utils.unpackLong(unpacker);
+                    Long version = unpackLong(unpacker);
 
                     //returning record values
                     if(!unpacker.getNextFormat().getValueType().isNilType()) {
@@ -83,6 +76,6 @@ public class EventAckMessageExample {
         }
 
         //exception
-        String exception = Utils.unpackString(unpacker);
+        String exception = unpackString(unpacker);
     }
 }

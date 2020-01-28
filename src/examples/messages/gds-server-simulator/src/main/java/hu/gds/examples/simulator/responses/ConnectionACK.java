@@ -39,6 +39,8 @@ public class ConnectionACK extends ACKBase {
 
     @Override
     public void pack(MessageBufferPacker packer) throws IOException {
+        packer.packArrayHeader(3);
+
         packer.packInt(globalStatus);
 
         if (data == null) {
