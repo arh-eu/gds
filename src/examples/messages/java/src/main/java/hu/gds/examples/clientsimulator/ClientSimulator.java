@@ -61,8 +61,8 @@ public class ClientSimulator {
     }
 
     public void handleResponse(byte[] message) throws IOException {
-        int dataType = MessageManager.unpackMessage(message);
-        logger.info("WebSocket Client received '" + DataType.findByKey(dataType) + "' message");
+        DataType dataType = MessageManager.unpackMessage(message);
+        logger.info("WebSocket Client received '" + dataType + "' message");
     }
 
     public void handleResponse(String message) {

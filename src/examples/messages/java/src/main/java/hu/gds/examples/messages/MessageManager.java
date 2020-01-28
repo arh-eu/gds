@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class MessageManager {
 
-    public static byte[] packMessage(int dataType) throws IOException {
+    public static byte[] packMessage(DataType dataType) throws IOException {
         MessageBufferPacker packer = MessagePack.newDefaultBufferPacker();
 
         //Wrapper array
@@ -18,10 +18,10 @@ public class MessageManager {
         MessageHeader.packHeader(packer, dataType);
 
         switch (dataType) {
-            case 0:
+            case CONNECTION:
                 ConnectionData.packData(packer);
                 break;
-            case 1:
+            case CONNECTION_ACK:
                 ConnectionAckData.packData(packer);
                 break;
             default:
@@ -32,20 +32,20 @@ public class MessageManager {
         return packer.toByteArray();
     }
 
-    public static int unpackMessage(byte[] message) throws IOException {
+    public static DataType unpackMessage(byte[] message) throws IOException {
         MessageUnpacker unPacker = MessagePack.newDefaultUnpacker(message);
 
         //Wrapper array
         unPacker.unpackArrayHeader();
 
         //HEADER
-        int dataType = MessageHeader.unpackHeader(unPacker);
+        DataType dataType = MessageHeader.unpackHeader(unPacker);
 
         switch (dataType) {
-            case 0:
+            case CONNECTION:
                 ConnectionData.unpackData(unPacker);
                 break;
-            case 1:
+            case CONNECTION_ACK:
                 ConnectionAckData.unpackData(unPacker);
                 break;
             default:

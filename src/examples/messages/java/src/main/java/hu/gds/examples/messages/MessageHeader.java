@@ -24,7 +24,7 @@ public class MessageHeader {
             '...' --> 'data'
         ]
      */
-    public static void packHeader(MessageBufferPacker packer, int dataType) throws IOException {
+    public static void packHeader(MessageBufferPacker packer, DataType dataType) throws IOException {
         //user name
         packer.packString("user");
 
@@ -53,10 +53,10 @@ public class MessageHeader {
         packer.packNil();
 
         //data type
-        packer.packInt(dataType);
+        packer.packInt(dataType.getValue());
     }
 
-    public static int unpackHeader(MessageUnpacker unpacker) throws IOException {
+    public static DataType unpackHeader(MessageUnpacker unpacker) throws IOException {
         //user name
         String userName = unpacker.unpackString();
 
@@ -87,6 +87,6 @@ public class MessageHeader {
         //dataType
         Integer dataType = unpacker.unpackInt();
 
-        return dataType;
+        return DataType.findByKey(dataType);
     }
 }
