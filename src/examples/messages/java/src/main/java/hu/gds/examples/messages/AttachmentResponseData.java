@@ -14,17 +14,18 @@ import java.util.Map;
 public class AttachmentResponseData {
 
     /*
+        DIRECTION: Client --> GDS
         [
             ..., --> 'header fields'
             [ --> 'data'
                 { --> 'attachment result'
                     'requestids': ['793ed37a-a30c-44cb-848b-ad30c1c52358'], --> 'request ids'
                     'ownertable': 'events', --> 'owner table'
-                    'attachmentid': 'ATID201811071434257890', --> 'attachment id'
-                    'ownerids': ['EVNT201811020039071890'], --> 'owner ids'
+                    'attachmentid': 'ATID202000000000000000', --> 'attachment id'
+                    'ownerids': ['EVNT202000000000000000'], --> 'owner ids'
                     'meta': 'some_meta', --> 'meta'
                     'ttl': 86 400 000, --> ttl
-                    'to_valid: System.currentTimeMillis() + 86 400 000, --> 'to valid'
+                    'to_valid: null, --> 'to valid'
                     'attachment': [1,2,3] --> 'attachment'
                 }
             ]
@@ -79,7 +80,7 @@ public class AttachmentResponseData {
         //map key
         packer.packString("to_valid");
         //map value
-        packer.packLong(System.currentTimeMillis() + 86_400_000);
+        packer.packNil();
 
         //attachment
         //map key

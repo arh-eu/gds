@@ -13,6 +13,7 @@ import static hu.gds.examples.messages.MessagePackUtil.*;
 public class ConnectionAckData {
 
     /*
+        DIRECTION: Client --> GDS
         [
             ..., --> 'header fields'
             [ --> 'data'

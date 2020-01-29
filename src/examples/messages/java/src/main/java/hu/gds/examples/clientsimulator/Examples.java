@@ -11,7 +11,8 @@ public class Examples {
         ClientSimulator simulator = new ClientSimulator("ws://127.0.0.1:8080/websocket");
         simulator.connect();
 
-        sendConnectionMessage(simulator);
+        //sendConnectionMessage(simulator);
+        sendEventMessage(simulator);
     }
 
     private static void sendConnectionMessage(ClientSimulator simulator) throws IOException {
@@ -20,5 +21,13 @@ public class Examples {
 
     public static void sendConnectionAckMessage(ClientSimulator simulator) throws IOException {
         simulator.sendMessage(MessageManager.packMessage(DataType.CONNECTION_ACK));
+    }
+
+    private static void sendEventMessage(ClientSimulator simulator) throws IOException {
+        simulator.sendMessage(MessageManager.packMessage(DataType.EVENT));
+    }
+
+    private static void sendAttachmentRequestMessage(ClientSimulator simulator) throws IOException {
+        simulator.sendMessage(MessageManager.packMessage(DataType.ATTACHMENT_REQUEST));
     }
 }

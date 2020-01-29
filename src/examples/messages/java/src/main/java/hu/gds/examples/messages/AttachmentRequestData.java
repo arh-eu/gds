@@ -8,14 +8,15 @@ import java.io.IOException;
 public class AttachmentRequestData {
 
     /*
+        DIRECTION: Client --> GDS
         [
             ..., --> 'header fields'
-            "SELECT meta, data, "@to_valid" FROM "events-@attachment" WHERE id = ’ATID201811071434257890’ and ownerid = ’EVNT201811020039071890’ FOR UPDATE WAIT 86400"
+            "SELECT meta, data, "@to_valid" FROM "events-@attachment" WHERE id = ’ATID202000000000000000’ and ownerid = ’EVNT202000000000000000’ FOR UPDATE WAIT 86400"
         ]
      */
     public static void packData(MessagePacker packer) throws IOException {
         //DATA
-        packer.packString("SELECT meta, data, \"@to_valid\" FROM \"events-@attachment\" WHERE id = ’ATID201811071434257890’ and ownerid = ’EVNT201811020039071890’ FOR UPDATE WAIT 86400");
+        packer.packString("SELECT meta, data, \"@to_valid\" FROM \"events-@attachment\" WHERE id = ’ATID202000000000000000’ and ownerid = ’EVNT202000000000000000’ FOR UPDATE WAIT 86400");
     }
 
     public static void unpackData(MessageUnpacker unpacker) throws IOException {

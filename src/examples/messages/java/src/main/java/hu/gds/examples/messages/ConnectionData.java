@@ -10,6 +10,7 @@ import java.io.IOException;
 public class ConnectionData {
 
     /*
+        DIRECTION: Client --> GDS
         [
             ..., --> 'header fields'
             [ --> 'data'

@@ -10,6 +10,7 @@ import static hu.gds.examples.messages.MessagePackUtil.*;
 public class MessageHeader {
 
     /*
+        DIRECTION: Client --> GDS
         [
             "user", --> 'user name'
             "793ed37a-a30c-44cb-848b-ad30c1c52358", --> 'message id'

@@ -8,6 +8,7 @@ import java.io.IOException;
 public class EventData {
 
     /*
+        DIRECTION: Client --> GDS
         [
             ..., --> 'header fields'
             [ --> 'data'
