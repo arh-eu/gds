@@ -27,7 +27,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import io.netty.handler.codec.http.websocketx.CloseWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 
 public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocketFrame> {
@@ -45,6 +45,8 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocket
             } catch (Throwable t) {
                 throw new IllegalStateException(t);
             }
+        } else if (frame instanceof CloseWebSocketFrame) {
+            ctx.channel().close();
         } else {
             String message = "unsupported frame type: " + frame.getClass().getName();
             throw new UnsupportedOperationException(message);

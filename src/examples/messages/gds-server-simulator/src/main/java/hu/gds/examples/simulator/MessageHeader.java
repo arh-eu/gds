@@ -73,6 +73,9 @@ public class MessageHeader implements Packable {
             Integer fullDataSize = MessagePackUtil.getInteger(unpacker);
 
             int dataType = unpacker.unpackInt();
+            if (dataType < 0 || dataType >= DataType.values().length) {
+                throw new IndexOutOfBoundsException("HeaderDataType is: " + dataType);
+            }
 
             return new MessageHeader(userName, messageId, createTime, requestTime, isFragmented,
                     firstFragment, lastFragment, offset, fullDataSize, dataType);
