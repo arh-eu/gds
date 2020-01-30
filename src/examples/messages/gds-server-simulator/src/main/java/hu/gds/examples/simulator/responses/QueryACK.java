@@ -55,7 +55,8 @@ public class QueryACK extends ACKBase {
             packer.packArrayHeader(resultSize);
             int start = firstQuery ? 1 : resultSize + 1;
 
-            for (int i = start; i <= start + resultSize; ++i) {
+            for (int i = start; i <= start + resultSize - 1; ++i) {
+                packer.packArrayHeader(3);
                 for (int j = 1; j <= 3; ++j) {
                     packer.packString("row_" + i + "_value_" + j);
                 }
