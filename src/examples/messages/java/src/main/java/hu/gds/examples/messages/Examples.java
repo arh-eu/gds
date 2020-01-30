@@ -5,7 +5,7 @@ import java.io.IOException;
 public class Examples {
 
     public static void main(String[] args) throws IOException {
-        byte[] message = packConnectionMessage();
+        byte[] message = packEventDocumentMessage();
         unpackMessage(message);
     }
 
@@ -23,5 +23,25 @@ public class Examples {
 
     private static byte[] packEventMessage() throws IOException {
         return MessageManager.packMessage(DataType.EVENT);
+    }
+
+    private static byte[] packAttachmentRequestMessage() throws IOException {
+        return MessageManager.packMessage(DataType.ATTACHMENT_REQUEST);
+    }
+
+    private static byte[] packAttachmentRequestAck() throws IOException {
+        return MessageManager.packMessage(DataType.ATTACHMENT_REQUEST_ACK);
+    }
+
+    private static byte[] packAttachmentResponse() throws IOException {
+        return MessageManager.packMessage(DataType.ATTACHMENT_RESPONSE);
+    }
+
+    private static byte[] packAttachmentResponseAck() throws IOException {
+        return MessageManager.packMessage(DataType.ATTACHMENT_RESPONSE_ACK);
+    }
+
+    private static byte[] packEventDocumentMessage() throws IOException {
+        return MessageManager.packMessage(DataType.EVENT_DOCUMENT);
     }
 }

@@ -68,6 +68,8 @@ public class EventAckData {
                     //returning record values
                     if(!unpacker.getNextFormat().getValueType().isNilType()) {
                         List<Value> returningRecordValues = unpacker.unpackValue().asArrayValue().list();
+                    } else {
+                        unpacker.unpackNil();
                     }
                 }
             }
