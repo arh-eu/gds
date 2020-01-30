@@ -34,6 +34,6 @@ This does not mean your requests are not checked at all - packages violating the
 
 ## Which scenarios are covered then?
 
- - You can _connect_ to the GDS with the username `user` (any other operation without a connection message first will be declined by an appropriate response message `Error 401 - Unauthorized`). Trying to connect with an other username will result in an error as well.
+ - You can _connect_ to the GDS with the username `user` (any other operation without a connection message first will be declined by an appropriate response message `Error 401 - Unauthorized`). Trying to connect with an other username will result in an error as well. The response will contain the appropriate [ConnectionACK](https://github.com/arh-eu/gds/wiki/Connection-ACK) message.
  - You can send a `SELECT` request - by a [QueryRequest (10)](https://github.com/arh-eu/gds/wiki/Query-request) message. Contents of your request (the specified SQL-string) will be ignored - you will receive a response ([QueryRequestACK (11)](https://github.com/arh-eu/gds/wiki/Query-request-ACK)) with some predefined values.
  - You can continue an existing `SELECT` query by sending a [NextQueryRequest (12)](https://github.com/arh-eu/gds/wiki/Next-Query-Page-request). This will look like it is continuing an existing request from the rows it stopped last time - you will receive a response ([QueryRequestACK (11)](https://github.com/arh-eu/gds/wiki/Query-request-ACK)) as well.
