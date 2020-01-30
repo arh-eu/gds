@@ -13,7 +13,7 @@ public class Examples {
         simulator = new ClientSimulator("ws://127.0.0.1:8080/websocket", dataType -> {
             switch (dataType) {
                 case CONNECTION_ACK:
-                    sendEventMessage();
+                    sendEventDocumentAckMessage();
                     break;
             }
         });
@@ -52,5 +52,9 @@ public class Examples {
 
     private static void sendEventDocumentMessage() throws IOException {
         simulator.sendMessage(MessageManager.packMessage(DataType.EVENT_DOCUMENT), DataType.EVENT_DOCUMENT);
+    }
+
+    private static void sendEventDocumentAckMessage() throws IOException {
+        simulator.sendMessage(MessageManager.packMessage(DataType.EVENT_DOCUMENT_ACK), DataType.EVENT_DOCUMENT_ACK);
     }
 }

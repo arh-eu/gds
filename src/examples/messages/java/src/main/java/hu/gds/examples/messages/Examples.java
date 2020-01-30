@@ -5,7 +5,7 @@ import java.io.IOException;
 public class Examples {
 
     public static void main(String[] args) throws IOException {
-        byte[] message = packEventDocumentMessage();
+        byte[] message = packEventDocumentAckMessage();
         unpackMessage(message);
     }
 
@@ -43,5 +43,9 @@ public class Examples {
 
     private static byte[] packEventDocumentMessage() throws IOException {
         return MessageManager.packMessage(DataType.EVENT_DOCUMENT);
+    }
+
+    private static byte[] packEventDocumentAckMessage() throws IOException {
+        return MessageManager.packMessage(DataType.EVENT_DOCUMENT_ACK);
     }
 }

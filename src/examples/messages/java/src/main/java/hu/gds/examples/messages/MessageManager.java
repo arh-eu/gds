@@ -42,6 +42,9 @@ public class MessageManager {
             case EVENT_DOCUMENT:
                 EventDocumentData.packData(packer);
                 break;
+            case EVENT_DOCUMENT_ACK:
+                EventDocumentAckData.packData(packer);
+                break;
             default:
                 throw new IllegalStateException("unknown message data type: " + dataType);
         }
@@ -82,6 +85,9 @@ public class MessageManager {
                 break;
             case EVENT_DOCUMENT:
                 EventDocumentData.unpackData(unPacker);
+                break;
+            case EVENT_DOCUMENT_ACK:
+                EventDocumentAckData.unpackData(unPacker);
                 break;
             default:
                 throw new IllegalStateException("unknown message data type: " + dataType);
