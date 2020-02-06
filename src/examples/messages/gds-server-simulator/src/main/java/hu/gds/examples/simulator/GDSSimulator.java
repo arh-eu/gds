@@ -50,7 +50,7 @@ public class GDSSimulator {
                 LOGGER.info("Sending back the EVENT_ACK..");
                 break;
             case ATTACHMENT_REQUEST:
-                MessageHeader.create(username, DataType.ATTACHMENT_REQUEST).pack(packer);
+                MessageHeader.create(username, DataType.ATTACHMENT_REQUEST_ACK).pack(packer);
                 new AttachmentRequestACK(header, new AttachmentRequest(unpacker)).pack(packer);
                 LOGGER.info("Sending back the ATTACHMENT_REQUEST_ACK..");
                 break;
