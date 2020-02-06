@@ -39,9 +39,19 @@ public class QueryACK extends ACKBase {
             packer.packInt(10);
             packer.packBoolean(firstQuery);
             packer.packArrayHeader(9);
-            for (int i = 1; i <= 9; ++i) {
-                packer.packString("QueryContextField" + i);
-            }
+            //QueryContextDescriptor
+            packer.packString("2b22a5a84966df20a3a44793476a55c45bc06418d964bc1d9009a6e859a1bf4e");
+            packer.packString("SELECT * FROM table");
+            packer.packLong(firstQuery ? 0L : 100L);
+            packer.packLong(System.currentTimeMillis());
+            packer.packString("BUCKET_ID");
+            packer.packString("NONE");
+            packer.packArrayHeader(2);
+            packer.packString("GDS_CLUSTER");
+            packer.packString("GDS_NODE");
+            packer.packArrayHeader(0);
+            packer.packArrayHeader(0);
+
             //3 fields
             packer.packArrayHeader(3);
             for (int i = 1; i <= 3; ++i) {
