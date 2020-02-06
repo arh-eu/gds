@@ -6,14 +6,8 @@
 
 package hu.gds.examples.simulator;
 
-import hu.gds.examples.simulator.requests.Connection;
-import hu.gds.examples.simulator.requests.Event;
-import hu.gds.examples.simulator.requests.NextQuery;
-import hu.gds.examples.simulator.requests.Query;
-import hu.gds.examples.simulator.responses.ConnectionACK;
-import hu.gds.examples.simulator.responses.EventACK;
-import hu.gds.examples.simulator.responses.InvalidACK;
-import hu.gds.examples.simulator.responses.QueryACK;
+import hu.gds.examples.simulator.requests.*;
+import hu.gds.examples.simulator.responses.*;
 import org.msgpack.core.MessageBufferPacker;
 import org.msgpack.core.MessagePack;
 import org.msgpack.core.MessageUnpacker;
@@ -56,24 +50,36 @@ public class GDSSimulator {
                 LOGGER.info("Sending back the EVENT_ACK..");
                 break;
             case ATTACHMENT_REQUEST:
-                break;
-            case ATTACHMENT_REQUEST_ACK:
+                MessageHeader.create(username, DataType.ATTACHMENT_REQUEST).pack(packer);
+                new AttachmentRequestACK(header, new AttachmentRequest(unpacker)).pack(packer);
+                LOGGER.info("Sending back the ATTACHMENT_REQUEST_ACK..");
                 break;
             case ATTACHMENT_RESPONSE:
-                break;
-            case ATTACHMENT_RESPONSE_ACK:
+                MessageHeader.create(username, DataType.ATTACHMENT_RESPONSE_ACK).pack(packer);
+                new AttachmentResponseACK(header, new AttachmentResponse(unpacker)).pack(packer);
+                LOGGER.info("Sending back the ATTACHMENT_RESPONSE_ACK..");
                 break;
             case EVENT_DOCUMENT:
+                MessageHeader.create(username, DataType.EVENT_DOCUMENT_ACK).pack(packer);
+                new EventDocumentACK((header), new EventDocument((unpacker))).pack(packer);
+                LOGGER.info("Sending back the EVENT_DOCUMENT_ACK..");
                 break;
             case QUERY_REQUEST:
                 MessageHeader.create(username, DataType.QUERY_REQUEST_ACK).pack(packer);
                 new QueryACK(header, new Query(unpacker)).pack(packer);
+                LOGGER.info("Sending back the QUERY_REQUEST_ACK..");
                 break;
             case NEXT_QUERY_PAGE_REQUEST:
                 MessageHeader.create(username, DataType.QUERY_REQUEST_ACK).pack(packer);
                 new QueryACK(header, new NextQuery(unpacker)).pack(packer);
+                LOGGER.info("Sending back the QUERY_REQUEST_ACK..");
                 break;
 
+
+            case ATTACHMENT_REQUEST_ACK:
+            case ATTACHMENT_RESPONSE_ACK:
+                //skip
+                break;
 
             case CONNECTION_ACK:
             case EVENT_ACK:
