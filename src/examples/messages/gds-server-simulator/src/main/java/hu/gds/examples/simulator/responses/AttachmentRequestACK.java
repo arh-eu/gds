@@ -56,6 +56,8 @@ public class AttachmentRequestACK extends ACKBase {
 
             packPixel(packer);
 
+            packer.packLong(0);
+
             packer.packNil();
         } else {
             notLoggedIn(packer);
