@@ -4,6 +4,9 @@ import hu.gds.examples.messages.DataType;
 
 import java.io.IOException;
 
-public interface ReceivedMessageHandler {
-    void messageReceived(DataType dataType) throws IOException;
+public abstract class ReceivedMessageHandler {
+
+    boolean isMessageSendingProcessEnd = false;
+
+    abstract void messageReceived(DataType dataType) throws IOException;
 }

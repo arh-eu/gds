@@ -45,6 +45,12 @@ public class MessageManager {
             case EVENT_DOCUMENT_ACK:
                 EventDocumentAckData.packData(packer);
                 break;
+            case QUERY_REQUEST:
+                QueryRequestData.packData(packer);
+                break;
+            case NEXT_QUERY_PAGE_REQUEST:
+                NextQueryPageData.packData(packer);
+                break;
             default:
                 throw new IllegalStateException("unknown message data type: " + dataType);
         }
@@ -53,41 +59,47 @@ public class MessageManager {
     }
 
     public static DataType unpackMessage(byte[] message) throws IOException {
-        MessageUnpacker unPacker = MessagePack.newDefaultUnpacker(message);
+        MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(message);
 
         //Wrapper array
-        unPacker.unpackArrayHeader();
+        unpacker.unpackArrayHeader();
 
         //HEADER
-        DataType dataType = MessageHeader.unpackHeader(unPacker);
+        DataType dataType = MessageHeader.unpackHeader(unpacker);
 
         switch (dataType) {
             case CONNECTION:
-                ConnectionData.unpackData(unPacker);
+                ConnectionData.unpackData(unpacker);
                 break;
             case CONNECTION_ACK:
-                ConnectionAckData.unpackData(unPacker);
+                ConnectionAckData.unpackData(unpacker);
                 break;
             case EVENT_ACK:
-                EventAckData.unpackData(unPacker);
+                EventAckData.unpackData(unpacker);
                 break;
             case ATTACHMENT_REQUEST:
-                AttachmentRequestData.unpackData(unPacker);
+                AttachmentRequestData.unpackData(unpacker);
                 break;
             case ATTACHMENT_REQUEST_ACK:
-                AttachmentRequestAckData.unpackData(unPacker);
+                AttachmentRequestAckData.unpackData(unpacker);
                 break;
             case ATTACHMENT_RESPONSE:
-                AttachmentResponseData.unpackData(unPacker);
+                AttachmentResponseData.unpackData(unpacker);
                 break;
             case ATTACHMENT_RESPONSE_ACK:
-                AttachmentResponseAckData.unpackData(unPacker);
+                AttachmentResponseAckData.unpackData(unpacker);
                 break;
             case EVENT_DOCUMENT:
-                EventDocumentData.unpackData(unPacker);
+                EventDocumentData.unpackData(unpacker);
                 break;
             case EVENT_DOCUMENT_ACK:
-                EventDocumentAckData.unpackData(unPacker);
+                EventDocumentAckData.unpackData(unpacker);
+                break;
+            case QUERY_REQUEST:
+                QueryRequestData.unpackData(unpacker);
+                break;
+            case QUERY_REQUEST_ACK:
+                QueryRequestAckData.unpackData(unpacker);
                 break;
             default:
                 throw new IllegalStateException("unknown message data type: " + dataType);

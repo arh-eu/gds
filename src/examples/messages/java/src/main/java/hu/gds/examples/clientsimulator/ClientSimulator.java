@@ -65,6 +65,7 @@ public class ClientSimulator {
         try {
             webSocketClient.close();
         } catch (Throwable throwable) {
+            throwable.printStackTrace();
             logger.severe("An error occured while closing connection: " + throwable.getMessage());
         }
     }
@@ -86,6 +87,7 @@ public class ClientSimulator {
                 receivedMessageHandler.messageReceived(dataType);
             }
         } catch (Throwable throwable) {
+            throwable.printStackTrace();
             logger.severe("An error occured while handling response message: " + throwable.getMessage());
         }
     }

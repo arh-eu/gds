@@ -10,14 +10,50 @@ public class Examples {
     private static ClientSimulator simulator;
 
     public static void main(String args[]) throws IOException {
-        simulator = new ClientSimulator("ws://127.0.0.1:8080/websocket", dataType -> {
-            switch (dataType) {
-                case CONNECTION_ACK:
-                    sendEventDocumentAckMessage();
-                    break;
+        /*simulator = new ClientSimulator("ws://127.0.0.1:8080/websocket", new ReceivedMessageHandler() {
+            @Override
+            public void messageReceived(DataType dataType) throws IOException {
+                switch (dataType) {
+                    case CONNECTION_ACK:
+                        sendEventMessage();
+                        break;
+                    case EVENT_ACK:
+                        sendAttachmentRequestMessage();
+                        break;
+                    case ATTACHMENT_REQUEST_ACK:
+                        sendAttachmentResponseMessage();
+                        break;
+                    case ATTACHMENT_RESPONSE_ACK:
+                        sendEventDocumentMessage();
+                        break;
+                    case EVENT_DOCUMENT_ACK:
+                        sendQueryRequestMessage();
+                        break;
+                    case QUERY_REQUEST_ACK:
+                        if (!isMessageSendingProcessEnd) {
+                            sendNextQueryPageMessage();
+
+                            //sendAttachmentRequestAckMessage();
+                            //sendAttachmentResponseAckMessage();
+                            isMessageSendingProcessEnd = true;
+                        } else {
+                            simulator.close();
+                        }
+                        break;
+                }
+            }
+        });*/
+
+        simulator = new ClientSimulator("ws://127.0.0.1:8080/websocket", new ReceivedMessageHandler() {
+            @Override
+            public void messageReceived(DataType dataType) throws IOException {
+
             }
         });
 
+        simulator.connect();
+        sendConnectionMessage();
+        simulator.close();
         simulator.connect();
         sendConnectionMessage();
     }
@@ -56,5 +92,13 @@ public class Examples {
 
     private static void sendEventDocumentAckMessage() throws IOException {
         simulator.sendMessage(MessageManager.packMessage(DataType.EVENT_DOCUMENT_ACK), DataType.EVENT_DOCUMENT_ACK);
+    }
+
+    private static void sendQueryRequestMessage() throws IOException {
+        simulator.sendMessage(MessageManager.packMessage(DataType.QUERY_REQUEST), DataType.QUERY_REQUEST);
+    }
+
+    private static void sendNextQueryPageMessage() throws IOException {
+        simulator.sendMessage(MessageManager.packMessage(DataType.NEXT_QUERY_PAGE_REQUEST), DataType.NEXT_QUERY_PAGE_REQUEST);
     }
 }

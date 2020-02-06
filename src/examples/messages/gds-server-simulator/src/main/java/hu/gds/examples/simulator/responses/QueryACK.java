@@ -44,8 +44,8 @@ public class QueryACK extends ACKBase {
             packer.packString("SELECT * FROM table");
             packer.packLong(firstQuery ? 0L : 100L);
             packer.packLong(System.currentTimeMillis());
-            packer.packString("BUCKET_ID");
             packer.packString("NONE");
+            packer.packString("BUCKET_ID");
             packer.packArrayHeader(2);
             packer.packString("GDS_CLUSTER");
             packer.packString("GDS_NODE");

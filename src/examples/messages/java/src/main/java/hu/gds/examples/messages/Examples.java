@@ -48,4 +48,12 @@ public class Examples {
     private static byte[] packEventDocumentAckMessage() throws IOException {
         return MessageManager.packMessage(DataType.EVENT_DOCUMENT_ACK);
     }
+
+    private static byte[] packQueryRequestMessage() throws IOException {
+        return MessageManager.packMessage(DataType.QUERY_REQUEST);
+    }
+
+    private static byte[] packNextQueryPageMessage() throws IOException {
+        return MessageManager.packMessage(DataType.NEXT_QUERY_PAGE_REQUEST);
+    }
 }

@@ -2,13 +2,9 @@ package hu.gds.examples.messages;
 
 import org.msgpack.core.MessagePacker;
 import org.msgpack.core.MessageUnpacker;
-import org.msgpack.value.Value;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
-import static hu.gds.examples.messages.MessagePackUtil.unpackInteger;
 import static hu.gds.examples.messages.MessagePackUtil.unpackString;
 
 public class EventDocumentAckData {
