@@ -41,6 +41,11 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocket
             frame.content().readBytes(request);
             try {
                 byte[] response = simulator.handleRequest(request);
+
+                if (response == null) {
+                    return;
+                }
+
                 ctx.channel().writeAndFlush(new BinaryWebSocketFrame(Unpooled.wrappedBuffer(response)));
             } catch (Throwable t) {
                 throw new IllegalStateException(t);

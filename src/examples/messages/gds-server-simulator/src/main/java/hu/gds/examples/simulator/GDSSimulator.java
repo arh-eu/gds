@@ -76,11 +76,6 @@ public class GDSSimulator {
                 break;
 
 
-            case ATTACHMENT_REQUEST_ACK:
-            case ATTACHMENT_RESPONSE_ACK:
-                //skip
-                break;
-
             case CONNECTION_ACK:
             case EVENT_ACK:
             case EVENT_DOCUMENT_ACK:
@@ -93,6 +88,10 @@ public class GDSSimulator {
             default:
                 //should never reach
                 break;
+
+            case ATTACHMENT_REQUEST_ACK:
+            case ATTACHMENT_RESPONSE_ACK:
+                return null;
         }
 
 
