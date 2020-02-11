@@ -1,0 +1,14 @@
+E:\github\gds\src\examples\messages\c#\messages\bin\Debug\netcoreapp3.1\messages.exe
+E:\github\gds\src\examples\messages\c#\messages\obj\Debug\netcoreapp3.1\messages.csprojAssemblyReference.cache
+E:\github\gds\src\examples\messages\c#\messages\obj\Debug\netcoreapp3.1\messages.AssemblyInfoInputs.cache
+E:\github\gds\src\examples\messages\c#\messages\obj\Debug\netcoreapp3.1\messages.AssemblyInfo.cs
+E:\github\gds\src\examples\messages\c#\messages\bin\Debug\netcoreapp3.1\messages.deps.json
+E:\github\gds\src\examples\messages\c#\messages\bin\Debug\netcoreapp3.1\messages.runtimeconfig.json
+E:\github\gds\src\examples\messages\c#\messages\bin\Debug\netcoreapp3.1\messages.runtimeconfig.dev.json
+E:\github\gds\src\examples\messages\c#\messages\bin\Debug\netcoreapp3.1\messages.dll
+E:\github\gds\src\examples\messages\c#\messages\bin\Debug\netcoreapp3.1\messages.pdb
+E:\github\gds\src\examples\messages\c#\messages\bin\Debug\netcoreapp3.1\MsgPack.dll
+E:\github\gds\src\examples\messages\c#\messages\bin\Debug\netcoreapp3.1\System.CodeDom.dll
+E:\github\gds\src\examples\messages\c#\messages\obj\Debug\netcoreapp3.1\messages.csproj.CopyComplete
+E:\github\gds\src\examples\messages\c#\messages\obj\Debug\netcoreapp3.1\messages.dll
+E:\github\gds\src\examples\messages\c#\messages\obj\Debug\netcoreapp3.1\messages.pdb
