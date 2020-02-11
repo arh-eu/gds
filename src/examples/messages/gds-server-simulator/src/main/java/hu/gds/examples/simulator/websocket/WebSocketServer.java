@@ -34,28 +34,12 @@ import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
 
 /**
- * An HTTP server which serves Web Socket requests at:
- * <p>
- * http://localhost:8080/websocket
- * <p>
- * Open your browser at <a href="http://localhost:8080/">http://localhost:8080/</a>, then the demo page will be loaded
- * and a Web Socket connection will be made automatically.
- * <p>
- * This server illustrates support for the different web socket specification versions and will work with:
- *
- * <ul>
- * <li>Safari 5+ (draft-ietf-hybi-thewebsocketprotocol-00)
- * <li>Chrome 6-13 (draft-ietf-hybi-thewebsocketprotocol-00)
- * <li>Chrome 14+ (draft-ietf-hybi-thewebsocketprotocol-10)
- * <li>Chrome 16+ (RFC 6455 aka draft-ietf-hybi-thewebsocketprotocol-17)
- * <li>Firefox 7+ (draft-ietf-hybi-thewebsocketprotocol-10)
- * <li>Firefox 11+ (RFC 6455 aka draft-ietf-hybi-thewebsocketprotocol-17)
- * </ul>
+ * An HTTP server which serves Web Socket requests at: http://localhost:8080/websocket
  */
 public final class WebSocketServer implements Runnable {
 
-    static final boolean SSL = System.getProperty("ssl") != null;
-    static final int PORT = Integer.parseInt(System.getProperty("port", SSL ? "8443" : "8080"));
+    private static final boolean SSL = System.getProperty("ssl") != null;
+    private static final int PORT = Integer.parseInt(System.getProperty("port", SSL ? "8443" : "8080"));
 
     @Override
     public void run() {
