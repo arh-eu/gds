@@ -1,10 +1,12 @@
 package hu.gds.examples.messages;
 
 import org.msgpack.core.MessagePacker;
-import org.msgpack.core.MessageUnpacker;
 
 import java.io.IOException;
 
+/*
+        Client --> GDS
+ */
 public class QueryRequestData {
 
     /*
@@ -29,29 +31,5 @@ public class QueryRequestData {
 
         //timeout
         packer.packLong(10_000);
-    }
-
-    public static void unpackData(MessageUnpacker unpacker) throws IOException {
-        //DATA
-        unpacker.unpackArrayHeader();
-
-        //select string block
-        String selectStringBlock = unpacker.unpackString();
-
-        //consistency type
-        int consistencyType = unpacker.unpackInt();
-
-        //timeout
-        long timeout = unpacker.unpackLong();
-
-        if(unpacker.hasNext()) {
-            //query page size
-            int queryPageSize = unpacker.unpackInt();
-
-            if(unpacker.hasNext()) {
-                //query type
-                int queryType = unpacker.unpackInt();
-            }
-        }
     }
 }

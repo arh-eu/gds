@@ -5,10 +5,13 @@ import org.msgpack.core.MessageUnpacker;
 
 import java.io.IOException;
 
+/*
+        Client --> GDS
+        GDS --> Client
+ */
 public class AttachmentRequestData {
 
     /*
-        DIRECTION: Client --> GDS
         [
             ..., --> 'header fields'
             "SELECT meta, data, "@to_valid" FROM "events-@attachment" WHERE id = ’ATID202000000000000000’ and ownerid = ’EVNT202000000000000000’ FOR UPDATE WAIT 86400"

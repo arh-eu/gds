@@ -7,6 +7,10 @@ import java.io.IOException;
 
 import static hu.gds.examples.messages.MessagePackUtil.unpackString;
 
+/*
+        Client --> GDS
+        GDS --> Client
+ */
 public class EventDocumentAckData {
 
     /*

@@ -4,6 +4,9 @@ import org.msgpack.core.MessagePacker;
 
 import java.io.IOException;
 
+/*
+        Client --> GDS
+ */
 public class NextQueryPageData {
 
     /*

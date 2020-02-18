@@ -5,6 +5,10 @@ import org.msgpack.core.MessageUnpacker;
 
 import java.io.IOException;
 
+/*
+        Client --> GDS
+        GDS --> Client
+ */
 public class AttachmentResponseAckData {
 
     /*

@@ -102,7 +102,7 @@ public class Connection implements Packable {
         if(reserved != null) {
             packer.packArrayHeader(reserved.length);
             for (String s : reserved) {
-                packer.packString(s);
+                MessagePackUtil.packString(packer, s);
             }
         }
     }

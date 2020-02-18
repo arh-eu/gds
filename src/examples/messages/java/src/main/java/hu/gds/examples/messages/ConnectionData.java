@@ -6,11 +6,13 @@ import static hu.gds.examples.messages.MessagePackUtil.*;
 
 import java.io.IOException;
 
-
+/*
+        Client --> GDS
+        GDS --> Client
+ */
 public class ConnectionData {
 
     /*
-        DIRECTION: Client --> GDS
         [
             ..., --> 'header fields'
             [ --> 'data'

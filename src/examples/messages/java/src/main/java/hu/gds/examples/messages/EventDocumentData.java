@@ -7,6 +7,10 @@ import org.msgpack.value.Value;
 import java.io.IOException;
 import java.util.List;
 
+/*
+        Client --> GDS
+        GDS --> Client
+ */
 public class EventDocumentData {
 
     /*

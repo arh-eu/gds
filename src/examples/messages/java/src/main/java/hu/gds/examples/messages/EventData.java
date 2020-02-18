@@ -5,10 +5,12 @@ import org.msgpack.value.impl.ImmutableBinaryValueImpl;
 
 import java.io.IOException;
 
+/*
+        Client --> GDS
+ */
 public class EventData {
 
     /*
-        DIRECTION: Client --> GDS
         [
             ..., --> 'header fields'
             [ --> 'data'

@@ -20,7 +20,7 @@ public class ConnectionACK extends ACKBase {
 
     private final static String allowed_user = "user";
     private final Connection data;
-    private final Map<String, String> errors;
+    private final Map<Integer, String> errors;
 
 
     public ConnectionACK(MessageHeader header, Connection request) {
@@ -29,7 +29,7 @@ public class ConnectionACK extends ACKBase {
             globalException = "This user is not allowed!";
             data = null;
             errors = new HashMap<>();
-            errors.put("0", "There is no user named '" + header.getUsername() + "'!");
+            errors.put(0, "There is no user named '" + header.getUsername() + "'!");
         } else {
             data = request;
             errors = null;
@@ -45,8 +45,8 @@ public class ConnectionACK extends ACKBase {
 
         if (data == null) {
             packer.packMapHeader(1);
-            Map.Entry<String, String> entry = errors.entrySet().iterator().next();
-            packer.packString(entry.getKey());
+            Map.Entry<Integer, String> entry = errors.entrySet().iterator().next();
+            packer.packInt(entry.getKey());
             packer.packString(entry.getValue());
         } else {
             data.pack(packer);

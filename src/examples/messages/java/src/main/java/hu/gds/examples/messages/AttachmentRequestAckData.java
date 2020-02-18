@@ -13,10 +13,13 @@ import java.util.Map;
 
 import static hu.gds.examples.messages.MessagePackUtil.*;
 
+/*
+        Client --> GDS
+        GDS --> Client
+ */
 public class AttachmentRequestAckData {
 
     /*
-        DIRECTION: Client --> GDS
        [
            ..., --> 'header fields'
            [ --> 'data'

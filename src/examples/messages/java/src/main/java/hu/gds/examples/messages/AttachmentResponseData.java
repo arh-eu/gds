@@ -11,10 +11,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/*
+        Client --> GDS
+        GDS --> Client
+ */
 public class AttachmentResponseData {
 
     /*
-        DIRECTION: Client --> GDS
         [
             ..., --> 'header fields'
             [ --> 'data'

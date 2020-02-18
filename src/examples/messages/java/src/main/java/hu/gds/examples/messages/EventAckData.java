@@ -8,6 +8,9 @@ import java.util.List;
 
 import static hu.gds.examples.messages.MessagePackUtil.*;
 
+/*
+        GDS --> Client
+ */
 public class EventAckData {
 
     public static void unpackData(MessageUnpacker unpacker) throws IOException {

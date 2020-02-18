@@ -9,6 +9,9 @@ import java.util.List;
 
 import static hu.gds.examples.messages.MessagePackUtil.unpackString;
 
+/*
+        GDS --> Client
+ */
 public class QueryRequestAckData {
 
     public static void unpackData(MessageUnpacker unpacker) throws IOException {

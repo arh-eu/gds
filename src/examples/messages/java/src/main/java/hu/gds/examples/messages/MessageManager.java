@@ -95,9 +95,6 @@ public class MessageManager {
             case EVENT_DOCUMENT_ACK:
                 EventDocumentAckData.unpackData(unpacker);
                 break;
-            case QUERY_REQUEST:
-                QueryRequestData.unpackData(unpacker);
-                break;
             case QUERY_REQUEST_ACK:
                 QueryRequestAckData.unpackData(unpacker);
                 break;
