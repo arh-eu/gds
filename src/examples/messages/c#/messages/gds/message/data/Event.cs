@@ -1,11 +1,28 @@
-﻿using gds.messages.data;
+﻿/*
+ * Copyright 2020 ARH Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 using MessagePack;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace gds.messages.data
+namespace gds.message.data
 {
+    /// <summary>
+    /// Event type data part of the Message
+    /// </summary>
     [MessagePackObject]
     public class Event : Data
     {
@@ -25,12 +42,21 @@ namespace gds.messages.data
             this.executionPriorityStructure = executionPriorityStructure;
         }
 
+        /// <summary>
+        /// The operations in standard SQL statements, separated with ';' characters.
+        /// </summary>
         [IgnoreMember]
         public String OperationsStringBlock => operationsStringBlock;
 
+        /// <summary>
+        /// The mapping of the binary contents.
+        /// </summary>
         [IgnoreMember]
         public Dictionary<string, byte[]> BinaryContentsMapping => binaryContentsMapping;
 
+        /// <summary>
+        /// The execution priority structure.
+        /// </summary>
         [IgnoreMember]
         public List<List<Dictionary<int, bool>>> ExecutionPriorityStructure => executionPriorityStructure;
 

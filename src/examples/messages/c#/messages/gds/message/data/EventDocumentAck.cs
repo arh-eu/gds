@@ -1,12 +1,28 @@
-﻿using gds.messages.data;
+﻿/*
+ * Copyright 2020 ARH Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 using MessagePack;
 using MessagePack.Formatters;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace gds.messages.data
+namespace gds.message.data
 {
+    /// <summary>
+    /// EventDocumentAck type data part of the Message
+    /// </summary>
     [MessagePackObject]
     public class EventDocumentAck : Data
     {
@@ -26,12 +42,21 @@ namespace gds.messages.data
             this.exception = exception;
         }
 
+        /// <summary>
+        /// The status incorporates a global signal regardin the response.
+        /// </summary>
         [IgnoreMember]
         public StatusCode Status => status;
 
+        /// <summary>
+        /// The sucess response object belonging to the acknowledgement.
+        /// </summary>
         [IgnoreMember]
         public List<EventDocumentAckResult> AckData => ackData;
 
+        /// <summary>
+        /// The description of an error.
+        /// </summary>
         [IgnoreMember]
         public string Exception => exception;
 
@@ -72,7 +97,7 @@ namespace gds.messages.data
         public void Serialize(ref MessagePackWriter writer, EventDocumentAckResult value, MessagePackSerializerOptions options)
         {
             writer.WriteArrayHeader(3);
-            writer.Write((int) value.Status);
+            writer.Write((int)value.Status);
             writer.Write(value.Notification);
             writer.WriteMapHeader(0);
         }
@@ -80,7 +105,7 @@ namespace gds.messages.data
         public EventDocumentAckResult Deserialize(ref MessagePackReader reader, MessagePackSerializerOptions options)
         {
             reader.ReadArrayHeader();
-            StatusCode status = (StatusCode) reader.ReadInt32();
+            StatusCode status = (StatusCode)reader.ReadInt32();
             string notification = reader.ReadString();
             reader.ReadMapHeader();
             return new EventDocumentAckResult(status, notification);

@@ -1,11 +1,24 @@
-﻿using MessagePack;
-using MessagePack.Formatters;
-using gds.messages.data;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿/*
+ * Copyright 2020 ARH Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-namespace gds.messages.header
+using MessagePack;
+using MessagePack.Formatters;
+using gds.message.data;
+
+namespace gds.message.header
 {
     class HeaderFormatter : IMessagePackFormatter<Header>
     {
@@ -20,7 +33,7 @@ namespace gds.messages.header
             MsgPackUtils.WriteNullableBool(value.LastFragment, ref writer);
             MsgPackUtils.WriteNullableInt(value.Offset, ref writer);
             MsgPackUtils.WriteNullableInt(value.FullDataSize, ref writer);
-            writer.Write((int) value.DataType);
+            writer.Write((int)value.DataType);
         }
 
         public Header Deserialize(ref MessagePackReader reader, MessagePackSerializerOptions options)
@@ -37,7 +50,7 @@ namespace gds.messages.header
             int dataType = reader.ReadInt32();
 
             return new Header(userName, messageId, createTime, requestTime, isFragmented, firstFragment,
-                lastFragment, offset, fullDataSize, (DataType) dataType);
+                lastFragment, offset, fullDataSize, (DataType)dataType);
         }
     }
 }

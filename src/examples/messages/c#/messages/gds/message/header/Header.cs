@@ -1,13 +1,25 @@
-﻿using MessagePack;
-using gds.messages.data;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿/*
+ * Copyright 2020 ARH Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-namespace gds.messages.header
+using gds.message.data;
+
+namespace gds.message.header
 {
     /// <summary>
-    /// The <c>Header</c> part of the <c>Message</c>
+    /// The Header part of the Message.
     /// </summary>
     public class Header
     {
@@ -22,21 +34,7 @@ namespace gds.messages.header
         private readonly int? fullDataSize;
         private readonly DataType dataType;
 
-        /// <summary>
-        /// This constructor initializes a new Header
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="messageId"></param>
-        /// <param name="createTime"></param>
-        /// <param name="requestTime"></param>
-        /// <param name="isFragmented"></param>
-        /// <param name="firstFragment"></param>
-        /// <param name="lastFragment"></param>
-        /// <param name="offset"></param>
-        /// <param name="fullDataSize"></param>
-        /// <param name="dataType"></param>
-        public Header(string userName, string messageId, long createTime, long requestTime,
-            bool isFragmented, bool? firstFragment, bool? lastFragment, int? offset, int? fullDataSize, DataType dataType)
+        public Header(string userName, string messageId, long createTime, long requestTime, bool isFragmented, bool? firstFragment, bool? lastFragment, int? offset, int? fullDataSize, DataType dataType)
         {
             this.userName = userName;
             this.messageId = messageId;
@@ -86,10 +84,7 @@ namespace gds.messages.header
         public bool? LastFragment => lastFragment;
 
         /// <summary>
-        /// If the <c>IsFragmented</c> value of the message is false and this is a chunk acknowledgement, 
-        /// it's content determines the last byte of the original, fragmented message the receiver has yet received.
-        /// If the <c>IsFragmented</c> is true, then it is a chunk (which can’t be an acknowledgement), 
-        /// so it specifies the last byte of the of the original message that has yet been forwarded.
+        /// The last byte of the original, fragmented message the receiver has yet received or the last byte of the original message that has yet been forwarded.
         /// </summary>
         public int? Offset => offset;
 

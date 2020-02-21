@@ -1,11 +1,29 @@
-﻿using MessagePack;
+﻿/*
+ * Copyright 2020 ARH Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+using MessagePack;
 using MessagePack.Formatters;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace gds.messages.data
+namespace gds.message.data
 {
+    /// <summary>
+    /// The ConnectionAck type data part of the Message
+    /// </summary>
     [MessagePackObject]
     public class ConnectionAck : Data
     {
@@ -26,11 +44,10 @@ namespace gds.messages.data
             this.exception = exception;
         }
 
-        public ConnectionAck(StatusCode status, Connection successAckData, string exception)
+        public ConnectionAck(StatusCode status, Connection successAckData)
         {
             this.status = status;
             this.ackData = new ConnectionAckTypeData(successAckData);
-            this.exception = exception;
         }
 
         public ConnectionAck(StatusCode status, Dictionary<int, string> unauthorizedAckData, string exception)
@@ -47,17 +64,29 @@ namespace gds.messages.data
             this.exception = exception;
         }
 
+        /// <summary>
+        /// The status incorporates a global signal regardin the response.
+        /// </summary>
         [IgnoreMember]
         public StatusCode Status => status;
 
-        [IgnoreMember]
-        public String Exception => exception;
-
+        /// <summary>
+        /// The sucess response object belonging to the acknowledgement.
+        /// </summary>
         [IgnoreMember]
         public Connection SuccessAckData => ackData.SuccessAckTypeData;
 
+        /// <summary>
+        /// The unauthorized response object belonging to the acknowledgement.
+        /// </summary>
         [IgnoreMember]
         public Dictionary<int, string> UnauthorizedAckData => ackData.UnauthorizedAckTypeData;
+
+        /// <summary>
+        /// The description of an error.
+        /// </summary>
+        [IgnoreMember]
+        public String Exception => exception;
 
         public override DataType GetDataType()
         {
@@ -101,14 +130,14 @@ namespace gds.messages.data
     {
         public void Serialize(ref MessagePackWriter writer, ConnectionAckTypeData value, MessagePackSerializerOptions options)
         {
-            if(value.SuccessAckTypeData != null)
+            if (value.SuccessAckTypeData != null)
             {
                 MessagePackSerializer.Serialize(ref writer, value.SuccessAckTypeData, options);
-            } 
-            else if(value.UnauthorizedAckTypeData != null)
+            }
+            else if (value.UnauthorizedAckTypeData != null)
             {
                 MessagePackSerializer.Serialize(ref writer, value.UnauthorizedAckTypeData);
-            } 
+            }
             else
             {
                 writer.WriteNil();
@@ -117,16 +146,16 @@ namespace gds.messages.data
 
         public ConnectionAckTypeData Deserialize(ref MessagePackReader reader, MessagePackSerializerOptions options)
         {
-            if(reader.NextMessagePackType.Equals(MessagePackType.Array))
+            if (reader.NextMessagePackType.Equals(MessagePackType.Array))
             {
                 return new ConnectionAckTypeData(
                     MessagePackSerializer.Deserialize<Connection>(ref reader, options));
-            } 
-            else if(reader.NextMessagePackType.Equals(MessagePackType.Map))
+            }
+            else if (reader.NextMessagePackType.Equals(MessagePackType.Map))
             {
                 return new ConnectionAckTypeData(
                     MessagePackSerializer.Deserialize<Dictionary<int, string>>(ref reader));
-            } 
+            }
             else
             {
                 reader.ReadNil();

@@ -1,24 +1,56 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <DocumentationFile>E:\github\gds\src\examples\messages\c#\messages\messages.xml</DocumentationFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Product>messages</Product>
-    <Description>gds messages library</Description>
+    <Description>C# messages library for GDS</Description>
     <PackageId>GDSMessages</PackageId>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <PackageReleaseNotes>gds messages library</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReleaseNotes></PackageReleaseNotes>
     <Version>1.0.0</Version>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
-    <Company>ARH</Company>
-    <Authors>ARH</Authors>
+    <Company>ARH Inc.</Company>
+    <Authors>ARH Inc.</Authors>
     <PackageProjectUrl>https://github.com/arh-eu/gds</PackageProjectUrl>
+    <PackageTags>GDS, ARH</PackageTags>
+    <PackageLicenseFile></PackageLicenseFile>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageIcon>logo.png</PackageIcon>
+    <PackageIconUrl />
+    <ApplicationIcon />
+    <StartupObject />
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>E:\github\gds\src\examples\messages\c#\messages\messages.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>E:\github\gds\src\examples\messages\c#\messages\messages.xml</DocumentationFile>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <None Remove="LICENSE.txt" />
+    <None Remove="LICENSE.txt" />
+    <None Include="logo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MessagePack" Version="2.1.90" />
-    <PackageReference Include="MessagePackAnalyzer" Version="2.1.90" />
     <PackageReference Include="WebSocket4Net" Version="0.15.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\..\..\..\license_files\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

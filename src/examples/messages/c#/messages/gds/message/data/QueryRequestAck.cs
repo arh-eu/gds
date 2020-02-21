@@ -1,11 +1,27 @@
-﻿using gds.messages.data;
-using MessagePack;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿/*
+ * Copyright 2020 ARH Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-namespace gds.messages.data
+using MessagePack;
+using System.Collections.Generic;
+
+namespace gds.message.data
 {
+    /// <summary>
+    /// QueryRequestAck type data part of the Message
+    /// </summary>
     [MessagePackObject]
     public class QueryRequestAck : Data
     {
@@ -25,12 +41,21 @@ namespace gds.messages.data
             this.exception = exception;
         }
 
+        /// <summary>
+        /// The status incorporates a global signal regardin the response.
+        /// </summary>
         [IgnoreMember]
         public StatusCode Status => status;
 
+        /// <summary>
+        /// The sucess response object belonging to the acknowledgement.
+        /// </summary>
         [IgnoreMember]
         public QueryRequestAckTypeData AckData => ackData;
 
+        /// <summary>
+        /// The description of an error.
+        /// </summary>
         [IgnoreMember]
         public string Exception => exception;
 
@@ -71,8 +96,7 @@ namespace gds.messages.data
         [Key(5)]
         private readonly List<List<object>> records;
 
-        public QueryRequestAckTypeData(long numberOfHits, long numberOfFilteredHits, bool hasMorePage, QueryContextDescriptor queryContextDescriptor, 
-            List<FieldDescriptor> fieldDescriptors, List<List<object>> records)
+        public QueryRequestAckTypeData(long numberOfHits, long numberOfFilteredHits, bool hasMorePage, QueryContextDescriptor queryContextDescriptor, List<FieldDescriptor> fieldDescriptors, List<List<object>> records)
         {
             this.numberOfHits = numberOfHits;
             this.numberOfFilteredHits = numberOfFilteredHits;
@@ -82,21 +106,39 @@ namespace gds.messages.data
             this.records = records;
         }
 
+        /// <summary>
+        /// This many hits have been returned in this page.
+        /// </summary>
         [IgnoreMember]
         public long NumberOfHits => numberOfHits;
 
+        /// <summary>
+        /// This many records have been filtered from the original result by the lists. 
+        /// </summary>
         [IgnoreMember]
         public long NumberOfFilteredHits => numberOfFilteredHits;
 
+        /// <summary>
+        /// Its value is true if the result has not fitted into this page, meaning that there are more records.
+        /// </summary>
         [IgnoreMember]
         public bool HasMorePage => hasMorePage;
 
+        /// <summary>
+        /// Query status descriptor for querying the next pages.
+        /// </summary>
         [IgnoreMember]
         public QueryContextDescriptor QueryContextDescriptor => queryContextDescriptor;
 
+        /// <summary>
+        /// The field descriptors.
+        /// </summary>
         [IgnoreMember]
         public List<FieldDescriptor> FieldDescriptors => fieldDescriptors;
 
+        /// <summary>
+        /// The field values of the query result in the sort order.
+        /// </summary>
         [IgnoreMember]
         public List<List<object>> Records => records;
     }
@@ -131,8 +173,7 @@ namespace gds.messages.data
         [Key(8)]
         private readonly List<string> partitionNames;
 
-        public QueryContextDescriptor(string id, string query, long deliveredNumberOfHits, long queryStartTime, string consistencyType, string lastBucketId,
-            GDSDescriptor gdsDescriptor, List<object> fieldValues, List<string> partitionNames)
+        public QueryContextDescriptor(string id, string query, long deliveredNumberOfHits, long queryStartTime, string consistencyType, string lastBucketId, GDSDescriptor gdsDescriptor, List<object> fieldValues, List<string> partitionNames)
         {
             this.id = id;
             this.query = query;
@@ -145,30 +186,57 @@ namespace gds.messages.data
             this.partitionNames = partitionNames;
         }
 
+        /// <summary>
+        /// Uniquely identifies the query within the entire system.
+        /// </summary>
         [IgnoreMember]
         public string Id => id;
 
+        /// <summary>
+        /// The original SELECT query sent by the user.
+        /// </summary>
         [IgnoreMember]
         public string Query => query;
 
+        /// <summary>
+        /// This many records have been forwarded yet to the requester client.
+        /// </summary>
         [IgnoreMember]
         public long DeliveredNumberOfHits => deliveredNumberOfHits;
 
+        /// <summary>
+        /// A millisecond based epoch timestamp which is important at NONE consistency.
+        /// </summary>
         [IgnoreMember]
         public long QueryStartTime => queryStartTime;
 
+        /// <summary>
+        /// The consistency type.
+        /// </summary>
         [IgnoreMember]
         public string ConsistencyType => consistencyType;
 
+        /// <summary>
+        /// The bucket id of the last record sent in the page.
+        /// </summary>
         [IgnoreMember]
         public string LastBucketId => lastBucketId;
 
+        /// <summary>
+        /// The descriptor of the GDS Node serving the request.
+        /// </summary>
         [IgnoreMember]
         public GDSDescriptor GdsDescriptor => gdsDescriptor;
 
+        /// <summary>
+        /// The field values (included in the sorting condition) of the last record sent in the page.
+        /// </summary>
         [IgnoreMember]
         public List<object> FieldValues => fieldValues;
 
+        /// <summary>
+        /// The GDS has not sent data from these partitions yet .
+        /// </summary>
         [IgnoreMember]
         public List<string> PartitionNames => partitionNames;
     }
@@ -182,15 +250,26 @@ namespace gds.messages.data
         [Key(1)]
         private readonly string nodeName;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GDSDescriptor"/> class
+        /// </summary>
+        /// <param name="clusterName">The GDS cluster name.</param>
+        /// <param name="nodeName">The GDS cluster node.</param>
         public GDSDescriptor(string clusterName, string nodeName)
         {
             this.clusterName = clusterName;
             this.nodeName = nodeName;
         }
-        
+
+        /// <summary>
+        /// The GDS cluster name.
+        /// </summary>
         [IgnoreMember]
         public string ClusterName => clusterName;
 
+        /// <summary>
+        /// The GDS cluster node.
+        /// </summary>
         [IgnoreMember]
         public string NodeName => nodeName;
     }

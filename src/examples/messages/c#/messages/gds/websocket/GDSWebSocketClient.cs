@@ -1,13 +1,25 @@
-﻿using gds.messages;
+﻿/*
+ * Copyright 2020 ARH Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+using gds.message;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Threading;
 using WebSocket4Net;
 
-
-namespace messages_api.gds.websocket
+namespace gds.websocket
 {
     public class GDSWebSocketClient
     {
@@ -33,7 +45,6 @@ namespace messages_api.gds.websocket
 
             if (client.State != WebSocketState.Open)
             {
-                
                 throw new Exception("Connection is not opened.");
             }
         }
@@ -51,7 +62,7 @@ namespace messages_api.gds.websocket
             }
             byte[] binary = MessageManager.GetBinaryFromMessage(message);
             client.Send(binary, 0, binary.Length);
-            
+
         }
 
         public Message SendSync(Message message, int timeout)
@@ -82,10 +93,7 @@ namespace messages_api.gds.websocket
             Message message = MessageManager.GetMessageFromBinary(e.Data);
             lastMessageReceived = message;
             messageReceiveEvent.Set();
-            if (MessageReceived != null)
-            {
-                MessageReceived(sender, message);
-            }
+            MessageReceived?.Invoke(sender, message);
         }
     }
 }

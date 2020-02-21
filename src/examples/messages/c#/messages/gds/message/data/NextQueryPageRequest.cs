@@ -1,11 +1,26 @@
-﻿using gds.messages.data;
-using MessagePack;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿/*
+ * Copyright 2020 ARH Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-namespace gds.messages.data
+using MessagePack;
+
+namespace gds.message.data
 {
+    /// <summary>
+    /// NextQueryPageRequest type data part of the Message
+    /// </summary>
     [MessagePackObject]
     public class NextQueryPageRequest : Data
     {
@@ -21,9 +36,15 @@ namespace gds.messages.data
             this.timeout = timeout;
         }
 
+        /// <summary>
+        /// Query status descriptor for querying the next pages.
+        /// </summary>
         [IgnoreMember]
         public QueryContextDescriptor QueryContextDescriptor => queryContextDescriptor;
 
+        /// <summary>
+        /// The timeout value in milliseconds.
+        /// </summary>
         [IgnoreMember]
         public long Timeout => timeout;
 

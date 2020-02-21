@@ -1,0 +1,914 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>messages</name>
+    </assembly>
+    <members>
+        <member name="T:gds.message.data.AttachmentRequest">
+            <summary>
+            AttachmentRequest type data part of the Message
+            </summary>
+        </member>
+        <member name="P:gds.message.data.AttachmentRequest.Request">
+            <summary>
+            The SELECT statement.
+            </summary>
+        </member>
+        <member name="T:gds.message.data.AttachmentRequestAck">
+            <summary>
+            AttachmentRequestAck type data part of the Message
+            </summary>
+        </member>
+        <member name="P:gds.message.data.AttachmentRequestAck.Status">
+            <summary>
+            The status incorporates a global signal regardin the response.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.AttachmentRequestAck.AckData">
+            <summary>
+            The response object belonging to the acknowledgement.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.AttachmentRequestAck.Exception">
+            <summary>
+            The description of an error.
+            </summary>
+        </member>
+        <member name="M:gds.message.data.AttachmentRequestAckTypeData.#ctor(gds.message.data.StatusCode,gds.message.data.AttachmentResult,System.Nullable{System.Int64})">
+            <summary>
+            Initializes a new instance of the <see cref="T:gds.message.data.AttachmentRequestAckTypeData"/> class
+            </summary>
+            <param name="status">The sub-type belonging to the global status.</param>
+            <param name="result">The description of the result.</param>
+            <param name="remainedWaitTimeMillis">It indicates how many milliseconds are left of the attachment obtainment time if the request cannot be served yet.</param>
+        </member>
+        <member name="P:gds.message.data.AttachmentRequestAckTypeData.Status">
+            <summary>
+            The sub-type belonging to the global status.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.AttachmentRequestAckTypeData.Result">
+            <summary>
+            The description of the result.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.AttachmentRequestAckTypeData.RemainedWaitTimeMillis">
+            <summary>
+            It indicates how many milliseconds are left of the attachment obtainment time if the request cannot be served yet.
+            </summary>
+        </member>
+        <member name="M:gds.message.data.AttachmentResult.#ctor(System.Collections.Generic.List{System.String},System.String,System.String,System.Collections.Generic.List{System.String},System.String,System.Nullable{System.Int64},System.Nullable{System.Int64},System.Byte[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:gds.message.data.AttachmentResult"/> class
+            </summary>
+            <param name="requestids">Contains the request message identifier(s).</param>
+            <param name="ownertable">The table name of the event record that owns the attachment.</param>
+            <param name="attachmentid">The unique identifier of the attachment.</param>
+            <param name="ownerids">The identifier(s) of the event(s) owning the attachment.</param>
+            <param name="meta">The meta descriptor of the attachment in JSON form.</param>
+            <param name="ttl">The preservation time of the attachment in milliseconds, relative to the date of storing.</param>
+            <param name="to_valid">The preservation time of the attachment as a millisecond based epoch timestamp.</param>
+            <param name="attachment">The attachment in binary format. </param>
+        </member>
+        <member name="P:gds.message.data.AttachmentResult.RequestIds">
+            <summary>
+            Contains the request message identifier(s).
+            </summary>
+        </member>
+        <member name="P:gds.message.data.AttachmentResult.OwnerTable">
+            <summary>
+            The table name of the event record that owns the attachment.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.AttachmentResult.AttachmentId">
+            <summary>
+            The unique identifier of the attachment.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.AttachmentResult.OwnerIds">
+            <summary>
+            The identifier(s) of the event(s) owning the attachment.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.AttachmentResult.Meta">
+            <summary>
+            The meta descriptor of the attachment in JSON form.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.AttachmentResult.Ttl">
+            <summary>
+            The preservation time of the attachment in milliseconds, relative to the date of storing.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.AttachmentResult.ToValid">
+            <summary>
+            The preservation time of the attachment as a millisecond based epoch timestamp.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.AttachmentResult.Attachment">
+            <summary>
+            The attachment in binary format. 
+            </summary>
+        </member>
+        <member name="T:gds.message.data.AttachmentResponse">
+            <summary>
+            AttachmentResponse type data part of the Message
+            </summary>
+        </member>
+        <member name="P:gds.message.data.AttachmentResponse.Result">
+            <summary>
+            The description of the result.
+            </summary>
+        </member>
+        <member name="T:gds.message.data.AttachmentResponseAck">
+            <summary>
+            AttachmentResponseAck type data part of the Message
+            </summary>
+        </member>
+        <member name="P:gds.message.data.AttachmentResponseAck.Status">
+            <summary>
+            The status incorporates a global signal regardin the response.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.AttachmentResponseAck.AckData">
+            <summary>
+            The response object belonging to the acknowledgement.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.AttachmentResponseAck.Exception">
+            <summary>
+            The description of an error.
+            </summary>
+        </member>
+        <member name="M:gds.message.data.AttachmentResponseAckTypeData.#ctor(gds.message.data.StatusCode,gds.message.data.AttachmentResponseAckResult)">
+            <summary>
+            Initializes a new instance of the <see cref="T:gds.message.data.AttachmentResponseAckTypeData"/> class
+            </summary>
+            <param name="status">The sub-type belonging to the global status.</param>
+            <param name="result">The acknowledgement descriptor.</param>
+        </member>
+        <member name="P:gds.message.data.AttachmentResponseAckTypeData.Status">
+            <summary>
+            The sub-type belonging to the global status.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.AttachmentResponseAckTypeData.Result">
+            <summary>
+            The acknowledgement descriptor.
+            </summary>
+        </member>
+        <member name="M:gds.message.data.AttachmentResponseAckResult.#ctor(System.Collections.Generic.List{System.String},System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:gds.message.data.AttachmentResponseAckResult"/> class
+            </summary>
+            <param name="requestids">Contains the request message identifier(s).</param>
+            <param name="ownertable">The table name of the event record that owns the attachment.</param>
+            <param name="attachmentid">The unique identifier of the attachment.</param>
+        </member>
+        <member name="P:gds.message.data.AttachmentResponseAckResult.Requestids">
+            <summary>
+            Contains the request message identifier(s).
+            </summary>
+        </member>
+        <member name="P:gds.message.data.AttachmentResponseAckResult.Ownertable">
+            <summary>
+            The table name of the event record that owns the attachment.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.AttachmentResponseAckResult.Attachmentid">
+            <summary>
+            The unique identifier of the attachment.
+            </summary>
+        </member>
+        <member name="T:gds.message.data.Connection">
+            <summary>
+            The Connection type data part of the Message.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.Connection.ServeOnTheSameConnection">
+            <summary>
+            If true, the clients only accepts the response on the same connection the message was sent (on the connection it established).
+            </summary>
+        </member>
+        <member name="P:gds.message.data.Connection.ProtocolVersionNumber">
+            <summary>
+            The version number of the protocol, with which the connected client communicates.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.Connection.FragmentationSupported">
+            <summary>
+            If true, the client indicates that it accepts messages on this connection fragmented too.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.Connection.FragmentationTransmissionUnit">
+            <summary>
+            If fragmentation is supported, it determines the size of chunks the other party should fragment the data part of the message.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.Connection.Password">
+            <summary>
+            For a password based authentication.
+            </summary>
+        </member>
+        <member name="T:gds.message.data.ConnectionAck">
+            <summary>
+            The ConnectionAck type data part of the Message
+            </summary>
+        </member>
+        <member name="P:gds.message.data.ConnectionAck.Status">
+            <summary>
+            The status incorporates a global signal regardin the response.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.ConnectionAck.SuccessAckData">
+            <summary>
+            The sucess response object belonging to the acknowledgement.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.ConnectionAck.UnauthorizedAckData">
+            <summary>
+            The unauthorized response object belonging to the acknowledgement.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.ConnectionAck.Exception">
+            <summary>
+            The description of an error.
+            </summary>
+        </member>
+        <member name="M:gds.message.data.Data.GetDataType">
+            <summary>
+            It specifies what types of information the data carries.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:gds.message.data.Event">
+            <summary>
+            Event type data part of the Message
+            </summary>
+        </member>
+        <member name="P:gds.message.data.Event.OperationsStringBlock">
+            <summary>
+            The operations in standard SQL statements, separated with ';' characters.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.Event.BinaryContentsMapping">
+            <summary>
+            The mapping of the binary contents.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.Event.ExecutionPriorityStructure">
+            <summary>
+            The execution priority structure.
+            </summary>
+        </member>
+        <member name="T:gds.message.data.EventAck">
+            <summary>
+            EventAck type data part of the Message
+            </summary>
+        </member>
+        <member name="P:gds.message.data.EventAck.Status">
+            <summary>
+            The status incorporates a global signal regardin the response.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.EventAck.AckData">
+            <summary>
+            The sucess response object belonging to the acknowledgement.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.EventAck.Exception">
+            <summary>
+            The description of an error.
+            </summary>
+        </member>
+        <member name="M:gds.message.data.OperationResponse.#ctor(gds.message.data.StatusCode,System.String,System.Collections.Generic.List{gds.message.data.FieldDescriptor},System.Collections.Generic.List{gds.message.data.SubResult})">
+            <summary>
+            Initializes a new instance of the <see cref="T:gds.message.data.OperationResponse"/> class
+            </summary>
+            <param name="status">The status of the operation.</param>
+            <param name="notification">The description of the error in case of one.</param>
+            <param name="fieldDescriptors">The field descriptors if the requester demanded a response with specifying the RETURNING clause.</param>
+            <param name="subResults">Contains the results of each sub-operation.</param>
+        </member>
+        <member name="P:gds.message.data.OperationResponse.Status">
+            <summary>
+            The status of the operation.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.OperationResponse.Notification">
+            <summary>
+            The description of the error in case of one.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.OperationResponse.FieldDescriptors">
+            <summary>
+            The field descriptors if the requester demanded a response with specifying the RETURNING clause.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.OperationResponse.SubResults">
+            <summary>
+            Contains the results of each sub-operation.
+            </summary>
+        </member>
+        <member name="M:gds.message.data.FieldDescriptor.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:gds.message.data.FieldDescriptor"/> class
+            </summary>
+            <param name="fieldName">The name of the field.</param>
+            <param name="fieldType">The type of the field.</param>
+            <param name="mimeType">The mime type of the field.</param>
+        </member>
+        <member name="P:gds.message.data.FieldDescriptor.FieldName">
+            <summary>
+            The name of the field.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.FieldDescriptor.FieldType">
+            <summary>
+            The type of the field.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.FieldDescriptor.MimeType">
+            <summary>
+            The mime type of the field.
+            </summary>
+        </member>
+        <member name="M:gds.message.data.SubResult.#ctor(gds.message.data.StatusCode,System.String,System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Collections.Generic.List{System.Object})">
+            <summary>
+            Initializes a new instance of the <see cref="T:gds.message.data.SubResult"/> class
+            </summary>
+            <param name="subStatus">The status code of the sub-operation.</param>
+            <param name="id">The unique identifier of the record.</param>
+            <param name="tableName">The name of the table.</param>
+            <param name="created">Specifies whether the record was created at database level during the operation.</param>
+            <param name="version">The version number of the record. </param>
+            <param name="returningRecordValues">The block containing the results requested in the RETURNING clause.</param>
+        </member>
+        <member name="P:gds.message.data.SubResult.SubStatus">
+            <summary>
+            The status code of the sub-operation.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.SubResult.Id">
+            <summary>
+            The unique identifier of the record.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.SubResult.TableName">
+            <summary>
+            The name of the table.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.SubResult.Created">
+            <summary>
+            Specifies whether the record was created at database level during the operation.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.SubResult.Version">
+            <summary>
+            The version number of the record. 
+            </summary>
+        </member>
+        <member name="P:gds.message.data.SubResult.ReturningRecordValues">
+            <summary>
+             The block containing the results requested in the RETURNING clause.
+            </summary>
+        </member>
+        <member name="T:gds.message.data.EventDocument">
+            <summary>
+            EventDocument type data part of the Message
+            </summary>
+        </member>
+        <member name="P:gds.message.data.EventDocument.TableName">
+            <summary>
+            The name of the table.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.EventDocument.FieldDescriptors">
+            <summary>
+            The field descriptors.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.EventDocument.Records">
+            <summary>
+            The records.
+            </summary>
+        </member>
+        <member name="T:gds.message.data.EventDocumentAck">
+            <summary>
+            EventDocumentAck type data part of the Message
+            </summary>
+        </member>
+        <member name="P:gds.message.data.EventDocumentAck.Status">
+            <summary>
+            The status incorporates a global signal regardin the response.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.EventDocumentAck.AckData">
+            <summary>
+            The sucess response object belonging to the acknowledgement.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.EventDocumentAck.Exception">
+            <summary>
+            The description of an error.
+            </summary>
+        </member>
+        <member name="T:gds.message.data.NextQueryPageRequest">
+            <summary>
+            NextQueryPageRequest type data part of the Message
+            </summary>
+        </member>
+        <member name="P:gds.message.data.NextQueryPageRequest.QueryContextDescriptor">
+            <summary>
+            Query status descriptor for querying the next pages.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.NextQueryPageRequest.Timeout">
+            <summary>
+            The timeout value in milliseconds.
+            </summary>
+        </member>
+        <member name="T:gds.message.data.QueryRequest">
+            <summary>
+            QueryRequest type data part of the Message
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryRequest.SelectStringBlock">
+            <summary>
+            The SELECT statement.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryRequest.ConsistencyType">
+            <summary>
+            The consistency type used for the query.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryRequest.Timeout">
+            <summary>
+            The timeout value in milliseconds.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryRequest.QueryPageSize">
+            <summary>
+            The number of records per page.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryRequest.QueryType">
+            <summary>
+            The query type
+            </summary>
+        </member>
+        <member name="T:gds.message.data.QueryRequestAck">
+            <summary>
+            QueryRequestAck type data part of the Message
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryRequestAck.Status">
+            <summary>
+            The status incorporates a global signal regardin the response.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryRequestAck.AckData">
+            <summary>
+            The sucess response object belonging to the acknowledgement.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryRequestAck.Exception">
+            <summary>
+            The description of an error.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryRequestAckTypeData.NumberOfHits">
+            <summary>
+            This many hits have been returned in this page.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryRequestAckTypeData.NumberOfFilteredHits">
+            <summary>
+            This many records have been filtered from the original result by the lists. 
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryRequestAckTypeData.HasMorePage">
+            <summary>
+            Its value is true if the result has not fitted into this page, meaning that there are more records.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryRequestAckTypeData.QueryContextDescriptor">
+            <summary>
+            Query status descriptor for querying the next pages.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryRequestAckTypeData.FieldDescriptors">
+            <summary>
+            The field descriptors.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryRequestAckTypeData.Records">
+            <summary>
+            The field values of the query result in the sort order.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryContextDescriptor.Id">
+            <summary>
+            Uniquely identifies the query within the entire system.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryContextDescriptor.Query">
+            <summary>
+            The original SELECT query sent by the user.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryContextDescriptor.DeliveredNumberOfHits">
+            <summary>
+            This many records have been forwarded yet to the requester client.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryContextDescriptor.QueryStartTime">
+            <summary>
+            A millisecond based epoch timestamp which is important at NONE consistency.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryContextDescriptor.ConsistencyType">
+            <summary>
+            The consistency type.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryContextDescriptor.LastBucketId">
+            <summary>
+            The bucket id of the last record sent in the page.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryContextDescriptor.GdsDescriptor">
+            <summary>
+            The descriptor of the GDS Node serving the request.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryContextDescriptor.FieldValues">
+            <summary>
+            The field values (included in the sorting condition) of the last record sent in the page.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.QueryContextDescriptor.PartitionNames">
+            <summary>
+            The GDS has not sent data from these partitions yet .
+            </summary>
+        </member>
+        <member name="M:gds.message.data.GDSDescriptor.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:gds.message.data.GDSDescriptor"/> class
+            </summary>
+            <param name="clusterName">The GDS cluster name.</param>
+            <param name="nodeName">The GDS cluster node.</param>
+        </member>
+        <member name="P:gds.message.data.GDSDescriptor.ClusterName">
+            <summary>
+            The GDS cluster name.
+            </summary>
+        </member>
+        <member name="P:gds.message.data.GDSDescriptor.NodeName">
+            <summary>
+            The GDS cluster node.
+            </summary>
+        </member>
+        <member name="T:gds.message.header.Header">
+            <summary>
+            The Header part of the Message.
+            </summary>
+        </member>
+        <member name="P:gds.message.header.Header.UserName">
+            <summary>
+            The name of the user.
+            </summary>
+        </member>
+        <member name="P:gds.message.header.Header.MessageId">
+            <summary>
+            The identifier of the message, with which the request can be associated.
+            </summary>
+        </member>
+        <member name="P:gds.message.header.Header.CreateTime">
+            <summary>
+            The time of creating the message, epoch timestamp.
+            </summary>
+        </member>
+        <member name="P:gds.message.header.Header.RequestTime">
+            <summary>
+            The time of the request, epoch timestamp.
+            </summary>
+        </member>
+        <member name="P:gds.message.header.Header.IsFragmented">
+            <summary>
+            Whether the current message is fragmented or not.
+            </summary>
+        </member>
+        <member name="P:gds.message.header.Header.FirstFragment">
+            <summary>
+            Whether it's the first fragment of a fragmented message.
+            </summary>
+        </member>
+        <member name="P:gds.message.header.Header.LastFragment">
+            <summary>
+            Whether it's the last fragment of a fragmented message.
+            </summary>
+        </member>
+        <member name="P:gds.message.header.Header.Offset">
+            <summary>
+            The last byte of the original, fragmented message the receiver has yet received or the last byte of the original message that has yet been forwarded.
+            </summary>
+        </member>
+        <member name="P:gds.message.header.Header.FullDataSize">
+            <summary>
+            The size of the full data in bytes.
+            </summary>
+        </member>
+        <member name="P:gds.message.header.Header.DataType">
+            <summary>
+            It specifies what types of information the data carries.
+            </summary>
+        </member>
+        <member name="T:gds.message.Message">
+            <summary>
+            Message with the Header and Data parts
+            </summary>
+        </member>
+        <member name="P:gds.message.Message.Header">
+            <summary>
+            Header part of the Message
+            </summary>
+        </member>
+        <member name="P:gds.message.Message.Data">
+            <summary>
+            Data part of the Message
+            </summary>
+        </member>
+        <member name="M:gds.message.MessageManager.GetBinaryFromMessage(gds.message.Message)">
+            <summary>
+            Pack the specified Message object. 
+            </summary>
+            <param name="message">The Message object. See <see cref="M:gds.message.MessageManager.GetMessage(gds.message.header.Header,gds.message.data.Data)"/>.</param>
+            <returns>The packed message in byte array format.</returns>
+            <exception cref="T:MessagePack.MessagePackSerializationException"></exception>
+        </member>
+        <member name="M:gds.message.MessageManager.GetMessageFromBinary(System.Byte[])">
+            <summary>
+            Unpack the specified binary message.
+            </summary>
+            <param name="message">The message in byte array format.</param>
+            <returns>The unpacked Message object.</returns>
+            /// <exception cref="T:MessagePack.MessagePackSerializationException"></exception>
+        </member>
+        <member name="M:gds.message.MessageManager.GetMessage(gds.message.header.Header,gds.message.data.Data)">
+            <summary>
+            Create a Message object with the speficed Header and Data parts.
+            </summary>
+            <param name="header">The Header part of the message. See <see cref="M:gds.message.MessageManager.GetHeader(System.String,System.String,System.Int64,System.Int64,System.Boolean,System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},gds.message.data.DataType)"/>.</param>
+            <param name="data">The Data part of the message. See the MessageManager.GetXXXData() methods.</param>
+            <returns>The created Message object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetHeader(System.String,System.String,System.Int64,System.Int64,System.Boolean,System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},gds.message.data.DataType)">
+            <summary>
+            Create the Header part of the Message.
+            </summary>
+            <param name="userName">The name of the user.</param>
+            <param name="messageId">The identifier of the message, with which the request can be associated.</param>
+            <param name="createTime">The time of creating the message, epoch timestamp.</param>
+            <param name="requestTime">The time of the request, epoch timestamp.</param>
+            <param name="isFragmented">Whether the current message is fragmented or not.</param>
+            <param name="firstFragment">Whether it's the first fragment of a fragmented message</param>
+            <param name="lastFragment">Whether it's the last fragment of a fragmented message.</param>
+            <param name="offset">The last byte of the original, fragmented message the receiver has yet received or the last byte of the original message that has yet been forwarded.</param>
+            <param name="fullDataSize">The size of the full data in bytes.</param>
+            <param name="dataType">It specifies what types of information the data carries.</param>
+            <returns>The created Header object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetConnectionData(System.Boolean,System.Int32,System.Boolean,System.Nullable{System.Int32},System.String)">
+            <summary>
+            Create a Connection type data part.
+            </summary>
+            <param name="serveOnTheSameConnection">If true, the clients only accepts the response on the same connection the message was sent (on the connection it established).</param>
+            <param name="protocolVersionNumber">The version number of the protocol, with which the connected client communicates.</param>
+            <param name="fragmentationSupported">If true, the client indicates that it accepts messages on this connection fragmented too.</param>
+            <param name="fragmentationTransmissionUnit">If fragmentation is supported, it determines the size of chunks the other party should fragment the data part of the message.</param>
+            <param name="password">For a password based authentication.</param>
+            <returns>The created Connection data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetConnectionData(System.Boolean,System.Int32,System.Boolean,System.Nullable{System.Int32})">
+            <summary>
+            Create a Connection type data part.
+            </summary>
+            <param name="serveOnTheSameConnection">If true, the clients only accepts the response on the same connection the message was sent (on the connection it established).</param>
+            <param name="protocolVersionNumber">The version number of the protocol, with which the connected client communicates.</param>
+            <param name="fragmentationSupported">If true, the client indicates that it accepts messages on this connection fragmented too.</param>
+            <param name="fragmentationTransmissionUnit">If fragmentation is supported, it determines the size of chunks the other party should fragment the data part of the message.</param>
+            <returns>The created Connection data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetConnectionAckData(gds.message.data.StatusCode,gds.message.data.Connection)">
+            <summary>
+            Create a ConnectionAck type data part.
+            </summary>
+            <param name="status">The status incorporates a global signal regardin the response.</param>
+            <param name="successAckData">The sucess response object belonging to the acknowledgement.</param>
+            <returns>The created ConnectionAck data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetConnectionAckData(gds.message.data.StatusCode,System.Collections.Generic.Dictionary{System.Int32,System.String},System.String)">
+            <summary>
+            Create a ConnectionAck type data part.
+            </summary>
+            <param name="status">The status incorporates a global signal regardin the response.</param>
+            <param name="unauthorizedAckData">The unauthorized response object belonging to the acknowledgement.</param>
+            <param name="exception">The description of an error.</param>
+            <returns>The created ConnectionAck data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetConnectionAckData(gds.message.data.StatusCode,System.String)">
+            <summary>
+            Create a ConnectionAck type data part.
+            </summary>
+            <param name="status">The status incorporates a global signal regardin the response.</param>
+            <param name="exception">The description of an error.</param>
+            <returns>The created ConnectionAck data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetEventData(System.String,System.Collections.Generic.Dictionary{System.String,System.Byte[]},System.Collections.Generic.List{System.Collections.Generic.List{System.Collections.Generic.Dictionary{System.Int32,System.Boolean}}})">
+            <summary>
+            Create an Event type data part.
+            </summary>
+            <param name="operationsStringBlock">The operations in standard SQL statements, separated with ';' characters.</param>
+            <param name="binaryContentsMapping">The mapping of the binary contents.</param>
+            <param name="executionPriorityStructure">The execution priority structure.</param>
+            <returns>The created Event data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetEventData(System.String,System.Collections.Generic.Dictionary{System.String,System.Byte[]})">
+            <summary>
+            Create an Event type data part.
+            </summary>
+            <param name="operationsStringBlock">The operations in standard SQL statements, separated with ';' characters.</param>
+            <param name="binaryContentsMapping">The mapping of the binary contents.</param>
+            <returns>The created Event data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetEventData(System.String,System.Collections.Generic.List{System.Collections.Generic.List{System.Collections.Generic.Dictionary{System.Int32,System.Boolean}}})">
+            <summary>
+            Create an Event type data part.
+            </summary>
+            <param name="operationsStringBlock">The operations in standard SQL statements, separated with ';' characters.</param>
+            <param name="executionPriorityStructure">The execution priority structure.</param>
+            <returns>The created Event data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetEventData(System.String)">
+            <summary>
+            Create an Event type data part.
+            </summary>
+            <param name="operationsStringBlock"></param>
+            <returns>The created Event data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetAttachmentRequestData(System.String)">
+            <summary>
+            Create an AttachmentRequest type data part.
+            </summary>
+            <param name="request">The SELECT statement.</param>
+            <returns>The created AttachmentRequest data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetAttachmentRequestAckData(gds.message.data.StatusCode,gds.message.data.AttachmentRequestAckTypeData)">
+            <summary>
+            Create an AttachmentRequestAck type data part.
+            </summary>
+            <param name="status">The status incorporates a global signal regardin the response.</param>
+            <param name="ackData">The response object belonging to the acknowledgement.</param>
+            <returns>The created AttachmentRequestAck data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetAttachmentRequestAckData(gds.message.data.StatusCode,gds.message.data.AttachmentRequestAckTypeData,System.String)">
+            <summary>
+            Create an AttachmentRequestAck type data part.
+            </summary>
+            <param name="status">The status incorporates a global signal regardin the response.</param>
+            <param name="ackData">The response object belonging to the acknowledgement.</param>
+            <param name="exception">The description of an error.</param>
+            <returns>The created AttachmentRequestAck data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetAttachmentRequestAckData(gds.message.data.StatusCode,System.String)">
+            <summary>
+            Create an AttachmentRequestAck type data part.
+            </summary>
+            <param name="status">The status incorporates a global signal regardin the response.</param>
+            <param name="exception">The description of an error.</param>
+            <returns>The created AttachmentRequestAck data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetAttachmentResponseData(gds.message.data.AttachmentResult)">
+            <summary>
+            Create an AttachmentResponse type data part.
+            </summary>
+            <param name="result">The description of the result.</param>
+            <returns>The created AttachmentResponse data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetAttachmentResponseAckData(gds.message.data.StatusCode,gds.message.data.AttachmentResponseAckTypeData)">
+            <summary>
+            Create an AttachmentResponseAck type data part.
+            </summary>
+            <param name="status">The status incorporates a global signal regardin the response.</param>
+            <param name="ackData">The response object belonging to the acknowledgement.</param>
+            <returns>The created AttachmentResponseAck data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetAttachmentResponseAckData(gds.message.data.StatusCode,gds.message.data.AttachmentResponseAckTypeData,System.String)">
+            <summary>
+            Create an AttachmentResponseAck type data part.
+            </summary>
+            <param name="status">The status incorporates a global signal regardin the response.</param>
+            <param name="ackData">The response object belonging to the acknowledgement.</param>
+            <param name="exception">The description of an error.</param>
+            <returns>The created AttachmentResponseAck data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetAttachmentResponseAckData(gds.message.data.StatusCode,System.String)">
+            <summary>
+            Create an AttachmentResponseAck type data part.
+            </summary>
+            <param name="status">The status incorporates a global signal regardin the response.</param>
+            <param name="exception">The description of an error.</param>
+            <returns>The created AttachmentResponseAck data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetEventDocumentData(System.String,System.Collections.Generic.List{gds.message.data.FieldDescriptor},System.Collections.Generic.List{System.Collections.Generic.List{System.Object}})">
+            <summary>
+            Create an EventDocument type data part.
+            </summary>
+            <param name="tableName">The name of the table.</param>
+            <param name="fieldDescriptors">The field descriptors.</param>
+            <param name="records">The records.</param>
+            <returns>The created EventDocument data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetEventDocumentAckData(gds.message.data.StatusCode,System.Collections.Generic.List{gds.message.data.EventDocumentAckResult})">
+            <summary>
+            Create an EventDocumentAck type data part.
+            </summary>
+            <param name="status">The status incorporates a global signal regardin the response.</param>
+            <param name="ackData">The sucess response object belonging to the acknowledgement.</param>
+            <returns>The created EventDocumentAck data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetEventDocumentAckData(gds.message.data.StatusCode,System.Collections.Generic.List{gds.message.data.EventDocumentAckResult},System.String)">
+            <summary>
+            Create an EventDocumentAck type data part.
+            </summary>
+            <param name="status">The status incorporates a global signal regardin the response.</param>
+            <param name="ackData">The sucess response object belonging to the acknowledgement.</param>
+            <param name="exception">The description of an error.</param>
+            <returns>The created EventDocumentAck data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetEventDocumentAckData(gds.message.data.StatusCode,System.String)">
+            <summary>
+            Create an EventDocumentAck type data part.
+            </summary>
+            <param name="status">The status incorporates a global signal regardin the response.</param>
+            <param name="exception">The description of an error.</param>
+            <returns>The created EventDocumentAck data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetQueryRequest(System.String,gds.message.data.ConsistencyType,System.Int64,System.Int32,gds.message.data.QueryType)">
+            <summary>
+            Create a QueryRequest type data part.
+            </summary>
+            <param name="selectStringBlock">The SELECT statement.</param>
+            <param name="consistencyType">The consistency type used for the query.</param>
+            <param name="timeout">The timeout value in milliseconds.</param>
+            <param name="queryPageSize">The number of records per page.</param>
+            <param name="queryType">The query type</param>
+            <returns>The created QueryRequest data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetQueryRequest(System.String,gds.message.data.ConsistencyType,System.Int64)">
+            <summary>
+            Create a QueryRequest type data part.
+            </summary>
+            <param name="selectStringBlock">The SELECT statement.</param>
+            <param name="consistencyType">The consistency type used for the query.</param>
+            <param name="timeout">The timeout value in milliseconds.</param>
+            <returns>The created QueryRequest data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetQueryRequestAck(gds.message.data.StatusCode,gds.message.data.QueryRequestAckTypeData)">
+            <summary>
+            Create a QueryRequestAck type data part.
+            </summary>
+            <param name="status">The status incorporates a global signal regardin the response.</param>
+            <param name="ackData">The sucess response object belonging to the acknowledgement.</param>
+            <returns>The created QueryRequestAck data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetQueryRequestAck(gds.message.data.StatusCode,gds.message.data.QueryRequestAckTypeData,System.String)">
+            <summary>
+            Create a QueryRequestAck type data part.
+            </summary>
+            <param name="status">The status incorporates a global signal regardin the response.</param>
+            <param name="ackData">The sucess response object belonging to the acknowledgement.</param>
+            <param name="exception">The description of an error.</param>
+            <returns>The created QueryRequestAck data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetQueryRequestAck(gds.message.data.StatusCode,System.String)">
+            <summary>
+            Create a QueryRequestAck type data part.
+            </summary>
+            <param name="status">The status incorporates a global signal regardin the response.</param>
+            <param name="exception">The description of an error.</param>
+            <returns>The created QueryRequestAck data object.</returns>
+        </member>
+        <member name="M:gds.message.MessageManager.GetNextQueryPageRequest(gds.message.data.QueryContextDescriptor,System.Int64)">
+            <summary>
+            Create a NextQueryPageRequest type data part.
+            </summary>
+            <param name="queryContextDescriptor">Query status descriptor for querying the next pages.</param>
+            <param name="timeout">The timeout value in milliseconds.</param>
+            <returns>The created NextQueryPageRequest data object.</returns>
+        </member>
+    </members>
+</doc>
