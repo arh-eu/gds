@@ -152,7 +152,6 @@ namespace Gds.Websocket
             messageReceiveEvent.Set();
         }
 
-
         private void Opened(object sender, EventArgs e) { }
         private void Closed(object sender, EventArgs e) { }
         private void Error(object sender, SuperSocket.ClientEngine.ErrorEventArgs e) { }
