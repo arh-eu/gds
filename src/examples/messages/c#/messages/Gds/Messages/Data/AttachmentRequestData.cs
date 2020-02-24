@@ -17,16 +17,20 @@
 using MessagePack;
 using MessagePack.Formatters;
 
-namespace gds.message.data
+namespace Gds.Messages.Data
 {
     /// <summary>
-    /// AttachmentRequest type data part of the Message
+    /// Attachment Request type Data part of the Message
     /// </summary>
-    public class AttachmentRequest : Data
+    public class AttachmentRequestData : MessageData
     {
         private readonly string request;
 
-        public AttachmentRequest(string request)
+        /// <summary>
+        /// nitializes a new instance of the <see cref="AttachmentRequestData"/> class
+        /// </summary>
+        /// <param name="request">The SELECT statement.</param>
+        public AttachmentRequestData(string request)
         {
             this.request = request;
         }
@@ -46,22 +50,22 @@ namespace gds.message.data
             return true;
         }
 
-        public override AttachmentRequest AsAttachmentRequestData()
+        public override AttachmentRequestData AsAttachmentRequestData()
         {
             return this;
         }
     }
 
-    class AttachmentRequestFormatter : IMessagePackFormatter<AttachmentRequest>
+    class AttachmentRequestFormatter : IMessagePackFormatter<AttachmentRequestData>
     {
-        public void Serialize(ref MessagePackWriter writer, AttachmentRequest value, MessagePackSerializerOptions options)
+        public void Serialize(ref MessagePackWriter writer, AttachmentRequestData value, MessagePackSerializerOptions options)
         {
             writer.Write(value.Request);
         }
 
-        public AttachmentRequest Deserialize(ref MessagePackReader reader, MessagePackSerializerOptions options)
+        public AttachmentRequestData Deserialize(ref MessagePackReader reader, MessagePackSerializerOptions options)
         {
-            return new AttachmentRequest(reader.ReadString());
+            return new AttachmentRequestData(reader.ReadString());
         }
     }
 }

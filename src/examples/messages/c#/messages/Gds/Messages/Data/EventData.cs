@@ -18,13 +18,13 @@ using MessagePack;
 using System;
 using System.Collections.Generic;
 
-namespace gds.message.data
+namespace Gds.Messages.Data
 {
     /// <summary>
-    /// Event type data part of the Message
+    /// Event type Data part of the Message
     /// </summary>
     [MessagePackObject]
-    public class Event : Data
+    public class EventData : MessageData
     {
         [Key(0)]
         private readonly string operationsStringBlock;
@@ -35,7 +35,13 @@ namespace gds.message.data
         [Key(2)]
         private readonly List<List<Dictionary<int, bool>>> executionPriorityStructure;
 
-        public Event(string operationsStringBlock, Dictionary<string, byte[]> binaryContentsMapping, List<List<Dictionary<int, bool>>> executionPriorityStructure)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventData"/> class
+        /// </summary>
+        /// <param name="operationsStringBlock">The operations in standard SQL statements, separated with ';' characters.</param>
+        /// <param name="binaryContentsMapping">The mapping of the binary contents.</param>
+        /// <param name="executionPriorityStructure">The execution priority structure.</param>
+        public EventData(string operationsStringBlock, Dictionary<string, byte[]> binaryContentsMapping, List<List<Dictionary<int, bool>>> executionPriorityStructure)
         {
             this.operationsStringBlock = operationsStringBlock;
             this.binaryContentsMapping = binaryContentsMapping;
@@ -70,7 +76,7 @@ namespace gds.message.data
             return true;
         }
 
-        public override Event AsEventData()
+        public override EventData AsEventData()
         {
             return this;
         }

@@ -16,16 +16,16 @@
 
 using MessagePack;
 using MessagePack.Formatters;
-using gds.message.data;
-using gds.message.header;
+using Gds.Messages.Data;
+using Gds.Messages.Header;
 
-namespace gds.message
+namespace Gds.Messages
 {
     static class SerializerOptions
     {
         private static readonly IFormatterResolver PrivateFieldsResolver = MessagePack.Resolvers.StandardResolverAllowPrivate.Instance;
         private static readonly IMessagePackFormatter MessageFormatter = new MessageFormatter();
-        private static readonly IMessagePackFormatter HeaderFormatter = new HeaderFormatter();
+        private static readonly IMessagePackFormatter MessageHeaderFormatter = new MessageHeaderFormatter();
         private static readonly IMessagePackFormatter ConnectionAckTypeDataFormatter = new ConnectionAckTypeDataFormatter();
         private static readonly IMessagePackFormatter AttachmentRequestDataFormatter = new AttachmentRequestFormatter();
         private static readonly IMessagePackFormatter QueryRequestFormatter = new QueryRequestFormatter();
@@ -33,7 +33,7 @@ namespace gds.message
 
         public static readonly MessagePackSerializerOptions AllSerializerOptions =
             MessagePackSerializerOptions.Standard.WithResolver(MessagePack.Resolvers.CompositeResolver.Create(
-                new IMessagePackFormatter[] { MessageFormatter, HeaderFormatter, ConnectionAckTypeDataFormatter, AttachmentRequestDataFormatter,
+                new IMessagePackFormatter[] { MessageFormatter, MessageHeaderFormatter, ConnectionAckTypeDataFormatter, AttachmentRequestDataFormatter,
                     QueryRequestFormatter, EventDocumentAckResultFormatter },
                 new IFormatterResolver[] { PrivateFieldsResolver }));
     }

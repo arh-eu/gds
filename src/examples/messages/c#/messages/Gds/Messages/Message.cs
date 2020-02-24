@@ -14,33 +14,38 @@
  * limitations under the License.
  */
 
-using gds.message.data;
-using gds.message.header;
+using Gds.Messages.Data;
+using Gds.Messages.Header;
 
-namespace gds.message
+namespace Gds.Messages
 {
     /// <summary>
     /// Message with the Header and Data parts
     /// </summary>
     public class Message
     {
-        private readonly Header header;
-        private readonly Data data;
+        private readonly MessageHeader header;
+        private readonly MessageData data;
 
-        public Message(Header header, Data data)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Message"/> class with the <see cref="MessageHeader"/> and <see cref="MessageData"/> parts
+        /// </summary>
+        /// <param name="header">The Header part of the Message</param>
+        /// <param name="data">The Data part of the Message</param>
+        public Message(MessageHeader header, MessageData data)
         {
             this.header = header;
             this.data = data;
         }
 
         /// <summary>
-        /// Header part of the Message
+        /// The Header part of the Message
         /// </summary>
-        public Header Header => header;
+        public MessageHeader Header => header;
 
         /// <summary>
-        /// Data part of the Message
+        /// The Data part of the Message
         /// </summary>
-        public Data Data => data;
+        public MessageData Data => data;
     }
 }

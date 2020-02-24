@@ -17,13 +17,13 @@
 using MessagePack;
 using System.Collections.Generic;
 
-namespace gds.message.data
+namespace Gds.Messages.Data
 {
     /// <summary>
-    /// AttachmentRequestAck type data part of the Message
+    /// Attachment Request Ack type Data part of the Message
     /// </summary>
     [MessagePackObject]
-    public class AttachmentRequestAck : Data
+    public class AttachmentRequestAckData : MessageData
     {
         [Key(0)]
         private readonly StatusCode status;
@@ -34,7 +34,13 @@ namespace gds.message.data
         [Key(2)]
         private readonly string exception;
 
-        public AttachmentRequestAck(StatusCode status, AttachmentRequestAckTypeData ackData, string exception)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttachmentRequestAckData"/> class
+        /// </summary>
+        /// <param name="status">The status incorporates a global signal regarding the response.</param>
+        /// <param name="ackData">The response object belonging to the acknowledgement.</param>
+        /// <param name="exception">The description of an error.</param>
+        public AttachmentRequestAckData(StatusCode status, AttachmentRequestAckTypeData ackData, string exception)
         {
             this.status = status;
             this.ackData = ackData;
@@ -42,7 +48,7 @@ namespace gds.message.data
         }
 
         /// <summary>
-        /// The status incorporates a global signal regardin the response.
+        /// The status incorporates a global signal regarding the response.
         /// </summary>
         [IgnoreMember]
         public StatusCode Status => status;
@@ -69,7 +75,7 @@ namespace gds.message.data
             return true;
         }
 
-        public override AttachmentRequestAck AsAttachmentRequestAckData()
+        public override AttachmentRequestAckData AsAttachmentRequestAckData()
         {
             return this;
         }

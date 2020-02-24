@@ -16,13 +16,13 @@
 
 using MessagePack;
 
-namespace gds.message.data
+namespace Gds.Messages.Data
 {
     /// <summary>
-    /// The Connection type data part of the Message.
+    /// The Connection type Data part of the Message.
     /// </summary>
     [MessagePackObject]
-    public class Connection : Data
+    public class ConnectionData : MessageData
     {
         [Key(0)]
         private readonly bool serveOnTheSameConnection;
@@ -39,7 +39,15 @@ namespace gds.message.data
         [Key(4)]
         private readonly object[] reservedFields;
 
-        public Connection(bool serveOnTheSameConnection, int protocolVersionNumber, bool fragmentationSupported, int? fragmentationTransmissionUnit, object[] reservedFields)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConnectionData"/> class
+        /// </summary>
+        /// <param name="serveOnTheSameConnection">If true, the clients only accepts the response on the same connection the message was sent (on the connection it established).</param>
+        /// <param name="protocolVersionNumber">The version number of the protocol, with which the connected client communicates.</param>
+        /// <param name="fragmentationSupported">If true, the client indicates that it accepts messages on this connection fragmented too.</param>
+        /// <param name="fragmentationTransmissionUnit">If fragmentation is supported, it determines the size of chunks the other party should fragment the data part of the message.</param>
+        /// <param name="reservedFields"></param>
+        public ConnectionData(bool serveOnTheSameConnection, int protocolVersionNumber, bool fragmentationSupported, int? fragmentationTransmissionUnit, object[] reservedFields)
         {
             this.serveOnTheSameConnection = serveOnTheSameConnection;
             this.protocolVersionNumber = protocolVersionNumber;
@@ -105,7 +113,7 @@ namespace gds.message.data
             return true;
         }
 
-        public override Connection AsConnectionData()
+        public override ConnectionData AsConnectionData()
         {
             return this;
         }

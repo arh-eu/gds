@@ -5,23 +5,30 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Product>messages</Product>
+    <Product></Product>
     <Description>C# messages library for GDS</Description>
-    <PackageId>GDSMessages</PackageId>
+    <PackageId>gds-messages</PackageId>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageReleaseNotes></PackageReleaseNotes>
     <Version>1.0.0</Version>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
-    <Company>ARH Inc.</Company>
-    <Authors>ARH Inc.</Authors>
+    <Company>Arh Inc.</Company>
+    <Authors>Arh Inc.</Authors>
     <PackageProjectUrl>https://github.com/arh-eu/gds</PackageProjectUrl>
-    <PackageTags>GDS, ARH</PackageTags>
+    <PackageTags>arh, gds, messages</PackageTags>
     <PackageLicenseFile></PackageLicenseFile>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageIcon>logo.png</PackageIcon>
     <PackageIconUrl />
     <ApplicationIcon />
     <StartupObject />
+    <RepositoryUrl>https://github.com/arh-eu/gds</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -19,13 +19,13 @@ using MessagePack.Formatters;
 using System;
 using System.Collections.Generic;
 
-namespace gds.message.data
+namespace Gds.Messages.Data
 {
     /// <summary>
-    /// The ConnectionAck type data part of the Message
+    /// The Connection Ack type Data part of the Message
     /// </summary>
     [MessagePackObject]
-    public class ConnectionAck : Data
+    public class ConnectionAckData : MessageData
     {
         [Key(0)]
         private readonly StatusCode status;
@@ -37,27 +37,43 @@ namespace gds.message.data
         private readonly string exception;
 
         [SerializationConstructor]
-        private ConnectionAck(StatusCode status, ConnectionAckTypeData ackData, string exception)
+        private ConnectionAckData(StatusCode status, ConnectionAckTypeData ackData, string exception)
         {
             this.status = status;
             this.ackData = ackData;
             this.exception = exception;
         }
 
-        public ConnectionAck(StatusCode status, Connection successAckData)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConnectionAckData"/> class
+        /// </summary>
+        /// <param name="status">The status incorporates a global signal regarding the response.</param>
+        /// <param name="successAckData">The sucess response object belonging to the acknowledgement.</param>
+        public ConnectionAckData(StatusCode status, ConnectionData successAckData)
         {
             this.status = status;
             this.ackData = new ConnectionAckTypeData(successAckData);
         }
 
-        public ConnectionAck(StatusCode status, Dictionary<int, string> unauthorizedAckData, string exception)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConnectionAckData"/> class
+        /// </summary>
+        /// <param name="status">The status incorporates a global signal regarding the response.</param>
+        /// <param name="unauthorizedAckData">The unauthorized response object belonging to the acknowledgement.</param>
+        /// <param name="exception">The description of an error.</param>
+        public ConnectionAckData(StatusCode status, Dictionary<int, string> unauthorizedAckData, string exception)
         {
             this.status = status;
             this.ackData = new ConnectionAckTypeData(unauthorizedAckData);
             this.exception = exception;
         }
 
-        public ConnectionAck(StatusCode status, string exception)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConnectionAckData"/> class
+        /// </summary>
+        /// <param name="status">The status incorporates a global signal regarding the response.</param>
+        /// <param name="exception">The description of an error.</param>
+        public ConnectionAckData(StatusCode status, string exception)
         {
             this.status = status;
             this.ackData = new ConnectionAckTypeData();
@@ -65,7 +81,7 @@ namespace gds.message.data
         }
 
         /// <summary>
-        /// The status incorporates a global signal regardin the response.
+        /// The status incorporates a global signal regarding the response.
         /// </summary>
         [IgnoreMember]
         public StatusCode Status => status;
@@ -74,7 +90,7 @@ namespace gds.message.data
         /// The sucess response object belonging to the acknowledgement.
         /// </summary>
         [IgnoreMember]
-        public Connection SuccessAckData => ackData.SuccessAckTypeData;
+        public ConnectionData SuccessAckData => ackData.SuccessAckTypeData;
 
         /// <summary>
         /// The unauthorized response object belonging to the acknowledgement.
@@ -98,7 +114,7 @@ namespace gds.message.data
             return true;
         }
 
-        public override ConnectionAck AsConnectionAckData()
+        public override ConnectionAckData AsConnectionAckData()
         {
             return this;
         }
@@ -106,10 +122,10 @@ namespace gds.message.data
 
     public class ConnectionAckTypeData
     {
-        private readonly Connection successAckTypeData;
+        private readonly ConnectionData successAckTypeData;
         private readonly Dictionary<int, string> unauthorizedAckTypeData;
 
-        public ConnectionAckTypeData(Connection successAckTypeData)
+        public ConnectionAckTypeData(ConnectionData successAckTypeData)
         {
             this.successAckTypeData = successAckTypeData;
         }
@@ -121,7 +137,7 @@ namespace gds.message.data
 
         public ConnectionAckTypeData() { }
 
-        public Connection SuccessAckTypeData => successAckTypeData;
+        public ConnectionData SuccessAckTypeData => successAckTypeData;
 
         public Dictionary<int, string> UnauthorizedAckTypeData => unauthorizedAckTypeData;
     }
@@ -149,7 +165,7 @@ namespace gds.message.data
             if (reader.NextMessagePackType.Equals(MessagePackType.Array))
             {
                 return new ConnectionAckTypeData(
-                    MessagePackSerializer.Deserialize<Connection>(ref reader, options));
+                    MessagePackSerializer.Deserialize<ConnectionData>(ref reader, options));
             }
             else if (reader.NextMessagePackType.Equals(MessagePackType.Map))
             {

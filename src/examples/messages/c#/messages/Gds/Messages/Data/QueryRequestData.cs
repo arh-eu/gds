@@ -18,12 +18,12 @@ using MessagePack;
 using MessagePack.Formatters;
 using System;
 
-namespace gds.message.data
+namespace Gds.Messages.Data
 {
     /// <summary>
-    /// QueryRequest type data part of the Message
+    /// Query Request type Data part of the Message
     /// </summary>
-    public class QueryRequest : Data
+    public class QueryRequestData : MessageData
     {
         private readonly string selectStringBlock;
         private readonly ConsistencyType consistencyType;
@@ -31,7 +31,15 @@ namespace gds.message.data
         private readonly int? queryPageSize;
         private readonly QueryType? queryType;
 
-        public QueryRequest(string selectStringBlock, ConsistencyType consistencyType, long timeout, int queryPageSize, QueryType? queryType)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueryRequestData"/> class
+        /// </summary>
+        /// <param name="selectStringBlock">The SELECT statement.</param>
+        /// <param name="consistencyType">The consistency type used for the query.</param>
+        /// <param name="timeout">The timeout value in milliseconds.</param>
+        /// <param name="queryPageSize">The number of records per page.</param>
+        /// <param name="queryType">The query type</param>
+        public QueryRequestData(string selectStringBlock, ConsistencyType consistencyType, long timeout, int queryPageSize, QueryType? queryType)
         {
             this.selectStringBlock = selectStringBlock;
             this.consistencyType = consistencyType;
@@ -40,7 +48,13 @@ namespace gds.message.data
             this.queryType = queryType;
         }
 
-        public QueryRequest(string selectStringBlock, ConsistencyType consistencyType, long timeout)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueryRequestData"/> class
+        /// </summary>
+        /// <param name="selectStringBlock">The SELECT statement.</param>
+        /// <param name="consistencyType">The consistency type used for the query.</param>
+        /// <param name="timeout">The timeout value in milliseconds.</param>
+        public QueryRequestData(string selectStringBlock, ConsistencyType consistencyType, long timeout)
         {
             this.selectStringBlock = selectStringBlock;
             this.consistencyType = consistencyType;
@@ -84,28 +98,52 @@ namespace gds.message.data
             return true;
         }
 
-        public override QueryRequest AsQueryRequest()
+        public override QueryRequestData AsQueryRequest()
         {
             return this;
         }
     }
 
+    /// <summary>
+    /// The consistency type used for the query.
+    /// </summary>
     public enum ConsistencyType
     {
+        /// <summary>
+        /// Absolute consistency (one page consistency).
+        /// </summary>
         PAGE,
+
+        /// <summary>
+        /// Consistent result over time (through pages).
+        /// </summary>
         PAGES,
+
+        /// <summary>
+        /// Non-consistent query, duplicate records (none) may occur.
+        /// </summary>
         NONE
     }
 
+    /// <summary>
+    /// The query mode.
+    /// </summary>
     public enum QueryType
     {
+        /// <summary>
+        /// PAGE type query
+        /// </summary>
         PAGE = 0,
+
+        /// <summary>
+        /// SCROLL type query
+        /// </summary>
         SCROLL = 1
     }
 
-    public class QueryRequestFormatter : IMessagePackFormatter<QueryRequest>
+    public class QueryRequestFormatter : IMessagePackFormatter<QueryRequestData>
     {
-        public void Serialize(ref MessagePackWriter writer, QueryRequest value, MessagePackSerializerOptions options)
+        public void Serialize(ref MessagePackWriter writer, QueryRequestData value, MessagePackSerializerOptions options)
         {
             if (value.QueryPageSize != null && value.QueryType != null)
             {
@@ -128,7 +166,7 @@ namespace gds.message.data
             }
         }
 
-        public QueryRequest Deserialize(ref MessagePackReader reader, MessagePackSerializerOptions options)
+        public QueryRequestData Deserialize(ref MessagePackReader reader, MessagePackSerializerOptions options)
         {
             throw new NotImplementedException();
         }

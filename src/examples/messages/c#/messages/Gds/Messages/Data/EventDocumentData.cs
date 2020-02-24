@@ -17,13 +17,13 @@
 using MessagePack;
 using System.Collections.Generic;
 
-namespace gds.message.data
+namespace Gds.Messages.Data
 {
     /// <summary>
-    /// EventDocument type data part of the Message
+    /// Event Document type Data part of the Message
     /// </summary>
     [MessagePackObject]
-    public class EventDocument : Data
+    public class EventDocument : MessageData
     {
         [Key(0)]
         private readonly string tableName;
@@ -37,6 +37,12 @@ namespace gds.message.data
         [Key(3)]
         private readonly Dictionary<int, string[]> returningOptions = new Dictionary<int, string[]>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventDocument"/> class
+        /// </summary>
+        /// <param name="tableName">The name of the table.</param>
+        /// <param name="fieldDescriptors">The field descriptors.</param>
+        /// <param name="records">The records.</param>
         public EventDocument(string tableName, List<FieldDescriptor> fieldDescriptors, List<List<object>> records)
         {
             this.tableName = tableName;

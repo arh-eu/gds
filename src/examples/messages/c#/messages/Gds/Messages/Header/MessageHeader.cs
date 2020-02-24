@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-using gds.message.data;
+using Gds.Messages.Data;
 
-namespace gds.message.header
+namespace Gds.Messages.Header
 {
     /// <summary>
     /// The Header part of the Message.
     /// </summary>
-    public class Header
+    public class MessageHeader
     {
         private readonly string userName;
         private readonly string messageId;
@@ -34,7 +34,20 @@ namespace gds.message.header
         private readonly int? fullDataSize;
         private readonly DataType dataType;
 
-        public Header(string userName, string messageId, long createTime, long requestTime, bool isFragmented, bool? firstFragment, bool? lastFragment, int? offset, int? fullDataSize, DataType dataType)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MessageHeader"/> class
+        /// </summary>
+        /// <param name="userName">The name of the user.</param>
+        /// <param name="messageId">The identifier of the message, with which the request can be associated.</param>
+        /// <param name="createTime">The time of creating the message, epoch timestamp.</param>
+        /// <param name="requestTime">The time of the request, epoch timestamp.</param>
+        /// <param name="isFragmented">Whether the current message is fragmented or not.</param>
+        /// <param name="firstFragment">Whether it's the first fragment of a fragmented message.</param>
+        /// <param name="lastFragment">Whether it's the last fragment of a fragmented message.</param>
+        /// <param name="offset">The last byte of the original, fragmented message the receiver has yet received or the last byte of the original message that has yet been forwarded.</param>
+        /// <param name="fullDataSize">The size of the full data in bytes.</param>
+        /// <param name="dataType">It specifies what types of information the data carries.</param>
+        public MessageHeader(string userName, string messageId, long createTime, long requestTime, bool isFragmented, bool? firstFragment, bool? lastFragment, int? offset, int? fullDataSize, DataType dataType)
         {
             this.userName = userName;
             this.messageId = messageId;

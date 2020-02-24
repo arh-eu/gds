@@ -17,13 +17,13 @@
 using MessagePack;
 using System.Collections.Generic;
 
-namespace gds.message.data
+namespace Gds.Messages.Data
 {
     /// <summary>
-    /// QueryRequestAck type data part of the Message
+    /// Query Request Ack type Data part of the Message
     /// </summary>
     [MessagePackObject]
-    public class QueryRequestAck : Data
+    public class QueryRequestAckData : MessageData
     {
         [Key(0)]
         private readonly StatusCode status;
@@ -34,7 +34,13 @@ namespace gds.message.data
         [Key(2)]
         private readonly string exception;
 
-        public QueryRequestAck(StatusCode status, QueryRequestAckTypeData ackData, string exception)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueryRequestAckData"/> class
+        /// </summary>
+        /// <param name="status">The status incorporates a global signal regarding the response.</param>
+        /// <param name="ackData">The sucess response object belonging to the acknowledgement.</param>
+        /// <param name="exception">The description of an error.</param>
+        public QueryRequestAckData(StatusCode status, QueryRequestAckTypeData ackData, string exception)
         {
             this.status = status;
             this.ackData = ackData;
@@ -42,7 +48,7 @@ namespace gds.message.data
         }
 
         /// <summary>
-        /// The status incorporates a global signal regardin the response.
+        /// The status incorporates a global signal regarding the response.
         /// </summary>
         [IgnoreMember]
         public StatusCode Status => status;
@@ -69,7 +75,7 @@ namespace gds.message.data
             return true;
         }
 
-        public override QueryRequestAck AsQueryRequestAck()
+        public override QueryRequestAckData AsQueryRequestAck()
         {
             return this;
         }
@@ -96,6 +102,15 @@ namespace gds.message.data
         [Key(5)]
         private readonly List<List<object>> records;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueryRequestAckTypeData"/> class
+        /// </summary>
+        /// <param name="numberOfHits">This many hits have been returned in this page.</param>
+        /// <param name="numberOfFilteredHits">This many records have been filtered from the original result by the lists.</param>
+        /// <param name="hasMorePage">Its value is true if the result has not fitted into this page, meaning that there are more records.</param>
+        /// <param name="queryContextDescriptor">Query status descriptor for querying the next pages.</param>
+        /// <param name="fieldDescriptors">The field descriptors.</param>
+        /// <param name="records">The field values of the query result in the sort order.</param>
         public QueryRequestAckTypeData(long numberOfHits, long numberOfFilteredHits, bool hasMorePage, QueryContextDescriptor queryContextDescriptor, List<FieldDescriptor> fieldDescriptors, List<List<object>> records)
         {
             this.numberOfHits = numberOfHits;
@@ -173,6 +188,18 @@ namespace gds.message.data
         [Key(8)]
         private readonly List<string> partitionNames;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueryContextDescriptor"/> class
+        /// </summary>
+        /// <param name="id">Uniquely identifies the query within the entire system.</param>
+        /// <param name="query">The original SELECT query sent by the user.</param>
+        /// <param name="deliveredNumberOfHits">This many records have been forwarded yet to the requester client.</param>
+        /// <param name="queryStartTime">A millisecond based epoch timestamp which is important at NONE consistency.</param>
+        /// <param name="consistencyType">The consistency type.</param>
+        /// <param name="lastBucketId">The bucket id of the last record sent in the page.</param>
+        /// <param name="gdsDescriptor">The descriptor of the GDS Node serving the request.</param>
+        /// <param name="fieldValues">The field values (included in the sorting condition) of the last record sent in the page.</param>
+        /// <param name="partitionNames">The GDS has not sent data from these partitions yet.</param>
         public QueryContextDescriptor(string id, string query, long deliveredNumberOfHits, long queryStartTime, string consistencyType, string lastBucketId, GDSDescriptor gdsDescriptor, List<object> fieldValues, List<string> partitionNames)
         {
             this.id = id;
@@ -235,7 +262,7 @@ namespace gds.message.data
         public List<object> FieldValues => fieldValues;
 
         /// <summary>
-        /// The GDS has not sent data from these partitions yet .
+        /// The GDS has not sent data from these partitions yet.
         /// </summary>
         [IgnoreMember]
         public List<string> PartitionNames => partitionNames;

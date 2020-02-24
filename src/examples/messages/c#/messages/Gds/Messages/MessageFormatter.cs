@@ -16,11 +16,11 @@
 
 using MessagePack;
 using MessagePack.Formatters;
-using gds.message.data;
-using gds.message.header;
+using Gds.Messages.Data;
+using Gds.Messages.Header;
 using System;
 
-namespace gds.message
+namespace Gds.Messages
 {
     class MessageFormatter : IMessagePackFormatter<Message>
     {
@@ -75,21 +75,21 @@ namespace gds.message
         public Message Deserialize(ref MessagePackReader reader, MessagePackSerializerOptions options)
         {
             reader.ReadArrayHeader();
-            Header header = MessagePackSerializer.Deserialize<Header>(ref reader, options);
-            Data data = header.DataType switch
+            MessageHeader header = MessagePackSerializer.Deserialize<MessageHeader>(ref reader, options);
+            MessageData data = header.DataType switch
             {
-                DataType.Connection => MessagePackSerializer.Deserialize<Connection>(ref reader, options),
-                DataType.ConnectionAck => MessagePackSerializer.Deserialize<ConnectionAck>(ref reader, options),
+                DataType.Connection => MessagePackSerializer.Deserialize<ConnectionData>(ref reader, options),
+                DataType.ConnectionAck => MessagePackSerializer.Deserialize<ConnectionAckData>(ref reader, options),
                 DataType.Event => throw new InvalidOperationException("'Event' Message Data Type cannot be deserlaized by client"),
-                DataType.EventAck => MessagePackSerializer.Deserialize<EventAck>(ref reader, options),
-                DataType.AttachmentRequest => MessagePackSerializer.Deserialize<AttachmentRequest>(ref reader, options),
-                DataType.AttachmentRequestAck => MessagePackSerializer.Deserialize<AttachmentRequestAck>(ref reader, options),
-                DataType.AttachmentResponse => MessagePackSerializer.Deserialize<AttachmentResponse>(ref reader, options),
-                DataType.AttachmentResponseAck => MessagePackSerializer.Deserialize<AttachmentResponseAck>(ref reader, options),
+                DataType.EventAck => MessagePackSerializer.Deserialize<EventAckData>(ref reader, options),
+                DataType.AttachmentRequest => MessagePackSerializer.Deserialize<AttachmentRequestData>(ref reader, options),
+                DataType.AttachmentRequestAck => MessagePackSerializer.Deserialize<AttachmentRequestAckData>(ref reader, options),
+                DataType.AttachmentResponse => MessagePackSerializer.Deserialize<AttachmentResponseData>(ref reader, options),
+                DataType.AttachmentResponseAck => MessagePackSerializer.Deserialize<AttachmentResponseAckData>(ref reader, options),
                 DataType.EventDocument => MessagePackSerializer.Deserialize<EventDocument>(ref reader, options),
                 DataType.EventDocumentAck => MessagePackSerializer.Deserialize<EventDocumentAck>(ref reader, options),
                 DataType.QueryRequest => throw new InvalidOperationException("'QueryRequest' Message Data Type cannot be deserlaized by client"),
-                DataType.QueryRequestAck => MessagePackSerializer.Deserialize<QueryRequestAck>(ref reader, options),
+                DataType.QueryRequestAck => MessagePackSerializer.Deserialize<QueryRequestAckData>(ref reader, options),
                 DataType.NextQueryPageRequest => throw new InvalidOperationException("'NextQueryPageRequest' Message Data Type cannot be deserlaized by client"),
                 _ => throw new InvalidOperationException("Unknown Data Type: " + header.DataType),
             };

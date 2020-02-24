@@ -14,13 +14,16 @@
  * limitations under the License.
  */
 
-using gds.message.data;
-using gds.message.header;
+using Gds.Messages.Data;
+using Gds.Messages.Header;
 using MessagePack;
 using System.Collections.Generic;
 
-namespace gds.message
+namespace Gds.Messages
 {
+    /// <summary>
+    /// Helper class for create, pack and unpack messages
+    /// </summary>
     public class MessageManager
     {
         /// <summary>
@@ -51,7 +54,7 @@ namespace gds.message
         /// <param name="header">The Header part of the message. See <see cref="GetHeader"/>.</param>
         /// <param name="data">The Data part of the message. See the MessageManager.GetXXXData() methods.</param>
         /// <returns>The created Message object.</returns>
-        public static Message GetMessage(Header header, Data data)
+        public static Message GetMessage(MessageHeader header, MessageData data)
         {
             return new Message(header, data);
         }
@@ -69,10 +72,10 @@ namespace gds.message
         /// <param name="offset">The last byte of the original, fragmented message the receiver has yet received or the last byte of the original message that has yet been forwarded.</param>
         /// <param name="fullDataSize">The size of the full data in bytes.</param>
         /// <param name="dataType">It specifies what types of information the data carries.</param>
-        /// <returns>The created Header object.</returns>
-        public static Header GetHeader(string userName, string messageId, long createTime, long requestTime, bool isFragmented, bool? firstFragment, bool? lastFragment, int? offset, int? fullDataSize, DataType dataType)
+        /// <returns>The created MessageHeader object.</returns>
+        public static MessageHeader GetHeader(string userName, string messageId, long createTime, long requestTime, bool isFragmented, bool? firstFragment, bool? lastFragment, int? offset, int? fullDataSize, DataType dataType)
         {
-            return new Header(userName, messageId, createTime, requestTime, isFragmented, firstFragment,
+            return new MessageHeader(userName, messageId, createTime, requestTime, isFragmented, firstFragment,
                 lastFragment, offset, fullDataSize, dataType);
         }
 
@@ -84,10 +87,10 @@ namespace gds.message
         /// <param name="fragmentationSupported">If true, the client indicates that it accepts messages on this connection fragmented too.</param>
         /// <param name="fragmentationTransmissionUnit">If fragmentation is supported, it determines the size of chunks the other party should fragment the data part of the message.</param>
         /// <param name="password">For a password based authentication.</param>
-        /// <returns>The created Connection data object.</returns>
-        public static Connection GetConnectionData(bool serveOnTheSameConnection, int protocolVersionNumber, bool fragmentationSupported, int? fragmentationTransmissionUnit, string password)
+        /// <returns>The created ConnectionData object.</returns>
+        public static ConnectionData GetConnectionData(bool serveOnTheSameConnection, int protocolVersionNumber, bool fragmentationSupported, int? fragmentationTransmissionUnit, string password)
         {
-            return new Connection(serveOnTheSameConnection, protocolVersionNumber, fragmentationSupported, fragmentationTransmissionUnit, new object[] { password });
+            return new ConnectionData(serveOnTheSameConnection, protocolVersionNumber, fragmentationSupported, fragmentationTransmissionUnit, new object[] { password });
         }
 
         /// <summary>
@@ -97,44 +100,44 @@ namespace gds.message
         /// <param name="protocolVersionNumber">The version number of the protocol, with which the connected client communicates.</param>
         /// <param name="fragmentationSupported">If true, the client indicates that it accepts messages on this connection fragmented too.</param>
         /// <param name="fragmentationTransmissionUnit">If fragmentation is supported, it determines the size of chunks the other party should fragment the data part of the message.</param>
-        /// <returns>The created Connection data object.</returns>
-        public static Connection GetConnectionData(bool serveOnTheSameConnection, int protocolVersionNumber, bool fragmentationSupported, int? fragmentationTransmissionUnit)
+        /// <returns>The created ConnectionData object.</returns>
+        public static ConnectionData GetConnectionData(bool serveOnTheSameConnection, int protocolVersionNumber, bool fragmentationSupported, int? fragmentationTransmissionUnit)
         {
-            return new Connection(serveOnTheSameConnection, protocolVersionNumber, fragmentationSupported, fragmentationTransmissionUnit, new object[] { null });
+            return new ConnectionData(serveOnTheSameConnection, protocolVersionNumber, fragmentationSupported, fragmentationTransmissionUnit, new object[] { null });
         }
 
         /// <summary>
         /// Create a ConnectionAck type data part.
         /// </summary>
-        /// <param name="status">The status incorporates a global signal regardin the response.</param>
+        /// <param name="status">The status incorporates a global signal regarding the response.</param>
         /// <param name="successAckData">The sucess response object belonging to the acknowledgement.</param>
-        /// <returns>The created ConnectionAck data object.</returns>
-        public static ConnectionAck GetConnectionAckData(StatusCode status, Connection successAckData)
+        /// <returns>The created ConnectionAckData object.</returns>
+        public static ConnectionAckData GetConnectionAckData(StatusCode status, ConnectionData successAckData)
         {
-            return new ConnectionAck(status, successAckData);
+            return new ConnectionAckData(status, successAckData);
         }
 
         /// <summary>
         /// Create a ConnectionAck type data part.
         /// </summary>
-        /// <param name="status">The status incorporates a global signal regardin the response.</param>
+        /// <param name="status">The status incorporates a global signal regarding the response.</param>
         /// <param name="unauthorizedAckData">The unauthorized response object belonging to the acknowledgement.</param>
         /// <param name="exception">The description of an error.</param>
-        /// <returns>The created ConnectionAck data object.</returns>
-        public static ConnectionAck GetConnectionAckData(StatusCode status, Dictionary<int, string> unauthorizedAckData, string exception)
+        /// <returns>The created ConnectionAckData object.</returns>
+        public static ConnectionAckData GetConnectionAckData(StatusCode status, Dictionary<int, string> unauthorizedAckData, string exception)
         {
-            return new ConnectionAck(status, unauthorizedAckData, exception);
+            return new ConnectionAckData(status, unauthorizedAckData, exception);
         }
 
         /// <summary>
         /// Create a ConnectionAck type data part.
         /// </summary>
-        /// <param name="status">The status incorporates a global signal regardin the response.</param>
+        /// <param name="status">The status incorporates a global signal regardingg the response.</param>
         /// <param name="exception">The description of an error.</param>
-        /// <returns>The created ConnectionAck data object.</returns>
-        public static ConnectionAck GetConnectionAckData(StatusCode status, string exception)
+        /// <returns>The created ConnectionAckData object.</returns>
+        public static ConnectionAckData GetConnectionAckData(StatusCode status, string exception)
         {
-            return new ConnectionAck(status, exception);
+            return new ConnectionAckData(status, exception);
         }
 
         /// <summary>
@@ -143,10 +146,10 @@ namespace gds.message
         /// <param name="operationsStringBlock">The operations in standard SQL statements, separated with ';' characters.</param>
         /// <param name="binaryContentsMapping">The mapping of the binary contents.</param>
         /// <param name="executionPriorityStructure">The execution priority structure.</param>
-        /// <returns>The created Event data object.</returns>
-        public static Event GetEventData(string operationsStringBlock, Dictionary<string, byte[]> binaryContentsMapping, List<List<Dictionary<int, bool>>> executionPriorityStructure)
+        /// <returns>The created EventData object.</returns>
+        public static EventData GetEventData(string operationsStringBlock, Dictionary<string, byte[]> binaryContentsMapping, List<List<Dictionary<int, bool>>> executionPriorityStructure)
         {
-            return new Event(operationsStringBlock, binaryContentsMapping, executionPriorityStructure);
+            return new EventData(operationsStringBlock, binaryContentsMapping, executionPriorityStructure);
         }
 
         /// <summary>
@@ -154,10 +157,10 @@ namespace gds.message
         /// </summary>
         /// <param name="operationsStringBlock">The operations in standard SQL statements, separated with ';' characters.</param>
         /// <param name="binaryContentsMapping">The mapping of the binary contents.</param>
-        /// <returns>The created Event data object.</returns>
-        public static Event GetEventData(string operationsStringBlock, Dictionary<string, byte[]> binaryContentsMapping)
+        /// <returns>The created EventData object.</returns>
+        public static EventData GetEventData(string operationsStringBlock, Dictionary<string, byte[]> binaryContentsMapping)
         {
-            return new Event(operationsStringBlock, binaryContentsMapping, new List<List<Dictionary<int, bool>>>());
+            return new EventData(operationsStringBlock, binaryContentsMapping, new List<List<Dictionary<int, bool>>>());
         }
 
         /// <summary>
@@ -165,108 +168,108 @@ namespace gds.message
         /// </summary>
         /// <param name="operationsStringBlock">The operations in standard SQL statements, separated with ';' characters.</param>
         /// <param name="executionPriorityStructure">The execution priority structure.</param>
-        /// <returns>The created Event data object.</returns>
-        public static Event GetEventData(string operationsStringBlock, List<List<Dictionary<int, bool>>> executionPriorityStructure)
+        /// <returns>The created EventData object.</returns>
+        public static EventData GetEventData(string operationsStringBlock, List<List<Dictionary<int, bool>>> executionPriorityStructure)
         {
-            return new Event(operationsStringBlock, new Dictionary<string, byte[]>(), executionPriorityStructure);
+            return new EventData(operationsStringBlock, new Dictionary<string, byte[]>(), executionPriorityStructure);
         }
 
         /// <summary>
         /// Create an Event type data part.
         /// </summary>
         /// <param name="operationsStringBlock"></param>
-        /// <returns>The created Event data object.</returns>
-        public static Event GetEventData(string operationsStringBlock)
+        /// <returns>The created EventData object.</returns>
+        public static EventData GetEventData(string operationsStringBlock)
         {
-            return new Event(operationsStringBlock, new Dictionary<string, byte[]>(), new List<List<Dictionary<int, bool>>>());
+            return new EventData(operationsStringBlock, new Dictionary<string, byte[]>(), new List<List<Dictionary<int, bool>>>());
         }
 
         /// <summary>
         /// Create an AttachmentRequest type data part.
         /// </summary>
         /// <param name="request">The SELECT statement.</param>
-        /// <returns>The created AttachmentRequest data object.</returns>
-        public static AttachmentRequest GetAttachmentRequestData(string request)
+        /// <returns>The created AttachmentRequestData object.</returns>
+        public static AttachmentRequestData GetAttachmentRequestData(string request)
         {
-            return new AttachmentRequest(request);
+            return new AttachmentRequestData(request);
         }
 
         /// <summary>
         /// Create an AttachmentRequestAck type data part.
         /// </summary>
-        /// <param name="status">The status incorporates a global signal regardin the response.</param>
+        /// <param name="status">The status incorporates a global signal regarding the response.</param>
         /// <param name="ackData">The response object belonging to the acknowledgement.</param>
-        /// <returns>The created AttachmentRequestAck data object.</returns>
-        public static AttachmentRequestAck GetAttachmentRequestAckData(StatusCode status, AttachmentRequestAckTypeData ackData)
+        /// <returns>The created AttachmentRequestAckData object.</returns>
+        public static AttachmentRequestAckData GetAttachmentRequestAckData(StatusCode status, AttachmentRequestAckTypeData ackData)
         {
-            return new AttachmentRequestAck(status, ackData, null);
+            return new AttachmentRequestAckData(status, ackData, null);
         }
 
         /// <summary>
         /// Create an AttachmentRequestAck type data part.
         /// </summary>
-        /// <param name="status">The status incorporates a global signal regardin the response.</param>
+        /// <param name="status">The status incorporates a global signal regarding the response.</param>
         /// <param name="ackData">The response object belonging to the acknowledgement.</param>
         /// <param name="exception">The description of an error.</param>
-        /// <returns>The created AttachmentRequestAck data object.</returns>
-        public static AttachmentRequestAck GetAttachmentRequestAckData(StatusCode status, AttachmentRequestAckTypeData ackData, string exception)
+        /// <returns>The created AttachmentRequestAckData object.</returns>
+        public static AttachmentRequestAckData GetAttachmentRequestAckData(StatusCode status, AttachmentRequestAckTypeData ackData, string exception)
         {
-            return new AttachmentRequestAck(status, ackData, exception);
+            return new AttachmentRequestAckData(status, ackData, exception);
         }
 
         /// <summary>
         /// Create an AttachmentRequestAck type data part.
         /// </summary>
-        /// <param name="status">The status incorporates a global signal regardin the response.</param>
+        /// <param name="status">The status incorporates a global signal regarding the response.</param>
         /// <param name="exception">The description of an error.</param>
-        /// <returns>The created AttachmentRequestAck data object.</returns>
-        public static AttachmentRequestAck GetAttachmentRequestAckData(StatusCode status, string exception)
+        /// <returns>The created AttachmentRequestAckData object.</returns>
+        public static AttachmentRequestAckData GetAttachmentRequestAckData(StatusCode status, string exception)
         {
-            return new AttachmentRequestAck(status, null, exception);
+            return new AttachmentRequestAckData(status, null, exception);
         }
 
         /// <summary>
         /// Create an AttachmentResponse type data part.
         /// </summary>
         /// <param name="result">The description of the result.</param>
-        /// <returns>The created AttachmentResponse data object.</returns>
-        public static AttachmentResponse GetAttachmentResponseData(AttachmentResult result)
+        /// <returns>The created AttachmentResponseData object.</returns>
+        public static AttachmentResponseData GetAttachmentResponseData(AttachmentResult result)
         {
-            return new AttachmentResponse(result);
+            return new AttachmentResponseData(result);
         }
 
         /// <summary>
         /// Create an AttachmentResponseAck type data part.
         /// </summary>
-        /// <param name="status">The status incorporates a global signal regardin the response.</param>
+        /// <param name="status">The status incorporates a global signal regarding the response.</param>
         /// <param name="ackData">The response object belonging to the acknowledgement.</param>
-        /// <returns>The created AttachmentResponseAck data object.</returns>
-        public static AttachmentResponseAck GetAttachmentResponseAckData(StatusCode status, AttachmentResponseAckTypeData ackData)
+        /// <returns>The created AttachmentResponseAckData object.</returns>
+        public static AttachmentResponseAckData GetAttachmentResponseAckData(StatusCode status, AttachmentResponseAckTypeData ackData)
         {
-            return new AttachmentResponseAck(status, ackData, null);
+            return new AttachmentResponseAckData(status, ackData, null);
         }
 
         /// <summary>
         /// Create an AttachmentResponseAck type data part.
         /// </summary>
-        /// <param name="status">The status incorporates a global signal regardin the response.</param>
+        /// <param name="status">The status incorporates a global signal regarding the response.</param>
         /// <param name="ackData">The response object belonging to the acknowledgement.</param>
         /// <param name="exception">The description of an error.</param>
-        /// <returns>The created AttachmentResponseAck data object.</returns>
-        public static AttachmentResponseAck GetAttachmentResponseAckData(StatusCode status, AttachmentResponseAckTypeData ackData, string exception)
+        /// <returns>The created AttachmentResponseAckData object.</returns>
+        public static AttachmentResponseAckData GetAttachmentResponseAckData(StatusCode status, AttachmentResponseAckTypeData ackData, string exception)
         {
-            return new AttachmentResponseAck(status, ackData, exception);
+            return new AttachmentResponseAckData(status, ackData, exception);
         }
 
         /// <summary>
         /// Create an AttachmentResponseAck type data part.
         /// </summary>
-        /// <param name="status">The status incorporates a global signal regardin the response.</param>
+        /// <param name="status">The status incorporates a global signal regarding the response.</param>
         /// <param name="exception">The description of an error.</param>
-        /// <returns>The created AttachmentResponseAck data object.</returns>
-        public static AttachmentResponseAck GetAttachmentResponseAckData(StatusCode status, string exception)
+        /// <returns>The created AttachmentResponseAckData object.</returns>
+        public static AttachmentResponseAckData GetAttachmentResponseAckData(StatusCode status, string exception)
         {
-            return new AttachmentResponseAck(status, null, exception);
+            return new AttachmentResponseAckData(status, null, exception);
         }
 
         /// <summary>
@@ -275,7 +278,7 @@ namespace gds.message
         /// <param name="tableName">The name of the table.</param>
         /// <param name="fieldDescriptors">The field descriptors.</param>
         /// <param name="records">The records.</param>
-        /// <returns>The created EventDocument data object.</returns>
+        /// <returns>The created EventDocumentData object.</returns>
         public static EventDocument GetEventDocumentData(string tableName, List<FieldDescriptor> fieldDescriptors, List<List<object>> records)
         {
             return new EventDocument(tableName, fieldDescriptors, records);
@@ -284,9 +287,9 @@ namespace gds.message
         /// <summary>
         /// Create an EventDocumentAck type data part.
         /// </summary>
-        /// <param name="status">The status incorporates a global signal regardin the response.</param>
+        /// <param name="status">The status incorporates a global signal regarding the response.</param>
         /// <param name="ackData">The sucess response object belonging to the acknowledgement.</param>
-        /// <returns>The created EventDocumentAck data object.</returns>
+        /// <returns>The created EventDocumentAckData object.</returns>
         public static EventDocumentAck GetEventDocumentAckData(StatusCode status, List<EventDocumentAckResult> ackData)
         {
             return new EventDocumentAck(status, ackData, null);
@@ -295,10 +298,10 @@ namespace gds.message
         /// <summary>
         /// Create an EventDocumentAck type data part.
         /// </summary>
-        /// <param name="status">The status incorporates a global signal regardin the response.</param>
+        /// <param name="status">The status incorporates a global signal regarding the response.</param>
         /// <param name="ackData">The sucess response object belonging to the acknowledgement.</param>
         /// <param name="exception">The description of an error.</param>
-        /// <returns>The created EventDocumentAck data object.</returns>
+        /// <returns>The created EventDocumentAckData object.</returns>
         public static EventDocumentAck GetEventDocumentAckData(StatusCode status, List<EventDocumentAckResult> ackData, string exception)
         {
             return new EventDocumentAck(status, ackData, exception);
@@ -307,9 +310,9 @@ namespace gds.message
         /// <summary>
         /// Create an EventDocumentAck type data part.
         /// </summary>
-        /// <param name="status">The status incorporates a global signal regardin the response.</param>
+        /// <param name="status">The status incorporates a global signal regarding the response.</param>
         /// <param name="exception">The description of an error.</param>
-        /// <returns>The created EventDocumentAck data object.</returns>
+        /// <returns>The created EventDocumentAckData object.</returns>
         public static EventDocumentAck GetEventDocumentAckData(StatusCode status, string exception)
         {
             return new EventDocumentAck(status, null, exception);
@@ -323,10 +326,10 @@ namespace gds.message
         /// <param name="timeout">The timeout value in milliseconds.</param>
         /// <param name="queryPageSize">The number of records per page.</param>
         /// <param name="queryType">The query type</param>
-        /// <returns>The created QueryRequest data object.</returns>
-        public static QueryRequest GetQueryRequest(string selectStringBlock, ConsistencyType consistencyType, long timeout, int queryPageSize, QueryType queryType)
+        /// <returns>The created QueryRequestData object.</returns>
+        public static QueryRequestData GetQueryRequest(string selectStringBlock, ConsistencyType consistencyType, long timeout, int queryPageSize, QueryType queryType)
         {
-            return new QueryRequest(selectStringBlock, consistencyType, timeout, queryPageSize, queryType);
+            return new QueryRequestData(selectStringBlock, consistencyType, timeout, queryPageSize, queryType);
         }
 
         /// <summary>
@@ -335,44 +338,44 @@ namespace gds.message
         /// <param name="selectStringBlock">The SELECT statement.</param>
         /// <param name="consistencyType">The consistency type used for the query.</param>
         /// <param name="timeout">The timeout value in milliseconds.</param>
-        /// <returns>The created QueryRequest data object.</returns>
-        public static QueryRequest GetQueryRequest(string selectStringBlock, ConsistencyType consistencyType, long timeout)
+        /// <returns>The created QueryRequestData object.</returns>
+        public static QueryRequestData GetQueryRequest(string selectStringBlock, ConsistencyType consistencyType, long timeout)
         {
-            return new QueryRequest(selectStringBlock, consistencyType, timeout);
+            return new QueryRequestData(selectStringBlock, consistencyType, timeout);
         }
 
         /// <summary>
         /// Create a QueryRequestAck type data part.
         /// </summary>
-        /// <param name="status">The status incorporates a global signal regardin the response.</param>
+        /// <param name="status">The status incorporates a global signal regarding the response.</param>
         /// <param name="ackData">The sucess response object belonging to the acknowledgement.</param>
-        /// <returns>The created QueryRequestAck data object.</returns>
-        public static QueryRequestAck GetQueryRequestAck(StatusCode status, QueryRequestAckTypeData ackData)
+        /// <returns>The created QueryRequestAckData object.</returns>
+        public static QueryRequestAckData GetQueryRequestAck(StatusCode status, QueryRequestAckTypeData ackData)
         {
-            return new QueryRequestAck(status, ackData, null);
+            return new QueryRequestAckData(status, ackData, null);
         }
 
         /// <summary>
         /// Create a QueryRequestAck type data part.
         /// </summary>
-        /// <param name="status">The status incorporates a global signal regardin the response.</param>
+        /// <param name="status">The status incorporates a global signal regarding the response.</param>
         /// <param name="ackData">The sucess response object belonging to the acknowledgement.</param>
         /// <param name="exception">The description of an error.</param>
-        /// <returns>The created QueryRequestAck data object.</returns>
-        public static QueryRequestAck GetQueryRequestAck(StatusCode status, QueryRequestAckTypeData ackData, string exception)
+        /// <returns>The created QueryRequestAckData object.</returns>
+        public static QueryRequestAckData GetQueryRequestAck(StatusCode status, QueryRequestAckTypeData ackData, string exception)
         {
-            return new QueryRequestAck(status, ackData, exception);
+            return new QueryRequestAckData(status, ackData, exception);
         }
 
         /// <summary>
         /// Create a QueryRequestAck type data part.
         /// </summary>
-        /// <param name="status">The status incorporates a global signal regardin the response.</param>
+        /// <param name="status">The status incorporates a global signal regarding the response.</param>
         /// <param name="exception">The description of an error.</param>
-        /// <returns>The created QueryRequestAck data object.</returns>
-        public static QueryRequestAck GetQueryRequestAck(StatusCode status, string exception)
+        /// <returns>The created QueryRequestAckData object.</returns>
+        public static QueryRequestAckData GetQueryRequestAck(StatusCode status, string exception)
         {
-            return new QueryRequestAck(status, null, exception);
+            return new QueryRequestAckData(status, null, exception);
         }
 
         /// <summary>
@@ -380,10 +383,10 @@ namespace gds.message
         /// </summary>
         /// <param name="queryContextDescriptor">Query status descriptor for querying the next pages.</param>
         /// <param name="timeout">The timeout value in milliseconds.</param>
-        /// <returns>The created NextQueryPageRequest data object.</returns>
-        public static NextQueryPageRequest GetNextQueryPageRequest(QueryContextDescriptor queryContextDescriptor, long timeout)
+        /// <returns>The created NextQueryPageRequestData object.</returns>
+        public static NextQueryPageRequestData GetNextQueryPageRequest(QueryContextDescriptor queryContextDescriptor, long timeout)
         {
-            return new NextQueryPageRequest(queryContextDescriptor, timeout);
+            return new NextQueryPageRequestData(queryContextDescriptor, timeout);
         }
     }
 }

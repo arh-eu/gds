@@ -16,13 +16,13 @@
 
 using MessagePack;
 using MessagePack.Formatters;
-using gds.message.data;
+using Gds.Messages.Data;
 
-namespace gds.message.header
+namespace Gds.Messages.Header
 {
-    class HeaderFormatter : IMessagePackFormatter<Header>
+    class MessageHeaderFormatter : IMessagePackFormatter<MessageHeader>
     {
-        public void Serialize(ref MessagePackWriter writer, Header value, MessagePackSerializerOptions options)
+        public void Serialize(ref MessagePackWriter writer, MessageHeader value, MessagePackSerializerOptions options)
         {
             writer.Write(value.UserName);
             writer.Write(value.MessageId);
@@ -36,7 +36,7 @@ namespace gds.message.header
             writer.Write((int)value.DataType);
         }
 
-        public Header Deserialize(ref MessagePackReader reader, MessagePackSerializerOptions options)
+        public MessageHeader Deserialize(ref MessagePackReader reader, MessagePackSerializerOptions options)
         {
             string userName = reader.ReadString();
             string messageId = reader.ReadString();
@@ -49,7 +49,7 @@ namespace gds.message.header
             int? fullDataSize = MsgPackUtils.ReadNullableInt(ref reader);
             int dataType = reader.ReadInt32();
 
-            return new Header(userName, messageId, createTime, requestTime, isFragmented, firstFragment,
+            return new MessageHeader(userName, messageId, createTime, requestTime, isFragmented, firstFragment,
                 lastFragment, offset, fullDataSize, (DataType)dataType);
         }
     }

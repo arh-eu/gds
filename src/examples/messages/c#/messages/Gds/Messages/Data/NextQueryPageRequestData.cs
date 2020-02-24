@@ -16,13 +16,13 @@
 
 using MessagePack;
 
-namespace gds.message.data
+namespace Gds.Messages.Data
 {
     /// <summary>
-    /// NextQueryPageRequest type data part of the Message
+    /// Next Query Page Request type Data part of the Message
     /// </summary>
     [MessagePackObject]
-    public class NextQueryPageRequest : Data
+    public class NextQueryPageRequestData : MessageData
     {
         [Key(0)]
         private readonly QueryContextDescriptor queryContextDescriptor;
@@ -30,7 +30,12 @@ namespace gds.message.data
         [Key(1)]
         private readonly long timeout;
 
-        public NextQueryPageRequest(QueryContextDescriptor queryContextDescriptor, long timeout)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NextQueryPageRequestData"/> class
+        /// </summary>
+        /// <param name="queryContextDescriptor">Query status descriptor for querying the next pages.</param>
+        /// <param name="timeout">The timeout value in milliseconds.</param>
+        public NextQueryPageRequestData(QueryContextDescriptor queryContextDescriptor, long timeout)
         {
             this.queryContextDescriptor = queryContextDescriptor;
             this.timeout = timeout;
@@ -58,7 +63,7 @@ namespace gds.message.data
             return true;
         }
 
-        public override NextQueryPageRequest AsNextQueryPageRequest()
+        public override NextQueryPageRequestData AsNextQueryPageRequest()
         {
             return this;
         }

@@ -16,7 +16,7 @@
 
 using MessagePack;
 
-namespace gds.message
+namespace Gds.Messages
 {
     static class MsgPackUtils
     {

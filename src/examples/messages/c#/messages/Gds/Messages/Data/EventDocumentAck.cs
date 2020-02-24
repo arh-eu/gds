@@ -18,13 +18,13 @@ using MessagePack;
 using MessagePack.Formatters;
 using System.Collections.Generic;
 
-namespace gds.message.data
+namespace Gds.Messages.Data
 {
     /// <summary>
-    /// EventDocumentAck type data part of the Message
+    /// Event Document Ack type Data part of the Message
     /// </summary>
     [MessagePackObject]
-    public class EventDocumentAck : Data
+    public class EventDocumentAck : MessageData
     {
         [Key(0)]
         private readonly StatusCode status;
@@ -35,6 +35,12 @@ namespace gds.message.data
         [Key(2)]
         private readonly string exception;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventDocumentAck"/> class
+        /// </summary>
+        /// <param name="status">The status incorporates a global signal regarding the response.</param>
+        /// <param name="ackData">The sucess response object belonging to the acknowledgement.</param>
+        /// <param name="exception">The description of an error.</param>
         public EventDocumentAck(StatusCode status, List<EventDocumentAckResult> ackData, string exception)
         {
             this.status = status;
@@ -43,7 +49,7 @@ namespace gds.message.data
         }
 
         /// <summary>
-        /// The status incorporates a global signal regardin the response.
+        /// The status incorporates a global signal regarding the response.
         /// </summary>
         [IgnoreMember]
         public StatusCode Status => status;
@@ -81,6 +87,11 @@ namespace gds.message.data
         private readonly StatusCode status;
         private readonly string notification;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventDocumentAckResult"/> class
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="notification"></param>
         public EventDocumentAckResult(StatusCode status, string notification)
         {
             this.status = status;

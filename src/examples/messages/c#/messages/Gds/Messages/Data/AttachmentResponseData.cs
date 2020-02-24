@@ -16,18 +16,22 @@
 
 using MessagePack;
 
-namespace gds.message.data
+namespace Gds.Messages.Data
 {
     /// <summary>
-    /// AttachmentResponse type data part of the Message
+    /// Attachment Response type Data part of the Message
     /// </summary>
     [MessagePackObject]
-    public class AttachmentResponse : Data
+    public class AttachmentResponseData : MessageData
     {
         [Key(0)]
         private readonly AttachmentResult result;
 
-        public AttachmentResponse(AttachmentResult result)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttachmentResponseData"/> class
+        /// </summary>
+        /// <param name="result">The description of the result.</param>
+        public AttachmentResponseData(AttachmentResult result)
         {
             this.result = result;
         }
@@ -48,7 +52,7 @@ namespace gds.message.data
             return true;
         }
 
-        public override AttachmentResponse AsAttachmentResponseData()
+        public override AttachmentResponseData AsAttachmentResponseData()
         {
             return this;
         }
