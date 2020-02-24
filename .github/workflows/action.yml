@@ -4,8 +4,6 @@ on:
     push:
         branches:
             - master
-        paths:
-            - 'gds/src/examples/messages/c#/messages/'
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -14,6 +12,7 @@ jobs:
             - name: Setup .NET Core
               uses: actions/setup-dotnet@v1
               with:
-                dotnet-version: 2.2.108
+                dotnet-version: 3.1.100
             - name: Build with dotnet
               run: dotnet build --configuration Release
+              working-directory: ./src/examples/messages/c#/messages
