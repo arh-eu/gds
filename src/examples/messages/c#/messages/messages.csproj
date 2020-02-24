@@ -51,11 +51,4 @@
     <PackageReference Include="WebSocket4Net" Version="0.15.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="..\..\..\..\..\..\..\license_files\LICENSE.txt">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
-
 </Project>
