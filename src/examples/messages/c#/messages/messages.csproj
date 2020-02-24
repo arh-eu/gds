@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <DocumentationFile>E:\github\gds\src\examples\messages\c#\messages\messages.xml</DocumentationFile>
+    <DocumentationFile>messages.xml</DocumentationFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -32,11 +32,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>E:\github\gds\src\examples\messages\c#\messages\messages.xml</DocumentationFile>
+    <DocumentationFile>messages.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>E:\github\gds\src\examples\messages\c#\messages\messages.xml</DocumentationFile>
+    <DocumentationFile>messages.xml</DocumentationFile>
   </PropertyGroup>
   
   <ItemGroup>
