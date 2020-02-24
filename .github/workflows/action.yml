@@ -2,10 +2,9 @@ name: Nuget Package Deploy
 
 on:
     push:
-        branches:
-            - master
         paths:
-            - './src/examples/messages/c#/messages/**'
+        - './src/examples/messages/c#/messages/**'
+
 jobs:
     build:
         runs-on: ubuntu-latest
