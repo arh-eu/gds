@@ -15,4 +15,4 @@ jobs:
                 dotnet-version: 2.2.108
             - name: Build with dotnet
               run: dotnet build --configuration Release
-              working-directory: ./gds/src/examples/messages/c#/messages
+              working-directory: gds/src/examples/messages/c#/messages
