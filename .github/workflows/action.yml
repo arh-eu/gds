@@ -3,7 +3,7 @@ name: Nuget Package Deploy
 on:
     push:
         paths:
-        - './src/examples/messages/c#/messages/**'
+        - 'src/examples/messages/c#/messages/**'
 
 jobs:
     build:
