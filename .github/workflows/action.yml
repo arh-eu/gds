@@ -23,7 +23,7 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - name: Pack nuget Package
-              run: dotnet pack --configuration
+              run: dotnet pack
               working-directory: ./src/examples/messages/c#/messages
             - name: Push package to nuget
               run: dotnet nuget push **/*.nupkg
