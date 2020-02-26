@@ -1,0 +1,22 @@
+{
+    "name": "arh/gds-messages",
+    "description": "php library for GDS messages",
+    "keywords": ["arh", "gds", "messages"],
+    "type": "library",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "arh",
+            "email": "carmen.azure@arh.hu"
+        }
+    ],
+    "require": {
+        "php": "^7.2.28",
+        "rybakit/msgpack": "dev-master"
+    },
+    "autoload" : {
+        "psr-4" : {
+            "Gds\\" : "src/"
+        }
+    }
+}
