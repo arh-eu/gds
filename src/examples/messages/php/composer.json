@@ -1,9 +1,6 @@
 {
     "name": "arh/gds-messages",
-    "description": "php library for GDS messages",
-    "keywords": ["arh", "gds", "messages"],
-    "type": "library",
-    "license": "Apache-2.0",
+    "description": "Description of project gds-messages.",
     "authors": [
         {
             "name": "arh",
@@ -11,12 +8,13 @@
         }
     ],
     "require": {
-        "php": "^7.2.28",
-        "rybakit/msgpack": "dev-master"
-    },
-    "autoload" : {
-        "psr-4" : {
-            "Gds\\" : "src/"
+        "rybakit/msgpack": "^0.5.3",
+        "ratchet/pawl": "^0.3.2",
+        "psr/log": "*"
+    }, 
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
         }
     }
 }
