@@ -1,7 +1,21 @@
 <?php
+/*
+ * Copyright 2020 ARH Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 namespace App\Gds;
-
 
 use App\Gds\Message\DataTypes as DataTypes;
 use App\Gds\Message\Message;
@@ -14,6 +28,7 @@ use MessagePack\MessagePack;
 use Ratchet\RFC6455\Messaging\Frame;
 use Evenement\EventEmitterTrait;
 use Psr\Log\LoggerInterface;
+use App\Gds\ConnectionInfo;
 
 /**
  * GDS websocket connection
@@ -42,12 +57,8 @@ class Connection implements ConnectionInterface
      * @var string
      */
     private $username;
-
-    /**
-     *
-     * @var type string
-     */
-    private $password;
+    
+    private $connectionInfo;
     
     /**
      * @var \React\EventLoop\LoopInterface
@@ -88,20 +99,19 @@ class Connection implements ConnectionInterface
      */
     private $logger;
 
-    public function __construct(string $url, ?string $password, \React\EventLoop\LoopInterface $eventLoop, LoggerInterface $logger)
+    public function __construct(ConnectionInfo $connectionInfo, \React\EventLoop\LoopInterface $eventLoop, LoggerInterface $logger)
     {
+        $this->connectionInfo = $connectionInfo;
         $this->eventLoop = $eventLoop;
         $this->logger = $logger;
 
-        $this->username = parse_url($url, PHP_URL_USER);
+        $this->username = parse_url($connectionInfo->getUrl(), PHP_URL_USER);
 
         if ('' == $this->username) {
             throw new ConnectionFailedException('Missing GDS username. Username must be specified in the URL in format: \'ws://username@host/path\'.');
         }
 
-        $this->url = str_replace($this->username.'@', '', $url);
-
-        $this->password = $password;
+        $this->url = str_replace($this->username.'@', '', $connectionInfo->getUrl());
         
         $this->packer = new \MessagePack\Packer(\MessagePack\PackOptions::FORCE_ARR);
         $this->packer->registerTransformer(new \MessagePack\TypeTransformer\MapTransformer());
@@ -158,8 +168,8 @@ class Connection implements ConnectionInterface
                     $this->onConnectionClose($code, $reason);
                 });
 
-                $data = new DataTypes\DataType0(true, true, 1024*1024, $this->password);
-                $header = new MessageHeader($this->username, uniqid(), time(), time(), FragmentationInfo::noFragmentation(), $data->getType());
+                $data = new DataTypes\DataType0($this->connectionInfo->getServeOnTheSameConnection(), $this->connectionInfo->getFragmentationSupported(), $this->connectionInfo->getFragmentTransmissionUnit(), $this->connectionInfo->getPassword());
+                $header = new MessageHeader($this->username, uniqid(), time(), time(), $this->connectionInfo->getFragmentationInfo(), $data->getType());
 
                 $this->logger->debug('[GDS.Connection] Initiate GDS connection: sending start connection data.', array('url'=>$this->url, 'username'=>$this->username));
 
