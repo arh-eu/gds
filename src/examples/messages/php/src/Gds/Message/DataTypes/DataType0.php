@@ -34,7 +34,7 @@ class DataType0 implements \App\Gds\Message\MessageData
     private $fragmentTransmissionUnit;
     private $password;
 
-    public function __construct(bool $serveOnTheSameConnection, $protocolVersionNumber, bool $fragmentationSupported, ?int $fragmentTransmissionUnit, ?string $password)
+    public function __construct(bool $serveOnTheSameConnection, int $protocolVersionNumber, bool $fragmentationSupported, ?int $fragmentTransmissionUnit, ?string $password)
     {
         $this->serveOnTheSameConnection = $serveOnTheSameConnection;
         $this->protocolVersionNumber = $protocolVersionNumber;
