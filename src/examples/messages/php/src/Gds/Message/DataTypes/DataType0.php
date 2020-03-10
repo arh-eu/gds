@@ -29,14 +29,15 @@ class DataType0 implements \App\Gds\Message\MessageData
     const TYPE = 0;
 
     private $serveOnTheSameConnection;
-    private $protocolVersionNumber = 0x01000000;
+    private $protocolVersionNumber;
     private $fragmentationSupported;
     private $fragmentTransmissionUnit;
     private $password;
 
-    public function __construct(bool $serveOnTheSameConnection, bool $fragmentationSupported, ?int $fragmentTransmissionUnit, ?string $password)
+    public function __construct(bool $serveOnTheSameConnection, $protocolVersionNumber, bool $fragmentationSupported, ?int $fragmentTransmissionUnit, ?string $password)
     {
         $this->serveOnTheSameConnection = $serveOnTheSameConnection;
+        $this->protocolVersionNumber = $protocolVersionNumber;
         $this->fragmentationSupported = $fragmentationSupported;
         if ($fragmentationSupported) {
             $this->fragmentTransmissionUnit = $fragmentTransmissionUnit;

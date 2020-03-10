@@ -49,7 +49,7 @@ class DataType9 implements \App\Gds\Message\ResponseData
     public static function fromArray(array $data): \App\Gds\Message\ResponseData 
     {
         $result = array();
-        foreach($data as $item) 
+        foreach($data as $item)
         {
             array_push($result, \App\Gds\Message\DataType9Result::fromArray($item));
         }

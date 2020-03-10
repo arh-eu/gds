@@ -46,6 +46,12 @@ class ConnectionInfo {
     
     /**
      *
+     * @var type int
+     */
+    private $protocolVersionNumber;
+
+    /**
+     *
      * @var type bool
      */
     private $fragmentationSupported;
@@ -66,12 +72,14 @@ class ConnectionInfo {
             string $url, 
             FragmentationInfo $fragmentationInfo, 
             bool $serveOnTheSameConnection,
+            ?int $protocolVersionNumber,
             bool $fragmentationSupported,
             ?int $fragmentationTransmissionUnit,
             ?string $password) {
         $this->url = $url;
         $this->fragmentationInfo = $fragmentationInfo;
         $this->serveOnTheSameConnection = $serveOnTheSameConnection;
+        $this->protocolVersionNumber = $protocolVersionNumber;
         $this->fragmentationSupported = $fragmentationSupported;
         $this->fragmentTransmissionUnit = $fragmentationTransmissionUnit;
         $this->password = $password;
@@ -89,6 +97,10 @@ class ConnectionInfo {
         return $this->serveOnTheSameConnection;
     }
 
+    public function getProtocolVersionNumber(): int {
+        return $this->protocolVersionNumber;
+    }
+    
     public function getFragmentationSupported(): bool {
         return $this->fragmentationSupported;
     }

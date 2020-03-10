@@ -168,7 +168,7 @@ class Connection implements ConnectionInterface
                     $this->onConnectionClose($code, $reason);
                 });
 
-                $data = new DataTypes\DataType0($this->connectionInfo->getServeOnTheSameConnection(), $this->connectionInfo->getFragmentationSupported(), $this->connectionInfo->getFragmentTransmissionUnit(), $this->connectionInfo->getPassword());
+                $data = new DataTypes\DataType0($this->connectionInfo->getServeOnTheSameConnection(), $this->connectionInfo->getProtocolVersionNumber(), $this->connectionInfo->getFragmentationSupported(), $this->connectionInfo->getFragmentTransmissionUnit(), $this->connectionInfo->getPassword());
                 $header = new MessageHeader($this->username, uniqid(), time(), time(), $this->connectionInfo->getFragmentationInfo(), $data->getType());
 
                 $this->logger->debug('[GDS.Connection] Initiate GDS connection: sending start connection data.', array('url'=>$this->url, 'username'=>$this->username));
