@@ -36,7 +36,7 @@ import io.netty.handler.ssl.SslContext;
  */
 public class WebSocketServerInitializer extends ChannelInitializer<SocketChannel> {
 
-    private static final String WEBSOCKET_PATH = "/websocket";
+    private static final String WEBSOCKET_PATH = "/gate";
 
     private final SslContext sslCtx;
 

@@ -53,9 +53,7 @@ public class Examples {
 
         simulator.connect();
         sendConnectionMessage();
-        simulator.close();
-        simulator.connect();
-        sendConnectionMessage();
+
     }
 
     private static void sendConnectionMessage() throws IOException {

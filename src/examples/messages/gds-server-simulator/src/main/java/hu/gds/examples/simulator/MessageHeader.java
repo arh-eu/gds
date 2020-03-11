@@ -85,9 +85,10 @@ public class MessageHeader implements Packable {
         }
     }
 
-    public static MessageHeader create(String username, DataType type) {
+    public static MessageHeader create(String username, DataType type, String messageID) {
         long now = System.currentTimeMillis();
-        return new MessageHeader(username, "request-" + now, now, now,
+        //return new MessageHeader(username, "request-" + now, now, now,
+        return new MessageHeader(username, messageID, now, now,
                 false, null, null, null, null, type);
     }
 

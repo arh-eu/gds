@@ -26,6 +26,8 @@ import hu.gds.examples.simulator.GDSSimulator;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.handler.codec.http.FullHttpMessage;
+import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.CloseWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
@@ -57,4 +59,6 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocket
             throw new UnsupportedOperationException(message);
         }
     }
+
+
 }

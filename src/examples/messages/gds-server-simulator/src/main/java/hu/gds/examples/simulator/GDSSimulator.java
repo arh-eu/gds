@@ -40,37 +40,37 @@ public class GDSSimulator {
         LOGGER.info("GDS has received a message of type '" + headerDataType.name() + "'..");
         switch (headerDataType) {
             case CONNECTION:
-                MessageHeader.create(username, DataType.CONNECTION_ACK).pack(packer);
+                MessageHeader.create(username, DataType.CONNECTION_ACK, header.getMessageID()).pack(packer);
                 new ConnectionACK(header, new Connection(unpacker)).pack(packer);
                 LOGGER.info("Sending back the CONNECTION_ACK..");
                 break;
             case EVENT:
-                MessageHeader.create(username, DataType.EVENT_ACK).pack(packer);
+                MessageHeader.create(username, DataType.EVENT_ACK, header.getMessageID()).pack(packer);
                 new EventACK(header, new Event(unpacker)).pack(packer);
                 LOGGER.info("Sending back the EVENT_ACK..");
                 break;
             case ATTACHMENT_REQUEST:
-                MessageHeader.create(username, DataType.ATTACHMENT_REQUEST_ACK).pack(packer);
+                MessageHeader.create(username, DataType.ATTACHMENT_REQUEST_ACK, header.getMessageID()).pack(packer);
                 new AttachmentRequestACK(header, new AttachmentRequest(unpacker)).pack(packer);
                 LOGGER.info("Sending back the ATTACHMENT_REQUEST_ACK..");
                 break;
             case ATTACHMENT_RESPONSE:
-                MessageHeader.create(username, DataType.ATTACHMENT_RESPONSE_ACK).pack(packer);
+                MessageHeader.create(username, DataType.ATTACHMENT_RESPONSE_ACK, header.getMessageID()).pack(packer);
                 new AttachmentResponseACK(header, new AttachmentResponse(unpacker)).pack(packer);
                 LOGGER.info("Sending back the ATTACHMENT_RESPONSE_ACK..");
                 break;
             case EVENT_DOCUMENT:
-                MessageHeader.create(username, DataType.EVENT_DOCUMENT_ACK).pack(packer);
+                MessageHeader.create(username, DataType.EVENT_DOCUMENT_ACK, header.getMessageID()).pack(packer);
                 new EventDocumentACK((header), new EventDocument((unpacker))).pack(packer);
                 LOGGER.info("Sending back the EVENT_DOCUMENT_ACK..");
                 break;
             case QUERY_REQUEST:
-                MessageHeader.create(username, DataType.QUERY_REQUEST_ACK).pack(packer);
+                MessageHeader.create(username, DataType.QUERY_REQUEST_ACK, header.getMessageID()).pack(packer);
                 new QueryACK(header, new Query(unpacker)).pack(packer);
                 LOGGER.info("Sending back the QUERY_REQUEST_ACK..");
                 break;
             case NEXT_QUERY_PAGE_REQUEST:
-                MessageHeader.create(username, DataType.QUERY_REQUEST_ACK).pack(packer);
+                MessageHeader.create(username, DataType.QUERY_REQUEST_ACK, header.getMessageID()).pack(packer);
                 new QueryACK(header, new NextQuery(unpacker)).pack(packer);
                 LOGGER.info("Sending back the QUERY_REQUEST_ACK..");
                 break;
@@ -81,7 +81,7 @@ public class GDSSimulator {
             case EVENT_DOCUMENT_ACK:
             case QUERY_REQUEST_ACK:
                 //error
-                MessageHeader.create(username, headerDataType).pack(packer);
+                MessageHeader.create(username, headerDataType, header.getMessageID()).pack(packer);
                 new InvalidACK(headerDataType).pack(packer);
                 break;
 
