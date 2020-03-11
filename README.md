@@ -6,6 +6,6 @@ Globessey Data Server (GDS) allows storing, transmitting, and querying large amo
 
 See the [Wiki](https://github.com/arh-eu/gds/wiki) for guides.
 
-### Code Examples
+### Libraries and Code Examples
 
-You can find code examples [here](https://github.com/arh-eu/gds/tree/master/src/examples).
+In some languages you can find libraries [here](https://github.com/arh-eu/gds/tree/master/src/libraries) and code examples [here](https://github.com/arh-eu/gds/tree/master/src/examples).
