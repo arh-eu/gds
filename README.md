@@ -8,4 +8,4 @@ See the [Wiki](https://github.com/arh-eu/gds/wiki) for guides.
 
 ### Libraries and Code Examples
 
-In some languages you can find libraries [here](https://github.com/arh-eu/gds/tree/master/src/libraries) and code examples [here](https://github.com/arh-eu/gds/tree/master/src/examples).
+In some languages you can find libraries [here](https://github.com/arh-eu/gds/wiki/Libraries) and code examples [here](https://github.com/arh-eu/gds/tree/master/src/examples).
