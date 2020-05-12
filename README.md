@@ -4,7 +4,7 @@ Globessey Data Server (GDS) allows storing, transmitting, and querying large amo
 
 ### Getting Started
 
-If you want to use the system as a user, you can use its features by sending messages which are embedded into [MessagePack](https://msgpack.org/) packages (they are also on [GitHub](https://github.com/msgpack)). We provide [[SDK]] in some languages, so you may not need to implement it from scratch. If you want to implement it at a low level, you can also find the [[Specification]].
+If you want to use the system as a user, you can use its features by sending messages which are embedded into [MessagePack](https://msgpack.org/) packages (they are also on [GitHub](https://github.com/msgpack)). We provide [SDKs](https://github.com/arh-eu/gds/wiki/SDK) in some languages, so you may not need to implement it from scratch. If you want to implement it at a low level, you can also find the [Specification](https://github.com/arh-eu/gds/wiki/Specification).
 
 See the [Wiki](https://github.com/arh-eu/gds/wiki) for guides.
 
