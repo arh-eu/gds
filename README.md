@@ -18,9 +18,9 @@ The examples show how to connect to a GDS instance, send an event with an attach
 The examples do not cover the full functionality of the GDS, they only provide insight into the use of SDKs.
 In addition, other operations can be performed, such as executing queries, retrieving events, and so on.
 
-- [Java](####Java)
-- [C#](####C#)
-- [PHP](####PHP)
+- [Java](#Java)
+- [C#](#C#)
+- [PHP](#PHP)
 
 #### Java
 
