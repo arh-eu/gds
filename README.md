@@ -191,7 +191,6 @@ $eventMessageData = new App\Gds\Message\DataTypes\DataType2($operationsStringBlo
 $eventMessage = new \App\Gds\Message\Message($eventMessageHeader, $eventMessageData);
 ```
 
-And in the end, we send the message.
 ```php
 $endpoint = new App\Gds\CustomEndpoint($gateway, $eventMessage);
 $endpoint->start();
