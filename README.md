@@ -19,7 +19,7 @@ The examples do not cover the full functionality of the GDS, they only provide i
 In addition, other operations can be performed, such as executing queries, retrieving events, and so on.
 
 - [Java](#Java)
-- [C#](#C#)
+- [C#](#C)
 - [PHP](#PHP)
 
 #### Java
