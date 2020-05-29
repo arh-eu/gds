@@ -28,16 +28,23 @@ The SDK installation, the source code and other details can be found [here](http
 
 First, we create the WebSocket client object, and connect to a GDS instance. 
 ```java
-Client client = new Client("ws://127.0.0.1:8080/gate", new ReceivedMessageHandler() {
+final Logger logger = Logger.getLogger("logging");
+
+final GDSWebSocketClient client = new GDSWebSocketClient(
+        "ws://127.0.0.1:8080/gate",
+        "user",
+        null,
+        logger
+);
+```
+
+We also subscribe to the MessageListener to access the received messages.
+```java
+client.setMessageListener(new MessageListener() {
     @Override
-    public void messageReceived(byte[] message) throws IOException {
-        try {
-            MessageHeader header = MessageManager.getMessageHeaderFromBinaryMessage(message);
-            MessageData data = MessageManager.getMessageData(message);
-            //do something with the header and data...
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
+    public void onMessageReceived(MessageHeader header, MessageData data) {
+        System.out.println(data.getTypeHelper().getMessageDataType() + " type message received");
+        // ...
     }
 });
 ```
@@ -46,16 +53,7 @@ Client client = new Client("ws://127.0.0.1:8080/gate", new ReceivedMessageHandle
 client.connect();
 ```
 
-After that, we need to send a connection message to the GDS.
-```java
-MessageHeader connectionMessageHeader = MessageManager.createMessageHeaderBase("user", "870da92f-7fff-48af-825e-05351ef97acd", System.currentTimeMillis(), System.currentTimeMillis(), false, null, null, null, null, MessageDataType.CONNECTION_0);
-MessageData connectionMessageData = MessageManager.createMessageData0Connection(false, 1, false, null, "pass");
-byte[] connectionMessage = MessageManager.createMessage(connectionMessageHeader, connectionMessageData);
-
-client.sendMessage(connectionMessage);
-```
-
-If the connection was successful (we received a positive connection ack message), we can send an event message.
+If the connection was successful (client.connected() returns true, or if we have received a notification via the ConnectionStateListener), we can send an event message.
 ```java
 MessageHeader eventMessageHeader = MessageManager.createMessageHeaderBase("user", "870da92f-7fff-48af-825e-05351ef97acd", System.currentTimeMillis(), System.currentTimeMillis(), false, null, null, null, null, MessageDataType.CONNECTION_0);
 
