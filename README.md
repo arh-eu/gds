@@ -122,15 +122,22 @@ Dictionary<string, byte[]> binaryContentsMapping = new Dictionary<string, byte[]
 MessageData eventMessageData = MessageManager.GetEventData(operationsStringBlock, binaryContentsMapping);
 Message eventMessage = MessageManager.GetMessage(eventMessageHeader, eventMessageData);
 
-Tuple<Message, MessagePackSerializationException> eventResponse = client.SendSync(eventMessage, 3000);
-if (eventResponse.Item2 == null)
+try
 {
-    Message eventResponseMessage = eventResponse.Item1;
+    Message eventResponseMessage = client.SendSync(eventMessage, 3000);        
     if (eventResponseMessage.Header.DataType.Equals(DataType.EventAck))
     {
         EventAckData eventAckData = eventResponseMessage.Data.AsEventAckData();
         // do something with the response data...
     }
+}
+catch(TimeoutException exception)
+{
+    // ...
+}
+catch (MessagePackSerializationException exception)
+{
+    // ...
 }
 ```
 
