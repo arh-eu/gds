@@ -96,7 +96,7 @@ The SDK installation, the source code and other details can be found [here](http
 
 First, we create the WebSocket client object, and connect to a GDS instance.
 ```csharp
-GDSWebSocketClient client = new GDSWebSocketClient("ws://127.0.0.1:8080/gate");
+GdsWebSocketClient client = new GdsWebSocketClient("ws://127.0.0.1:8080/gate");
 ```
 
 We also subscribe to the MessageListener to access the received messages.
