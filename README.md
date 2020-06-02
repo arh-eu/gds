@@ -96,7 +96,7 @@ The SDK installation, the source code and other details can be found [here](http
 
 First, we create the WebSocket client object, and connect to a GDS instance.
 ```csharp
-GdsWebSocketClient client = new GdsWebSocketClient("ws://127.0.0.1:8080/gate");
+GdsWebSocketClient client = new GdsWebSocketClient("ws://127.0.0.1:8080/gate", "user", null);
 ```
 
 We also subscribe to the MessageListener to access the received messages.
@@ -110,7 +110,7 @@ static void Client_MessageReceived(object sender, Tuple<Message, MessagePackSeri
 ```
 
 ```csharp
-client.ConnectSync();
+client.Connect();
 ```
 
 If the connection was successful (client.IsConnected() returns true, or if we have received a notification), we can send an event message. 
@@ -146,7 +146,7 @@ client.SendAsync(attachmentRequestMessage);
 At the end, we close the websocket connection as well.
 
 ```csharp
-client.CloseSync();
+client.Close();
 ```
 
 #### PHP
