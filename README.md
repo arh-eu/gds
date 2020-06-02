@@ -38,12 +38,20 @@ final GDSWebSocketClient client = new GDSWebSocketClient(
 );
 ```
 
-We also subscribe to the MessageListener to access the received messages.
+We also subscribe to the MessageListener to access the received messages and to be notified of the connection state changes.
 ```java
 client.setMessageListener(new MessageListener() {
+    client.setMessageListener(new MessageListener() {
     @Override
     public void onMessageReceived(MessageHeader header, MessageData data) {
-        System.out.println(data.getTypeHelper().getMessageDataType() + " type message received");
+        // ...
+    }
+    @Override
+    public void onConnected() {
+        // ...
+    }
+    @Override
+    public void onDisconnected() {
         // ...
     }
 });
@@ -53,7 +61,7 @@ client.setMessageListener(new MessageListener() {
 client.connect();
 ```
 
-If the connection was successful (client.connected() returns true, or if we have received a notification via the ConnectionStateListener), we can send an event message.
+If the connection was successful (client.connected() returns true, or if we have received a notification), we can send an event message.
 ```java
 MessageHeader eventMessageHeader = MessageManager.createMessageHeaderBase("user", "870da92f-7fff-48af-825e-05351ef97acd", System.currentTimeMillis(), System.currentTimeMillis(), false, null, null, null, null, MessageDataType.CONNECTION_0);
 
@@ -89,28 +97,24 @@ The SDK installation, the source code and other details can be found [here](http
 First, we create the WebSocket client object, and connect to a GDS instance.
 ```csharp
 GDSWebSocketClient client = new GDSWebSocketClient("ws://127.0.0.1:8080/gate");
-client.ConnectSync();
 ```
 
-After that, we need to send a connection message to the GDS.
+We also subscribe to the MessageListener to access the received messages.
 ```csharp
-MessageHeader connectionMessageHeader = MessageManager.GetHeader("user", "870da92f-7fff-48af-825e-05351ef97acd", 1582612168230, 1582612168230, false, null, null, null, null, DataType.Connection);
-MessageData connectionMessageData = MessageManager.GetConnectionData(false, 1, false, null, "pass");
-Message connectionMessage = MessageManager.GetMessage(connectionMessageHeader, connectionMessageData);
+client.MessageReceived += Client_MessageReceived;
 
-Tuple<Message, MessagePackSerializationException> connectionResponse = client.SendSync(connectionMessage, 3000);
-if(connectionResponse.Item2 == null)
+static void Client_MessageReceived(object sender, Tuple<Message, MessagePackSerializationException> e)
 {
-    Message connectionResponseMessage = connectionResponse.Item1;
-    if(connectionResponseMessage.Header.DataType.Equals(DataType.ConnectionAck))
-    {
-        ConnectionAckData connectionAckData = connectionResponseMessage.Data.AsConnectionAckData();
-        // do something with the response data...
-    }
+    //...
 }
 ```
 
-If the connection was successful (we received a positive connection ack message), we can send an event message.
+```csharp
+client.ConnectSync();
+```
+
+If the connection was successful (client.IsConnected() returns true, or if we have received a notification), we can send an event message. 
+Let’s see how we can send the message in synchronously.
 ```csharp
 MessageHeader eventMessageHeader = MessageManager.GetHeader("user", "c08ea082-9dbf-4d96-be36-4e4eab6ae624", 1582612168230, 1582612168230, false, null, null, null, null, DataType.Event);
 string operationsStringBlock = "INSERT INTO events (id, some_field, images) VALUES('EVNT202001010000000000', 'some_field', array('ATID202001010000000000'));INSERT INTO \"events-@attachment\" (id, meta, data) VALUES('ATID202001010000000000', 'some_meta', 0x62696e6172795f6964315f6578616d706c65)";
@@ -130,22 +134,13 @@ if (eventResponse.Item2 == null)
 }
 ```
 
-If you want to get the attachment of to the prevoiusly stored event, you can send an attachment request message.
+If you want to get the attachment of to the prevoiusly stored event, you can send an attachment request message. Let's see an asynchronous example.
 ```csharp
 MessageHeader attachmentRequestMessageHeader = MessageManager.GetHeader("user", "0292cbc8-df50-4e88-8be9-db392db07dbc", 1582612168230, 1582612168230, false, null, null, null, null, DataType.AttachmentRequest);
 MessageData attachmentRequestMessageData = MessageManager.GetAttachmentRequestData("SELECT * FROM \"events-@attachment\" WHERE id='ATID202001010000000000' and ownerid='EVNT202001010000000000' FOR UPDATE WAIT 86400");
 Message attachmentRequestMessage = MessageManager.GetMessage(attachmentRequestMessageHeader, attachmentRequestMessageData);
 
-Tuple<Message, MessagePackSerializationException> attachmentRequestResponse = client.SendSync(attachmentRequestMessage, 3000);
-if (attachmentRequestResponse.Item2 == null)
-{
-    Message attachmentRequestResponseMessage = attachmentRequestResponse.Item1;
-    if (attachmentRequestResponseMessage.Header.DataType.Equals(DataType.AttachmentRequestAck))
-    {
-        AttachmentRequestAckData attachmentRequestAckData = attachmentRequestResponseMessage.Data.AsAttachmentRequestAckData();
-        // do something with the response data...
-    }
-}
+client.SendAsync(attachmentRequestMessage);
 ```
 
 At the end, we close the websocket connection as well.
