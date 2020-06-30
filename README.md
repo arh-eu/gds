@@ -31,7 +31,7 @@ First, we create the WebSocket client object, and connect to a GDS instance.
 final Logger logger = Logger.getLogger("logging");
 
 final GDSWebSocketClient client = new GDSWebSocketClient(
-        "ws://127.0.0.1:8080/gate",
+        "ws://127.0.0.1:8888/gate",
         "user",
         null,
         logger
@@ -41,18 +41,25 @@ final GDSWebSocketClient client = new GDSWebSocketClient(
 We also subscribe to the MessageListener to access the received messages and to be notified of the connection state changes.
 ```java
 client.setMessageListener(new MessageListener() {
-    client.setMessageListener(new MessageListener() {
     @Override
     public void onMessageReceived(MessageHeader header, MessageData data) {
-        // ...
+        System.out.println(data.getTypeHelper().getMessageDataType() + " message received!");
+        //do something with the message...
     }
+
     @Override
     public void onConnected() {
-        // ...
+        System.out.println("Client connected!");
     }
+
+    @Override
+    public void onConnectionFailed(String s) {
+        System.out.println("Connection failed: " + s);
+    }
+
     @Override
     public void onDisconnected() {
-        // ...
+        System.out.println("Client disconnected!");
     }
 });
 ```
@@ -63,26 +70,56 @@ client.connect();
 
 If the connection was successful (client.connected() returns true, or if we have received a notification), we can send an event message.
 ```java
-MessageHeader eventMessageHeader = MessageManager.createMessageHeaderBase("user", "870da92f-7fff-48af-825e-05351ef97acd", System.currentTimeMillis(), System.currentTimeMillis(), false, null, null, null, null, MessageDataType.CONNECTION_0);
+MessageIdGenerator messageIdGenerator = new MessageIdGenerator("TEST", "yyMMddhhmmssSSS");
+String eventId = messageIdGenerator.nextId();
+String attachmentId = messageIdGenerator.nextId();
 
-List<String> operationsStringBlock = new ArrayList<String>();
-operationsStringBlock.add("INSERT INTO events (id, some_field, images) VALUES('EVNT202001010000000000', 'some_field', array('ATID202001010000000000'));INSERT INTO \"events-@attachment\" (id, meta, data) VALUES('ATID202001010000000000', 'some_meta', 0x62696e6172795f6964315f6578616d706c65)");
-Map<String, byte[]> binaryContentsMapping = new HashMap<>();
-binaryContentsMapping.put("62696e6172795f69645f6578616d706c65", new byte[] { 1, 2, 3 });
-MessageData eventMessageData = MessageManager.createMessageData2Event(operationsStringBlock, binaryContentsMapping, new ArrayList<PriorityLevelHolder>());
-
-byte[] eventMessage = MessageManager.createMessage(eventMessageHeader, eventMessageData);
-
-client.sendMessage(eventMessage);
+int[] binaryData = {
+        0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d,
+        0x49, 0x48, 0x44, 0x52, 0x00, 0x00, 0x00, 0x09, 0x00, 0x00, 0x00, 0x09,
+        0x08, 0x06, 0x00, 0x00, 0x00, 0xe0, 0x91, 0x06, 0x10, 0x00, 0x00, 0x00,
+        0x01, 0x73, 0x52, 0x47, 0x42, 0x00, 0xae, 0xce, 0x1c, 0xe9, 0x00, 0x00,
+        0x00, 0x04, 0x67, 0x41, 0x4d, 0x41, 0x00, 0x00, 0xb1, 0x8f, 0x0b, 0xfc,
+        0x61, 0x05, 0x00, 0x00, 0x00, 0x09, 0x70, 0x48, 0x59, 0x73, 0x00, 0x00,
+        0x0e, 0xc3, 0x00, 0x00, 0x0e, 0xc3, 0x01, 0xc7, 0x6f, 0xa8, 0x64, 0x00,
+        0x00, 0x00, 0x2d, 0x49, 0x44, 0x41, 0x54, 0x28, 0x53, 0x63, 0xf8, 0x4f,
+        0x04, 0x20, 0x4d, 0xd1, 0x5b, 0x19, 0x15, 0x30, 0x46, 0x67, 0x83, 0x00,
+        0x69, 0x8a, 0xf0, 0x01, 0xe2, 0x15, 0x21, 0x1b, 0x8d, 0x0c, 0x60, 0xe2,
+        0x18, 0x6e, 0x42, 0xc6, 0x30, 0x40, 0x84, 0x75, 0xff, 0xff, 0x03, 0x00,
+        0x18, 0xd8, 0x27, 0x9c, 0x9f, 0xb7, 0xe9, 0xa0, 0x00, 0x00, 0x00, 0x00,
+        0x49, 0x45, 0x4e, 0x44, 0xae, 0x42, 0x60, 0x82
+};
+ByteArrayOutputStream baos = new ByteArrayOutputStream();
+DataOutputStream dos = new DataOutputStream(baos);
+for (int pixel : binaryData) {
+    dos.writeByte(pixel);
+}
+byte[] byteArray = baos.toByteArray();
+try {
+    MessageData data = MessageManager.createMessageData2Event(
+            new ArrayList<String>() {{
+                add("INSERT INTO multi_event (id, plate, speed, images) VALUES('" + eventId + "', 'ABC123', 90, array('" + attachmentId +"'))");
+                add("INSERT INTO \"multi_event-@attachment\" (id, meta, data) VALUES('" + attachmentId + "', 'some_meta', 0x62696e6172795f6964315f6578616d706c65)");
+            }},
+            new HashMap<String, byte[]>() {{
+                put("binary_id1_example", byteArray);
+            }},
+            new ArrayList<>());
+    client.sendMessage(data);
+} catch (Throwable e) {
+    e.printStackTrace();
+}
 ```
 
 If you want to get the attachment of to the prevoiusly stored event, you can send an attachment request message.
 ```java
-MessageHeader eventMessageHeader = MessageManager.createMessageHeaderBase("user", "870da92f-7fff-48af-825e-05351ef97acd", System.currentTimeMillis(), System.currentTimeMillis(), false, null, null, null, null, MessageDataType.CONNECTION_0);
-MessageData eventMessageData  = MessageManager.createMessageData4AttachmentRequest("SELECT * FROM \"events-@attachment\" WHERE id='ATID202001010000000000' and ownerid='EVNT202001010000000000' FOR UPDATE WAIT 86400");
-byte[] eventMessage = MessageManager.createMessage(header, data);
-
-client.sendMessage(eventMessage);
+try {
+    MessageData data = MessageManager.createMessageData4AttachmentRequest(
+            "SELECT * FROM \"multi_event-@attachment\" WHERE id='" + attachmentId +"' and ownerid='" + eventId +"' FOR UPDATE WAIT 86400");
+    client.sendMessage(data);
+} catch (Throwable e) {
+    e.printStackTrace();
+}
 ```
 
 At the end, we close the websocket connection as well.
