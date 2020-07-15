@@ -21,6 +21,7 @@ In addition, other operations can be performed, such as executing queries, retri
 - [Java](#Java)
 - [C#](#C)
 - [PHP](#PHP)
+- [Python](#Python)
 
 #### Java
 
@@ -111,7 +112,7 @@ try {
 }
 ```
 
-If you want to get the attachment of to the prevoiusly stored event, you can send an attachment request message.
+If you want to get the attachment of to the previously stored event, you can send an attachment request message.
 ```java
 try {
     MessageData data = MessageManager.createMessageData4AttachmentRequest(
@@ -133,7 +134,7 @@ The SDK installation, the source code and other details can be found [here](http
 
 First, we create the WebSocket client object, and connect to a GDS instance.
 ```csharp
-GdsWebSocketClient client = new GdsWebSocketClient("ws://127.0.0.1:8080/gate", "user", null);
+GdsWebSocketClient client = new GdsWebSocketClient("ws://127.0.0.1:8888/gate", "user", null);
 ```
 
 We also subscribe to the MessageListener to access the received messages.
@@ -200,7 +201,7 @@ The SDK installation, the source code and other details can be found [here](http
 First, we need to specify our connection details.
 ```php
 $connectionInfo = new \App\Gds\ConnectionInfo(
-        "ws://user@127.0.0.1:8080/gate",
+        "ws://user@127.0.0.1:8888/gate",
         \App\Gds\Message\FragmentationInfo::noFragmentation(),
         true,
         0x01000000,
@@ -232,6 +233,48 @@ $eventMessage = new \App\Gds\Message\Message($eventMessageHeader, $eventMessageD
 $endpoint = new App\Gds\CustomEndpoint($gateway, $eventMessage);
 $endpoint->start();
 $response = $endpoint->getResponse();
+```
+
+
+#### Python
+
+The SDK installation, the source code and other details can be found [here](https://github.com/arh-eu/gds-python-sdk).
+
+We can specify our connection details.
+```python
+class CustomGDSClient(GDSClient.WebsocketClient):
+    def __init__(self):
+        super().__init__(url="ws://192.168.111.222:8888/gate")
+```
+
+To provide the client logic, we need to override the `client_code(..)` method from our base class. The signature is the following:
+
+```python
+
+class CustomGDSClient(GDSClient.WebsocketClient):
+    def __init__(self):
+        super().__init__(url="ws://192.168.111.222:8888/gate")
+
+    async def client_code(self, ws: websockets.WebSocketClientProtocol):
+        #our code comes here
+        pass
+
+```
+
+Now, we can create the event message. It is not necessary to explicit create and send a connection message because it is done in the background based on the connection info. If you want to customize the information, see the Python wiki for more details.
+
+```python
+    async def client_code(self, ws: websockets.WebSocketClientProtocol):
+        insert_string = "INSERT INTO events (id, some_field, images) VALUES('EVNT202001010000000000', 'some_field', array('ATID202001010000000000'));INSERT INTO \"events-@attachment\" (id, meta, data) VALUES('ATID202001010000000000', 'some_meta', 0x62696e6172795f6964315f6578616d706c65)"
+    await self.send_and_wait_event(ws, insert_string)
+```
+
+To handle the reply the `event_ack(..)` function should be overwritten. By default it prints the response to the console and saves it as a `JSON` file in the `exports` folder.
+
+```python
+    def event_ack(self, response: list, **kwargs):
+        #super().event_ack(response, **kwargs)
+        pass
 ```
 
 ### Carmen Cloud Service
