@@ -266,7 +266,7 @@ Now, we can create the event message. It is not necessary to explicit create and
 ```python
     async def client_code(self, ws: websockets.WebSocketClientProtocol):
         insert_string = "INSERT INTO events (id, some_field, images) VALUES('EVNT202001010000000000', 'some_field', array('ATID202001010000000000'));INSERT INTO \"events-@attachment\" (id, meta, data) VALUES('ATID202001010000000000', 'some_meta', 0x62696e6172795f6964315f6578616d706c65)"
-    await self.send_and_wait_event(ws, insert_string)
+        await self.send_and_wait_event(ws, insert_string)
 ```
 
 To handle the reply the `event_ack(..)` function should be overwritten. By default it prints the response to the console and saves it as a `JSON` file in the `exports` folder.
