@@ -155,7 +155,7 @@ If the connection was successful (client.IsConnected() returns true, or if we ha
 Let’s see how we can send the message in synchronously.
 ```csharp
 MessageHeader eventMessageHeader = MessageManager.GetHeader("user", "c08ea082-9dbf-4d96-be36-4e4eab6ae624", 1582612168230, 1582612168230, false, null, null, null, null, DataType.Event);
-string operationsStringBlock = "INSERT INTO events (id, some_field, images) VALUES('EVNT202001010000000000', 'some_field', array('ATID202001010000000000'));INSERT INTO \"events-@attachment\" (id, meta, data) VALUES('ATID202001010000000000', 'some_meta', 0x62696e6172795f6964315f6578616d706c65)";
+string operationsStringBlock = "INSERT INTO multi_event (id, plate, images) VALUES('EVNT2006241023125470', 'ABC123', array('ATID2006241023125470'));INSERT INTO \"multi_event-@attachment\" (id, meta, data) VALUES('ATID2006241023125470', 'some_meta', 0x62696e6172795f69645f6578616d706c65)";
 Dictionary<string, byte[]> binaryContentsMapping = new Dictionary<string, byte[]> { { "62696e6172795f69645f6578616d706c65", new byte[] { 1, 2, 3 } } };
 MessageData eventMessageData = MessageManager.GetEventData(operationsStringBlock, binaryContentsMapping);
 Message eventMessage = MessageManager.GetMessage(eventMessageHeader, eventMessageData);
@@ -182,7 +182,7 @@ catch (MessagePackSerializationException exception)
 If you want to get the attachment of to the prevoiusly stored event, you can send an attachment request message. Let's see an asynchronous example.
 ```csharp
 MessageHeader attachmentRequestMessageHeader = MessageManager.GetHeader("user", "0292cbc8-df50-4e88-8be9-db392db07dbc", 1582612168230, 1582612168230, false, null, null, null, null, DataType.AttachmentRequest);
-MessageData attachmentRequestMessageData = MessageManager.GetAttachmentRequestData("SELECT * FROM \"events-@attachment\" WHERE id='ATID202001010000000000' and ownerid='EVNT202001010000000000' FOR UPDATE WAIT 86400");
+MessageData attachmentRequestMessageData = MessageManager.GetAttachmentRequestData("SELECT * FROM \"multi_event-@attachment\" WHERE id='ATID2006241023125470' and ownerid='EVNT2006241023125470' FOR UPDATE WAIT 86400");
 Message attachmentRequestMessage = MessageManager.GetMessage(attachmentRequestMessageHeader, attachmentRequestMessageData);
 
 client.SendAsync(attachmentRequestMessage);
@@ -223,7 +223,7 @@ $gateway =  new \App\Gds\Gateway($connection, array('timeout' => 10), $logger);
 Now, we can create the event message. It is not necessary to explicit create and send a connection message because it is done in the background based on the connection info.
 ```php
 $eventMessageHeader = new \App\Gds\Message\MessageHeader("user", "0dc35f9d-ad70-46aa-8983-e57880b53c8b", time(), time(), App\Gds\Message\FragmentationInfo::noFragmentation(), 2);
-$operationsStringBlock = "INSERT INTO events (id, some_field, images) VALUES('EVNT202001010000000000', 'some_field', array('ATID202001010000000000'));INSERT INTO \"events-@attachment\" (id, meta, data) VALUES('ATID202001010000000000', 'some_meta', 0x62696e6172795f6964315f6578616d706c65)";
+$operationsStringBlock = "INSERT INTO multi_event (id, plate, images) VALUES('EVNT2006241023125470', 'ABC123', array('ATID2006241023125470'));INSERT INTO \"multi_event-@attachment\" (id, meta, data) VALUES('ATID2006241023125470', 'some_meta', 0x62696e6172795f69645f6578616d706c65)";
 $binaryContentsMapping = array("62696e6172795f69645f6578616d706c65" => pack("C*", 23, 17, 208));
 $eventMessageData = new App\Gds\Message\DataTypes\DataType2($operationsStringBlock, $binaryContentsMapping, null);
 $eventMessage = new \App\Gds\Message\Message($eventMessageHeader, $eventMessageData);
@@ -265,7 +265,7 @@ Now, we can create the event message. It is not necessary to explicit create and
 
 ```python
     async def client_code(self, ws: websockets.WebSocketClientProtocol):
-        insert_string = "INSERT INTO events (id, some_field, images) VALUES('EVNT202001010000000000', 'some_field', array('ATID202001010000000000'));INSERT INTO \"events-@attachment\" (id, meta, data) VALUES('ATID202001010000000000', 'some_meta', 0x62696e6172795f6964315f6578616d706c65)"
+        insert_string = "INSERT INTO multi_event (id, plate, images) VALUES('EVNT2006241023125470', 'ABC123', array('ATID2006241023125470'));INSERT INTO \"multi_event-@attachment\" (id, meta, data) VALUES('ATID2006241023125470', 'some_meta', 0x62696e6172795f69645f6578616d706c65)"
         await self.send_and_wait_event(ws, insert_string)
 ```
 
