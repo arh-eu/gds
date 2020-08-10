@@ -19,7 +19,8 @@ The examples do not cover the full functionality of the GDS, they only provide i
 In addition, other operations can be performed, such as executing queries, retrieving events, and so on.
 
 - [Java](#Java)
-- [C#](#C)
+- [C++](#C)
+- [C#](#C-1)
 - [PHP](#PHP)
 - [Python](#Python)
 
@@ -127,6 +128,81 @@ At the end, we close the websocket connection as well.
 ```java
 client.close();
 ```
+
+#### C++
+
+The SDK installation, the source code and other details can be found [here](https://github.com/arh-eu/gds-cpp-sdk).
+
+You can obtain a pointer for the implementation object by calling the static `gds_lib::connection::GDSInterface::create(..)` method. This has two overloads depending on if you want to use TLS security or not. If not, the only url that should be passed is the GDS gate url (fe. `192.168.111.222:8888/gate`).
+
+```cpp
+std::shared_ptr<gds_lib::connection::GDSInterface> mGDSInterface = gds_lib::connection::GDSInterface::create("192.168.111.222:8888/gate");
+```
+
+
+The client communicates with callbacks since it runs on a separate thread. You can specify your own callback function for the interface. It has four public members for this:
+```cpp
+struct GDSInterface {
+  //...
+  std::function<void()> on_open;
+  std::function<void(gds_lib::gds_types::GdsMessage &)> on_message;
+  std::function<void(int, const std::string&)> on_close;
+  std::function<void(int, const std::string&)> on_error;
+  //...
+};
+```
+
+Your client code simply has to assign a value for these after you create the client:
+
+```cpp
+mGDSInterface->on_open    = [](){
+	std::cout << "Client is open!" << std::endl;
+};
+
+mGDSInterface->on_close   = [](int status, const std::string& reason){
+		std::cout << "Client closed: " << reason << " (code: " <<  code << ")" << std::endl;
+};
+
+mGDSInterface->on_error   = [](int code, const std::string& reason) {
+	std::cout << "WebSocket returned error: " << reason << " (error code: " <<  code << ")" << std::endl;
+};
+
+
+mGDSInterface->on_message = [](gds_lib::gds_types::GdsMessage &msg) {
+	std::cout << "I received a message!" << std::endl;
+};
+```
+
+To start your client you should simply invoke the `start()` method. This will initialize and create the WebSocket connection to the GDS.
+Keep in mind that this does not send the login message, that is done by manually if you use the SDK.
+
+```cpp
+mGDSInterface->start();
+```	
+
+Once the connection is ready (the `on_open` callback has been invoked), you are ready to send messages to the GDS and receive the replies.
+
+```cpp
+GdsMessage fullMessage = create_default_message();
+
+fullMessage.dataType = GdsMsgType::LOGIN;
+
+std::shared_ptr<GdsLoginMessage> loginBody(new GdsLoginMessage());
+loginBody->serve_on_the_same_connection = false;
+loginBody->fragmentation_supported = false;
+
+fullMessage.messageBody = loginBody;
+mGDSInterface->send(fullMessage);
+```
+
+
+If you no longer need the client, you should invoke the `close()` method, which sends the standard close message for the WebSocket connection.
+
+```cpp
+mGDSInterface->close();
+```
+
+For additional details please check the C++ page and the [SDK usage](https://github.com/arh-eu/gds-cpp-sdk#sdk-usage) chapter.
 
 #### C#
 
