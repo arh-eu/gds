@@ -319,8 +319,8 @@ The SDK installation, the source code and other details can be found [here](http
 We can specify our connection details.
 ```python
 class CustomGDSClient(GDSClient.WebsocketClient):
-    def __init__(self):
-        super().__init__(url="ws://192.168.111.222:8888/gate")
+    def __init__(self, **kwargs):
+        super().__init__(url="ws://192.168.111.222:8888/gate", **kwargs)
 ```
 
 To provide the client logic, we need to override the `client_code(..)` method from our base class. The signature is the following:
@@ -328,8 +328,8 @@ To provide the client logic, we need to override the `client_code(..)` method fr
 ```python
 
 class CustomGDSClient(GDSClient.WebsocketClient):
-    def __init__(self):
-        super().__init__(url="ws://192.168.111.222:8888/gate")
+    def __init__(self, **kwargs):
+        super().__init__(url="ws://192.168.111.222:8888/gate", **kwargs)
 
     async def client_code(self, ws: websockets.WebSocketClientProtocol):
         #our code comes here
