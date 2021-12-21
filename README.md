@@ -352,7 +352,3 @@ To handle the reply the `event_ack(..)` function should be overwritten. By defau
         #super().event_ack(response, **kwargs)
         pass
 ```
-
-### Carmen Cloud Service
-
-[Here](https://github.com/arh-eu/carmen-cloud) you can read about our Carmen Cloud Service.
