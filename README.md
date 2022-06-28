@@ -70,7 +70,7 @@ client.setMessageListener(new MessageListener() {
 client.connect();
 ```
 
-If the connection was successful (client.connected() returns true, or if we have received a notification), we can send an event message.
+If the connection was successful (`client.connected()` returns `true`, or if we have received a notification), we can send an event message.
 ```java
 MessageIdGenerator messageIdGenerator = new MessageIdGenerator("TEST", "yyMMddhhmmssSSS");
 String eventId = messageIdGenerator.nextId();
@@ -99,14 +99,13 @@ for (int pixel : binaryData) {
 byte[] byteArray = baos.toByteArray();
 try {
     MessageData data = MessageManager.createMessageData2Event(
-            new ArrayList<String>() {{
-                add("INSERT INTO multi_event (id, plate, speed, images) VALUES('" + eventId + "', 'ABC123', 90, array('" + attachmentId +"'))");
-                add("INSERT INTO \"multi_event-@attachment\" (id, meta, data) VALUES('" + attachmentId + "', 'some_meta', 0x62696e6172795f6964315f6578616d706c65)");
-            }},
-            new HashMap<String, byte[]>() {{
-                put("binary_id1_example", byteArray);
-            }},
-            new ArrayList<>());
+        List.of(
+            "INSERT INTO multi_event (id, plate, speed, images) VALUES('" + eventId + "', 'ABC123', 90, array('" + attachmentId +"'))",
+            "INSERT INTO \"multi_event-@attachment\" (id, meta, data) VALUES('" + attachmentId + "', 'some_meta', 0x62696e6172795f6964315f6578616d706c65)"
+        ),
+        Map.of("binary_id1_example", byteArray),
+        Collections.singletonList()
+    );
     client.sendMessage(data);
 } catch (Throwable e) {
     e.printStackTrace();
